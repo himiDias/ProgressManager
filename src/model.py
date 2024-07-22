@@ -1,3 +1,38 @@
+
+from getpass import getpass 
+from mysql.connector import connect,Error
+
+
+try:
+    with connect(
+        host="localhost",
+        user = input("Enter Username: "),
+        password = getpass("Enter Password: "),
+
+    ) as connection:
+        create_db_query = "CREATE DATABASE IF NOT EXISTS university-progress"
+        with connection.cursor() as cursor:
+            cursor.execute(create_db_query)
+            print("Database created/exists, login success")
+except Error as e:
+    print(e)
+
+
+try:
+    with connect(
+        host="localhost",
+        user = input("Enter Username: "),
+        password = getpass("Enter password: "),
+        database="university-progress",
+    ) as connection:
+        print(connection)
+except Error as e:
+    print(e)
+
+
+
+cursor = connection.cursor()
+
 class Course:
     def __init__(self,id,name):
         self.id = id

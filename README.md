@@ -61,3 +61,50 @@ Application which can be used to store data about how well the user is doing at 
 - There is an empty graph on the side which updates as modules are added
 
 - y-axis same, lines same, x-axis modules which diffeent colours
+
+# Database Schema
+
+<b> Table : Course</b>
+
+- id (PK)
+- name
+- grade
+
+<b> Table : Year</b>
+
+- id (PK)
+- name
+- grade
+- course (FK)
+
+<b> Table : Module</b>
+
+- id (PK)
+- name
+- credits
+- grade
+- year (FK)
+
+<b> Table : Coursework</b>
+
+- id (PK)
+- name
+- weight
+- grade
+- module (FK)
+
+<b> Table : Exam </b>
+
+- id (PK)
+- name
+- weight
+- grade
+- module (FK)
+
+<b> Table : Assignments</b>
+
+- id (PK)
+- name
+- weight
+- grade
+- coursework (FK)
