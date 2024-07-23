@@ -67,44 +67,43 @@ Application which can be used to store data about how well the user is doing at 
 <b> Table : Course</b>
 
 - id (PK)
-- name
+- title
 - grade
 
 <b> Table : Year</b>
 
-- id (PK)
-- name
+- year (PK)
 - grade
-- course (FK)
+- course_id (FK)
 
 <b> Table : Module</b>
 
 - id (PK)
-- name
+- title
 - credits
 - grade
-- year (FK)
+- year_id (FK)
 
 <b> Table : Coursework</b>
 
 - id (PK)
-- name
+- title
 - weight
 - grade
-- module (FK)
+- module_id (FK)
 
 <b> Table : Exam </b>
 
 - id (PK)
-- name
+- title
 - weight
 - grade
-- module (FK)
+- module_id (FK)
 
 <b> Table : Assignments</b>
 
 - id (PK)
-- name
+- title
 - weight
 - grade
-- coursework (FK)
+- coursework_id (FK)

@@ -1,5 +1,6 @@
 
 from getpass import getpass 
+import mysql.connector
 from mysql.connector import connect,Error
 
 
@@ -10,13 +11,88 @@ try:
         password = getpass("Enter Password: "),
 
     ) as connection:
-        create_db_query = "CREATE DATABASE IF NOT EXISTS university-progress"
+        create_db_query = "CREATE DATABASE IF NOT EXISTS `university-progress`"
         with connection.cursor() as cursor:
             cursor.execute(create_db_query)
             print("Database created/exists, login success")
 except Error as e:
     print(e)
 
+
+
+
+def initialise_db(con):
+    create_course_table = """
+    CREATE TABLE IF NOT EXISTS courses(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    grade FLOAT
+    )
+    """
+    create_years_table = """
+    CREATE TABLE IF NOT EXISTS years(
+    year INT AUTO_INCREMENT PRIMARY KEY,
+    grade FLOAT,
+    course_id INT,
+    FOREIGN KEY(course_id) REFERENCES courses(id)
+    )
+    """
+    create_module_table = """
+    CREATE TABLE IF NOT EXISTS modules(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    grade FLOAT,
+    year INT,
+    FOREIGN KEY(year) REFERENCES years(year)
+    )
+    """
+
+    create_cw_table = """
+    CREATE TABLE IF NOT EXISTS coursework(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    weight INT,
+    grade FLOAT,
+    module_id INT,
+    FOREIGN KEY(module_id) REFERENCES modules(id) 
+    )
+    """
+
+    create_exam_table = """
+    CREATE TABLE IF NOT EXISTS exam(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    weight INT,
+    grade FLOAT,
+    module_id INT,
+    FOREIGN KEY(module_id) REFERENCES modules(id)
+    )"""
+
+    create_assignments_table = """
+    CREATE TABLE IF NOT EXISTS assignments(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    weight INT,
+    grade FLOAT,
+    coursework_id INT,
+    FOREIGN KEY(coursework_id) REFERENCES coursework(id)
+    )
+    """
+
+
+    try:
+        with con.cursor() as cursor:
+            cursor.execute(create_course_table)
+            cursor.execute(create_years_table)
+            cursor.execute(create_module_table)
+            cursor.execute(create_cw_table)
+            cursor.execute(create_exam_table)
+            cursor.execute(create_assignments_table)
+
+            con.commit()
+            print("Successfully initialised database")
+    except Error as e:
+        print(e)
 
 try:
     with connect(
@@ -26,60 +102,58 @@ try:
         database="university-progress",
     ) as connection:
         print(connection)
+        print("Successfully connected to database")
+        initialise_db(connection)
 except Error as e:
     print(e)
 
-
-
-cursor = connection.cursor()
-
 class Course:
-    def __init__(self,id,name):
+    def __init__(self,id,title):
         self.id = id
-        self.name = name
+        self.title = title
         self.grade = 0
 
 
     def update_grade(self,grade):
         self.grade = grade
 
-    def update_name(self,nName):
-        self.name = nName
+    def update_title(self,ntitle):
+        self.title = ntitle
 
     def get_grade(self):
         return self.grade
     
-    def get_name(self):
-        return self.name
+    def get_title(self):
+        return self.title
 
 
 class Year:
-    def __init__(self,id,name):
+    def __init__(self,id,title):
         self.id = id
-        self.name = name
+        self.title = title
         self.grade = 0
 
     def update_grade(self,grade):
         self.grade = grade
     
-    def update_name(self,nName):
-        self.name = nName
+    def update_title(self,ntitle):
+        self.title = ntitle
 
     def get_grade(self):
         return self.grade
     
-    def get_name(self):
-        return self.name
+    def get_title(self):
+        return self.title
 
 class Module:
-    def __init__(self,id,name,credits):
+    def __init__(self,id,title,credits):
         self.id= id
-        self.name = name
+        self.title = title
         self.credits = credits
         self.grade = 0
 
-    def update_name(self,nName):
-        self.name = nName
+    def update_title(self,ntitle):
+        self.title = ntitle
 
     def update_credits(self,nCredits):
         self.credits = nCredits
@@ -87,8 +161,8 @@ class Module:
     def update_grade(self,grade):
         self.grade= grade
     
-    def get_name(self):
-        return self.name
+    def get_title(self):
+        return self.title
     
     def get_credits(self):
         return self.credits
@@ -98,7 +172,7 @@ class Module:
 
 class Coursework:
     def __init__(self,weight):
-        self.name = "Coursework"
+        self.title = "Coursework"
         self.weight = weight
         self.grade = 0
 
@@ -114,12 +188,12 @@ class Coursework:
     def get_grade(self):
         return self.grade
     
-    def get_name(self):
-        return self.name
+    def get_title(self):
+        return self.title
 
 class Exam:
     def __init__(self,weight):
-        self.name = "Exam"
+        self.title = "Exam"
         self.weight = weight
         self.grade = 0
 
@@ -136,14 +210,14 @@ class Exam:
     def get_grade(self):
         return self.grade
     
-    def get_name(self):
-        return self.name
+    def get_title(self):
+        return self.title
     
 
 class Assignment:
-    def __init__(self,id,name,weight):
+    def __init__(self,id,title,weight):
         self.id = id
-        self.name = name
+        self.title = title
         self.weight = weight
         self.grade = 0
 
@@ -159,8 +233,8 @@ class Assignment:
     def get_grade(self):
         return self.grade
     
-    def get_name(self):
-        return self.name
+    def get_title(self):
+        return self.title
     
 
 
