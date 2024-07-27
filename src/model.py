@@ -167,6 +167,9 @@ class Year:
     
     def get_title(self):
         return self.title
+    
+    def get_cid(self):
+        return self.courseid
 
 class Module:
     def __init__(self,id,title,credits,yid):
@@ -193,6 +196,9 @@ class Module:
     
     def get_grade(self):
         return self.grade
+    
+    def get_yid(self):
+        return self.yearid
 
 class Coursework:
     def __init__(self,weight,mid):
@@ -215,6 +221,9 @@ class Coursework:
     
     def get_title(self):
         return self.title
+    
+    def get_mid(self):
+        return self.moduleid
 
 class Exam:
     def __init__(self,weight,mid):
@@ -239,6 +248,9 @@ class Exam:
     def get_title(self):
         return self.title
     
+    def get_mid(self):
+        return self.moduleid
+    
 
 class Assignment:
     def __init__(self,id,title,weight,cid):
@@ -262,6 +274,9 @@ class Assignment:
     
     def get_title(self):
         return self.title
+    
+    def get_cid(self):
+        return self.courseworkid
     
 
 
