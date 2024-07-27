@@ -293,8 +293,8 @@ class yearModel:
         db_connect(s)
         self.years.append(year)
 
-    def rem_year(self,year):
-        s = f"DELETE FROM years WHERE year = {year}"
+    def rem_year(self,year,cid):
+        s = f"DELETE FROM years WHERE year = {year} AND course_id = {cid}"
         db_connect(s)
         del self.years[id]
 
@@ -311,8 +311,8 @@ class moduleModel:
         db_connect(s)
         self.modules.append(module)
     
-    def rem_module(self,title):
-        s = f"DELETE FROM modules WHERE title = {title}"
+    def rem_module(self,title,yid):
+        s = f"DELETE FROM modules WHERE title = {title} AND year_id = {yid}"
         del self.modules[id]
     
     def get_modules(self):
@@ -337,6 +337,14 @@ class assessmentModel:
         return self.assessments
     
     def rem_assessment(self,id):
+        a = self.assessments[id]
+        if(a) == Coursework:
+            s = f"DELETE FROM coursework WHERE module_id = {a.moduleid}" 
+            db_connect(s)
+        else:
+            s = f"DELETE FROM exam WHERE module_id = {a.moduleid}"
+            db_connect(s)
+
         del self.assessments[id]
     
     def get_length(self):
