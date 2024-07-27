@@ -386,4 +386,30 @@ class assignmentModel:
     
 
 
-    
+def test_model():
+    # TEST 1: Initialises a main courses model and a years model for 1 course 
+    coursesM = courseModel()
+    physicsYearsM= yearModel()
+
+    # TEST 2 : Add two courses
+    coursesM.add_course(Course(0,"Physics"))
+    coursesM.add_course(Course(1,"Maths"))
+
+    # TEST 3 : Add 4 years to PhysicsYearsModel
+
+    physicsYearsM.add_year(Year(0,"Year 1",0))
+    physicsYearsM.add_year(Year(1,"Year 2",0))
+    physicsYearsM.add_year(Year(2,"Year 3",0))
+    physicsYearsM.add_year(Year(3,"Year 4",0))
+
+    #TEST 4 : Delete a course
+    coursesM.rem_course(1)
+
+    #TEST 5 : Delete year 4 of Physics
+    physicsYearsM.rem_year("Year 4",0)
+
+
+
+
+
+test_model()
