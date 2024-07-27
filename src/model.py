@@ -20,6 +20,25 @@ except Error as e:
 
 
 
+def db_connect(statement):
+    try:
+        with connect(
+            host="localhost",
+            user = username,
+            password = Password,
+            database="university-progress",
+        ) as connection:
+            print(connection)
+            print("Successfully connected to database")
+            try:
+                with connection.cursor() as cursor:
+                    cursor.execute(statement)
+                    connection.commit()
+                    print("Successfully adjusted database")
+            except Error as e:
+                print(e)
+    except Error as e:
+        print(e)
 
 def initialise_db(con):
     create_course_table = """
@@ -31,7 +50,8 @@ def initialise_db(con):
     """
     create_years_table = """
     CREATE TABLE IF NOT EXISTS years(
-    year INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    year INT,
     grade FLOAT,
     course_id INT,
     FOREIGN KEY(course_id) REFERENCES courses(id)
@@ -94,11 +114,13 @@ def initialise_db(con):
     except Error as e:
         print(e)
 
+username = input("Enter Username: ")
+Password = getpass("Enter Password: ")
 try:
     with connect(
         host="localhost",
-        user = input("Enter Username: "),
-        password = getpass("Enter password: "),
+        user = username,
+        password = Password,
         database="university-progress",
     ) as connection:
         print(connection)
@@ -128,10 +150,11 @@ class Course:
 
 
 class Year:
-    def __init__(self,id,title):
+    def __init__(self,id,title,cid):
         self.id = id
         self.title = title
         self.grade = 0
+        self.courseid = cid
 
     def update_grade(self,grade):
         self.grade = grade
@@ -146,11 +169,12 @@ class Year:
         return self.title
 
 class Module:
-    def __init__(self,id,title,credits):
+    def __init__(self,id,title,credits,yid):
         self.id= id
         self.title = title
         self.credits = credits
         self.grade = 0
+        self.yearid = yid
 
     def update_title(self,ntitle):
         self.title = ntitle
@@ -171,10 +195,11 @@ class Module:
         return self.grade
 
 class Coursework:
-    def __init__(self,weight):
+    def __init__(self,weight,mid):
         self.title = "Coursework"
         self.weight = weight
         self.grade = 0
+        self.moduleid = mid
 
     def update_weight(self,nWeight):
         self.weight = nWeight
@@ -192,10 +217,11 @@ class Coursework:
         return self.title
 
 class Exam:
-    def __init__(self,weight):
+    def __init__(self,weight,mid):
         self.title = "Exam"
         self.weight = weight
         self.grade = 0
+        self.moduleid = mid
 
 
     def update_weight(self,nWeight):
@@ -243,9 +269,13 @@ class courseModel:
         self.courses = []
 
     def add_course(self,course):
+        s = f"INSERT INTO courses (title,grade) VALUES ({course.title},{course.grade})"
+        db_connect(s)
         self.courses.append(course)
     
     def rem_course(self,id):
+        s = f"DELETE FROM courses WHERE id = {id}"
+        db_connect(s)
         del self.courses[id]
 
     def get_courses(self):
@@ -259,9 +289,13 @@ class yearModel:
 
     
     def add_year(self,year):
+        s = f"INSERT INTO years (year,grade,course_id) VALUES ({year.title},{year.grade},{year.courseid})"
+        db_connect(s)
         self.years.append(year)
 
-    def rem_year(self,id):
+    def rem_year(self,year):
+        s = f"DELETE FROM years WHERE year = {year}"
+        db_connect(s)
         del self.years[id]
 
     def get_years(self):
@@ -273,9 +307,12 @@ class moduleModel:
         self.modules = []
 
     def add_module(self,module):
+        s = f"INSERT INTO modules (title,credits,grade,year_id) VALUES ({module.title},{module.credits},{module.grade},{module.yearid})"
+        db_connect(s)
         self.modules.append(module)
     
-    def rem_module(self,id):
+    def rem_module(self,title):
+        s = f"DELETE FROM modules WHERE title = {title}"
         del self.modules[id]
     
     def get_modules(self):
@@ -287,9 +324,13 @@ class assessmentModel:
         self.assessments = []
     
     def add_cw(self,cw):
+        s = f"INSERT INTO coursework (title,weight,grade,module_id) VALUES ({cw.title},{cw.weight},{cw.grade},{cw.moduleid})"
+        db_connect(s)
         self.assessments.append(cw)
     
     def add_e(self,e):
+        s = f"INSERT INTO exam (title,weight,grade,module_id) WHERE ({e.title},{e.weight},{e.grade},{e.module_id})"
+        db_connect(s)
         self.assessments.append(e)
 
     def get_assessments(self):

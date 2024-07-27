@@ -107,3 +107,10 @@ Application which can be used to store data about how well the user is doing at 
 - weight
 - grade
 - coursework_id (FK)
+
+## Problems 
+
+- Issue when deleting records
+  - As the id of the individual objects are determined by which parent they belong to whilst the database tables have incrementing id regardless of what parent a record belongs to.
+  - E.g If there are 2 modules in year 1 and 2 more in year 2. The modules will have IDs 1 and 2 for each year whilst in the database they will have IDs 1,2,3,4.
+  - This makes it difficult to delete a record using the id attribute
