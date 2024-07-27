@@ -285,7 +285,8 @@ class courseModel:
         self.courses = []
 
     def add_course(self,course):
-        s = f"INSERT INTO courses (title,grade) VALUES ({course.title},{course.grade})"
+        print(course.title)
+        s = f"INSERT INTO courses (title,grade) VALUES ('{course.title}',{course.grade})"
         db_connect(s)
         self.courses.append(course)
     
@@ -392,15 +393,15 @@ def test_model():
     physicsYearsM= yearModel()
 
     # TEST 2 : Add two courses
-    coursesM.add_course(Course(0,"Physics"))
-    coursesM.add_course(Course(1,"Maths"))
+    coursesM.add_course(Course(1,"Physics"))
+    coursesM.add_course(Course(2,"Maths"))
 
     # TEST 3 : Add 4 years to PhysicsYearsModel
 
-    physicsYearsM.add_year(Year(0,"Year 1",0))
-    physicsYearsM.add_year(Year(1,"Year 2",0))
-    physicsYearsM.add_year(Year(2,"Year 3",0))
-    physicsYearsM.add_year(Year(3,"Year 4",0))
+    physicsYearsM.add_year(Year(1,"Year 1",1))
+    physicsYearsM.add_year(Year(2,"Year 2",1))
+    physicsYearsM.add_year(Year(3,"Year 3",1))
+    physicsYearsM.add_year(Year(4,"Year 4",1))
 
     #TEST 4 : Delete a course
     coursesM.rem_course(1)
@@ -408,8 +409,13 @@ def test_model():
     #TEST 5 : Delete year 4 of Physics
     physicsYearsM.rem_year("Year 4",0)
 
+def reset():
 
+    db_connect("DELETE FROM courses")
+    db_connect("DELETE FROM years")
 
 
 
 test_model()
+
+#reset()
