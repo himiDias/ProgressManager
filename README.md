@@ -108,9 +108,14 @@ Application which can be used to store data about how well the user is doing at 
 - grade
 - coursework_id (FK)
 
-## Problems 
+## Problems
 
-- Issue when deleting records
+- Issue when deleting records (FIXED)
+
   - As the id of the individual objects are determined by which parent they belong to whilst the database tables have incrementing id regardless of what parent a record belongs to.
   - E.g If there are 2 modules in year 1 and 2 more in year 2. The modules will have IDs 1 and 2 for each year whilst in the database they will have IDs 1,2,3,4.
   - This makes it difficult to delete a record using the id attribute
+
+- Limited exam and coursework for each module
+  - Currently each module can only have 1 exam and functions have been implemented to manipulate databases given there is only 1 exam per module
+    - However, it is easy to modify the code for multiple exams but will only implement in the future when it is required for other users as for now it is not needed for me
