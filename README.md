@@ -64,6 +64,8 @@ Application which can be used to store data about how well the user is doing at 
 
 # Database Schema
 
+There will be two databases used within the program, one is runtime in memory and the second is a persistant database held in MySQL. Reason for this is better performace during runtime, the database will be loaded in from MySQL at the start of the application and result in faster access during runtime for read only functions. I also started coding with a runtime database and once implementing the persistant database I could not be asked to change.
+
 <b> Table : Course</b>
 
 - id (PK)
