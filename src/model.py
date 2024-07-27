@@ -241,11 +241,12 @@ class Exam:
     
 
 class Assignment:
-    def __init__(self,id,title,weight):
+    def __init__(self,id,title,weight,cid):
         self.id = id
         self.title = title
         self.weight = weight
         self.grade = 0
+        self.courseworkid = cid
 
     def update_weight(self,nWeight):
         self.weight = nWeight
@@ -355,9 +356,14 @@ class assignmentModel:
         self.assignments = []
 
     def add_assignment(self,assignment):
+        s = f"INSERT INTO assignments (title,weight,grade,coursework_id) WHERE ({assignment.title},{assignment.weight},{assignment.grade},{assignment.courseworkid})"
+        db_connect(s)
         self.assignments.append(assignment)
 
     def rem_assigments(self,id):
+        a = self.assignments[id]
+        s = f"DELETE FROM assignments WHERE title = {a.title} AND coursework_id = {a.courseworkid}"
+        db_connect(s)
         del self.assignments[id]
 
     def get_assignments(self):
