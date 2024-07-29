@@ -20,7 +20,7 @@ except Error as e:
 
 
 
-def db_connect(statement):
+def db_set(statement):
     try:
         with connect(
             host="localhost",
@@ -40,6 +40,26 @@ def db_connect(statement):
     except Error as e:
         print(e)
 
+def db_get(statement):
+    try:
+        with connect(
+            host = "localhost",
+            user= username,
+            password = Password,
+            database="university-progress",
+        ) as connection:
+            print(connection)
+            print("Successfully connected to database")
+            try:
+                with connection.cursor() as cursor:
+                    cursor.execute(statement)
+                    records = cursor.fetchall()
+                    return records
+            except Error as e:
+                print(e)
+    except Error as e:
+        print(e)
+
 def initialise_db(con):
     create_course_table = """
     CREATE TABLE IF NOT EXISTS courses(
@@ -51,7 +71,7 @@ def initialise_db(con):
     create_years_table = """
     CREATE TABLE IF NOT EXISTS years(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    year INT,
+    year VARCHAR(100),
     grade FLOAT,
     course_id INT,
     FOREIGN KEY(course_id) REFERENCES courses(id)
@@ -62,8 +82,8 @@ def initialise_db(con):
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100),
     grade FLOAT,
-    year INT,
-    FOREIGN KEY(year) REFERENCES years(year)
+    year_id INT,
+    FOREIGN KEY(year_id) REFERENCES years(id)
     )
     """
 
@@ -287,12 +307,12 @@ class courseModel:
     def add_course(self,course):
         print(course.title)
         s = f"INSERT INTO courses (title,grade) VALUES ('{course.title}',{course.grade})"
-        db_connect(s)
+        db_set(s)
         self.courses.append(course)
     
-    def rem_course(self,id):
-        s = f"DELETE FROM courses WHERE id = {id}"
-        db_connect(s)
+    def rem_course(self,title,id):
+        s = f"DELETE FROM courses WHERE title = '{title}'"
+        db_set(s)
         del self.courses[id]
 
     def get_courses(self):
@@ -301,18 +321,22 @@ class courseModel:
   
 
 class yearModel:
-    def __init__(self):
-        self.years = []
+    def __init__(self,cid):
+        self.years=[]
+        s = f"SELECT * FROM years WHERE course_id = {cid}"
+        recs = db_get(s)
+        i = 0 
+        for record in recs:
+            self.years.append(Year(i,record[1],record[2]))
 
-    
     def add_year(self,year):
-        s = f"INSERT INTO years (year,grade,course_id) VALUES ({year.title},{year.grade},{year.courseid})"
-        db_connect(s)
+        s = f"INSERT INTO years (year,grade,course_id) VALUES ('{year.title}',{year.grade},{year.courseid})"
+        db_set(s)
         self.years.append(year)
 
-    def rem_year(self,year,cid):
-        s = f"DELETE FROM years WHERE year = {year} AND course_id = {cid}"
-        db_connect(s)
+    def rem_year(self,year,cid,id):
+        s = f"DELETE FROM years WHERE year = '{year}' AND course_id = {cid}"
+        db_set(s)
         del self.years[id]
 
     def get_years(self):
@@ -325,10 +349,10 @@ class moduleModel:
 
     def add_module(self,module):
         s = f"INSERT INTO modules (title,credits,grade,year_id) VALUES ({module.title},{module.credits},{module.grade},{module.yearid})"
-        db_connect(s)
+        db_set(s)
         self.modules.append(module)
     
-    def rem_module(self,title,yid):
+    def rem_module(self,title,yid,id):
         s = f"DELETE FROM modules WHERE title = {title} AND year_id = {yid}"
         del self.modules[id]
     
@@ -342,12 +366,12 @@ class assessmentModel:
     
     def add_cw(self,cw):
         s = f"INSERT INTO coursework (title,weight,grade,module_id) VALUES ({cw.title},{cw.weight},{cw.grade},{cw.moduleid})"
-        db_connect(s)
+        db_set(s)
         self.assessments.append(cw)
     
     def add_e(self,e):
         s = f"INSERT INTO exam (title,weight,grade,module_id) WHERE ({e.title},{e.weight},{e.grade},{e.module_id})"
-        db_connect(s)
+        db_set(s)
         self.assessments.append(e)
 
     def get_assessments(self):
@@ -357,10 +381,10 @@ class assessmentModel:
         a = self.assessments[id]
         if(a) == Coursework:
             s = f"DELETE FROM coursework WHERE module_id = {a.moduleid}" 
-            db_connect(s)
+            db_set(s)
         else:
             s = f"DELETE FROM exam WHERE module_id = {a.moduleid}"
-            db_connect(s)
+            db_set(s)
 
         del self.assessments[id]
     
@@ -373,13 +397,13 @@ class assignmentModel:
 
     def add_assignment(self,assignment):
         s = f"INSERT INTO assignments (title,weight,grade,coursework_id) WHERE ({assignment.title},{assignment.weight},{assignment.grade},{assignment.courseworkid})"
-        db_connect(s)
+        db_set(s)
         self.assignments.append(assignment)
 
     def rem_assigments(self,id):
         a = self.assignments[id]
         s = f"DELETE FROM assignments WHERE title = {a.title} AND coursework_id = {a.courseworkid}"
-        db_connect(s)
+        db_set(s)
         del self.assignments[id]
 
     def get_assignments(self):
@@ -390,32 +414,26 @@ class assignmentModel:
 def test_model():
     # TEST 1: Initialises a main courses model and a years model for 1 course 
     coursesM = courseModel()
-    physicsYearsM= yearModel()
+    physicsYearsM= yearModel(0)
 
     # TEST 2 : Add two courses
-    coursesM.add_course(Course(1,"Physics"))
-    coursesM.add_course(Course(2,"Maths"))
+    coursesM.add_course(Course(0,"Physics"))
+    coursesM.add_course(Course(1,"Maths"))
 
     # TEST 3 : Add 4 years to PhysicsYearsModel
 
-    physicsYearsM.add_year(Year(1,"Year 1",1))
-    physicsYearsM.add_year(Year(2,"Year 2",1))
-    physicsYearsM.add_year(Year(3,"Year 3",1))
-    physicsYearsM.add_year(Year(4,"Year 4",1))
+    physicsYearsM.add_year(Year(0,"Year 1",1))
+    physicsYearsM.add_year(Year(1,"Year 2",1))
+    physicsYearsM.add_year(Year(2,"Year 3",1))
+    physicsYearsM.add_year(Year(3,"Year 4",1))
 
     #TEST 4 : Delete a course
-    coursesM.rem_course(1)
+    coursesM.rem_course("Maths",1)
 
     #TEST 5 : Delete year 4 of Physics
-    physicsYearsM.rem_year("Year 4",0)
-
-def reset():
-
-    db_connect("DELETE FROM courses")
-    db_connect("DELETE FROM years")
+    physicsYearsM.rem_year("Year 4",1,3)
+ 
 
 
-
-test_model()
-
-#reset()
+#test_model()
+ 
