@@ -342,6 +342,7 @@ class courseModel:
 class yearModel:
     def __init__(self,cid):
         self.years=[]
+        self.courseId = cid
         s = f"SELECT * FROM years WHERE course_id = {cid}"
         recs = db_get(s)
         i = 0 
@@ -355,8 +356,8 @@ class yearModel:
         db_set(s)
         self.years.append(year)
 
-    def rem_year(self,year,cid,id):
-        s = f"DELETE FROM years WHERE year = '{year}' AND course_id = {cid}"
+    def rem_year(self,year,id):
+        s = f"DELETE FROM years WHERE year = '{year}' AND course_id = {self.courseId}"
         db_set(s)
         del self.years[id]
 
@@ -367,6 +368,7 @@ class yearModel:
 class moduleModel:
     def __init__(self,yid):
         self.modules = []
+        self.yearId = yid
 
         s = f"SELECT * FROM modules WHERE year_id = {yid}"
         recs = db_get(s)
@@ -381,8 +383,8 @@ class moduleModel:
         db_set(s)
         self.modules.append(module)
     
-    def rem_module(self,title,yid,id):
-        s = f"DELETE FROM modules WHERE title = '{title}' AND year_id = {yid}"
+    def rem_module(self,title,id):
+        s = f"DELETE FROM modules WHERE title = '{title}' AND year_id = {self.yearId}"
         del self.modules[id]
     
     def get_modules(self):
@@ -392,6 +394,7 @@ class moduleModel:
 class assessmentModel:
     def __init__(self,mid):
         self.assessments = []
+        self.moduleId = mid
 
         s = f"SELECT * FROM coursework WHERE module_id = {mid}"
         s1 = f"SELECT * FROM exam WHERE module_id = {mid}"
@@ -433,6 +436,7 @@ class assessmentModel:
 class assignmentModel:
     def __init__(self,cid):
         self.assignments = []
+        self.courseworkId = cid
 
         s = f"SELECT * FROM assignments WHERE coursework_id = {cid}"
         recs = db_get(s)
@@ -457,11 +461,17 @@ class assignmentModel:
         return self.assignments
     
 
+def load_data():
+    yearModels = []
+    moduleModels = []
+    assessmentModels = []
+    assignmentModels = []
 
 def test_model():
-    # TEST 1: Initialises a main courses model and a years model for 1 course 
+    # TEST 1: Initialises a main courses model and a years model for 2 course 
     coursesM = courseModel()
     physicsYearsM= yearModel(1)
+    mathsYearsM = yearModel(2)
 
     # TEST 2 : Add two courses
     coursesM.add_course(Course(0,"Physics"))
@@ -474,30 +484,73 @@ def test_model():
     physicsYearsM.add_year(Year(2,"Year 3",0,1))
     physicsYearsM.add_year(Year(3,"Year 4",0,1))
 
-    #TEST 4 : Delete a course
-    coursesM.rem_course("Maths",1)
+    # TEST 4 : Add 3 years to MathsYearsModel
 
-    #TEST 5 : Delete year 4 of Physics
-    physicsYearsM.rem_year("Year 4",1,3)
+    mathsYearsM.add_year(Year(0,"Year 1",0,2))
+    mathsYearsM.add_year(Year(1,"Year 2",0,2))
+    mathsYearsM.add_year(Year(2,"Year 3",0,2))
 
-    #TEST 6 : Add 2 Modules to first year physics
+    # TEST 5 : Add 2 Modules to first year physics
     pY1M = moduleModel(1)
 
     pY1M.add_module(Module(0,"Introduction to Physics",10,0,1))
     pY1M.add_module(Module(1,"Kinematics in Mechanics",20,0,1))
 
-    #TEST 7 : Add and exam and coursework section to module 2 of physics year 1
+    # TEST 6 : Add 1 Module to second year physics
+
+    pY2M = moduleModel(2)
+
+    pY2M.add_module(Module(0,"Advanced Kinematics",20,0,2))
+
+    # TEST 7 : Add 3 Modules to first year maths
+
+    mY1M = moduleModel(5)
+
+    mY1M.add_module(Module(0,"Advanced Algebra",10,0,5))
+    mY1M.add_module(Module(1,"Linear Algebra",10,0,5))
+    mY1M.add_module(Module(2,"Predicated",20,0,5))
+
+    # TEST 8 : Add an exam and coursework section to all modules 
     py1m2M = assessmentModel(2)
+    py1m1M = assessmentModel(1)
+    py2m1M = assessmentModel(3)
+
+    my1m1M = assessmentModel(4)
+    my1m2M = assessmentModel(5)
+    my1m3M = assessmentModel(6)
 
     py1m2M.add_cw(Coursework(70,0,2))
     py1m2M.add_e(Exam(30,0,2))
 
-    #TEST 8 : Add 3 assignments to the coursework section of module 2 of physics year 1
+    py1m1M.add_cw(Coursework(50,0,1))
+    py1m1M.add_e(Exam(50,0,1))
+
+    py2m1M.add_cw(Coursework(75,0,3))
+    py2m1M.add_e(Exam(25,0,3))
+
+    my1m1M.add_cw(Coursework(0,0,4))
+    my1m1M.add_e(Exam(100,0,4))
+
+    my1m2M.add_cw(Coursework(25,0,5))
+    my1m2M.add_e(Exam(75,0,5))
+
+    my1m3M.add_cw(Coursework(25,0,6))
+    my1m3M.add_e(Exam(75,0,6))
+
+     
+
+    #TEST 6 : Add 3 assignments to the coursework section of module 2 of physics year 1
+    # and 2 assignments to the coursework sectino of module 3 of maths year 1
     py1m2cM = assignmentModel(1)
+    my1m3cM = assignmentModel(6)
 
     py1m2cM.add_assignment(Assignment(0,"CW1",10,0,1))
     py1m2cM.add_assignment(Assignment(1,"CW2",40,0,1))
-    py1m2cM.add_assignment(Assignment(2,"CW2",50,0,1))
+    py1m2cM.add_assignment(Assignment(2,"CW3",50,0,1))
+
+    my1m3cM.add_assignment(Assignment(0,"CW1",50,0,6))
+    my1m3cM.add_assignment(Assignment(1,"CW2",50,0,6))
+
  
 
 
