@@ -81,6 +81,7 @@ def initialise_db(con):
     CREATE TABLE IF NOT EXISTS modules(
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100),
+    credits INT,
     grade FLOAT,
     year_id INT,
     FOREIGN KEY(year_id) REFERENCES years(id)
@@ -261,7 +262,7 @@ class Exam:
     def __init__(self,weight,grd,mid):
         self.title = "Exam"
         self.weight = weight
-        self.grade = grd,
+        self.grade = grd
         self.moduleid = mid
 
 
