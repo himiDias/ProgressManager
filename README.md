@@ -125,6 +125,6 @@ There will be two databases used within the program, one is runtime in memory an
 
 ## To Do
 
-- Need to retrieve data from database at the start of application but need to recreate all models without knowing how many courses,years,modules e.t.c were created. Could be tricky
+- Need to retrieve data from database at the start of application but need to recreate all models without knowing how many courses,years,modules e.t.c were created. Could be tricky (Done)
 
 - Need to test if works when multiple records of different parent records are added, may not work due to issue with different ids in the runtime models and the mysql database (DONE)
