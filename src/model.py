@@ -3,6 +3,7 @@ from getpass import getpass
 import mysql.connector
 from mysql.connector import connect,Error
 
+#Initial database connection to create an empty database for user
 
 try:
     with connect(
@@ -20,6 +21,7 @@ except Error as e:
 
 
 
+# function to change values in database, takes a sql query
 def db_set(statement):
     try:
         with connect(
@@ -40,6 +42,7 @@ def db_set(statement):
     except Error as e:
         print(e)
 
+# function to get values in database, takes sql query
 def db_get(statement):
     try:
         with connect(
@@ -60,6 +63,7 @@ def db_get(statement):
     except Error as e:
         print(e)
 
+# Function to initialise the database upon creation, creates necessary tables
 def initialise_db(con):
     create_course_table = """
     CREATE TABLE IF NOT EXISTS courses(
@@ -137,6 +141,7 @@ def initialise_db(con):
 
 username = input("Enter Username: ")
 Password = getpass("Enter Password: ")
+
 try:
     with connect(
         host="localhost",
@@ -150,6 +155,7 @@ try:
 except Error as e:
     print(e)
 
+# Classes for each part
 class Course:
     def __init__(self,id,title):
         self.id = id
@@ -318,7 +324,7 @@ class Assignment:
         return f"Assignment(id={self.id}, title={self.title}, weight={self.weight}, grade={self.grade}, courseworkid={self.cid})"
     
 
-
+# Models for each part, each model stores an array of its part for a specific parent of that part. E.g if there are two courses, there will be two yearModels for the years from course 1 and course 2
 class courseModel:
     def __init__(self):
         self.courses = []
@@ -460,13 +466,26 @@ class assignmentModel:
     def get_assignments(self):
         return self.assignments
     
+# Loads saved data during startup and updates    
 
 def load_data():
+    coursesM = courseModel()
     yearModels = []
+    courseIds = []
     moduleModels = []
+    yearIds = []
     assessmentModels = []
+    moduleIds = []
     assignmentModels = []
+    cwIds = []
 
+    recYears = db_get("SELECT * FROM YEARS")
+    yMCount = 0
+    for record in recYears:
+        if record[-1]
+
+
+# TESTING FOR MODEL
 def test_model():
     # TEST 1: Initialises a main courses model and a years model for 2 course 
     coursesM = courseModel()
