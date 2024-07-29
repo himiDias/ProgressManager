@@ -157,10 +157,10 @@ except Error as e:
 
 # Classes for each part
 class Course:
-    def __init__(self,id,title):
+    def __init__(self,id,title,grd):
         self.id = id
         self.title = title
-        self.grade = 0
+        self.grade = grd
 
 
     def update_grade(self,grade):
@@ -328,6 +328,13 @@ class Assignment:
 class courseModel:
     def __init__(self):
         self.courses = []
+        s = f"SELECT * FROM courses"
+        recs = db_get(s)
+
+        i=0
+        for record in recs:
+            self.courses.append(Course(i,record[1],record[2]))
+            i += 1
 
     def add_course(self,course):
         print(course.title)
@@ -408,9 +415,9 @@ class assessmentModel:
         recs_e = db_get(s1)
 
         for record in recs_c:
-            self.assessments.append(Coursework(record[1],record[2],record[3],record[4]))
+            self.assessments.append(Coursework(record[2],record[3],record[4]))
         for record in recs_e:
-            self.assessments.append(Exam(record[1],record[2],record[3],record[4]))
+            self.assessments.append(Exam(record[2],record[3],record[4]))
     
     def add_cw(self,cw):
         s = f"INSERT INTO coursework (title,weight,grade,module_id) VALUES ('{cw.title}',{cw.weight},{cw.grade},{cw.moduleid})"
@@ -449,7 +456,7 @@ class assignmentModel:
         i = 0 
         for record in recs:
             
-            self.modules.append(Assignment(i,record[1],record[2],record[3],record[4]))
+            self.assignments.append(Assignment(i,record[1],record[2],record[3],record[4]))
             i += 1
 
     def add_assignment(self,assignment):
@@ -479,10 +486,32 @@ def load_data():
     assignmentModels = []
     cwIds = []
 
-    recYears = db_get("SELECT * FROM YEARS")
-    yMCount = 0
+    recYears = db_get("SELECT * FROM years")
+    recModules = db_get("SELECT * FROM modules")
+    recExam = db_get("SELECT * FROM exam")
+    recAssignments = db_get("SELECT * FROM assignments")
+
     for record in recYears:
-        if record[-1]
+        if record[-1] not in courseIds:
+            courseIds.append(record[-1])
+            yearModels.append(yearModel(record[-1]))
+    for record in recModules:
+        if record[-1] not in yearIds:
+            yearIds.append(record[-1])
+            moduleModels.append(moduleModel(record[-1]))
+    for record in recExam:
+        if record[-1] not in moduleIds:
+            moduleIds.append(record[-1])
+            assessmentModels.append(assessmentModel(record[-1]))
+    for record in recAssignments:
+        if record[-1] not in cwIds:
+            cwIds.append(record[-1])
+            assignmentModels.append(assignmentModel(record[-1]))
+
+    for item in moduleModels:
+        print(item.modules)
+    
+
 
 
 # TESTING FOR MODEL
@@ -574,8 +603,4 @@ def test_model():
 
 
 #test_model()
-#coursesM = courseModel()
-#physicsYearsM = yearModel(1)
-
-#print(coursesM.courses)
-#print(physicsYearsM.years)
+load_data()
