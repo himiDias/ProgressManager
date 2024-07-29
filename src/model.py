@@ -554,7 +554,7 @@ def test_model():
  
 
 
-test_model()
+#test_model()
 #coursesM = courseModel()
 #physicsYearsM = yearModel(1)
 
