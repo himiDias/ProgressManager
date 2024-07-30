@@ -349,6 +349,12 @@ class courseModel:
 
     def get_courses(self):
         return self.courses
+    
+    def edit_course(self,course,d_id):
+        s=f"UPDATE courses SET title = '{course.title}', grade = {course.grade} WHERE id = {d_id}"
+        db_set(s)
+        self.courses[course.id] = course
+
 
   
 
@@ -377,6 +383,11 @@ class yearModel:
     def get_years(self):
         return self.years
     
+    def edit_year(self,year,d_id):
+        s=f"UPDATE years SET title = '{year.title}', grade = {year.grade}, course_id = {year.courseid} WHERE id = {d_id}"
+        db_set(s)
+        self.years[year.id] = year
+    
 
 class moduleModel:
     def __init__(self,yid):
@@ -403,6 +414,10 @@ class moduleModel:
     def get_modules(self):
         return self.modules
     
+    def edit_module(self,module,d_id):
+        s=f"UPDATE modules SET title = '{module.title}', credits = {module.credits}, grade = {module.grade}, year_id = {module.yearid} WHERE id = {d_id}"
+        db_set(s)
+        self.modules[module.id] = module
 
 class assessmentModel:
     def __init__(self,mid):
@@ -443,8 +458,13 @@ class assessmentModel:
 
         del self.assessments[id]
     
-    def get_length(self):
-        return len(self.assessments)
+    def edit_cw(self,coursework,d_id):
+        s=f"UPDATE coursework SET weight = '{coursework.weight}', grade = {coursework.grade}, module_id = {coursework.moduleid} WHERE id = {d_id}"
+        db_set(s)
+        
+    def edit_e(self,exam,d_id):
+        s=f"UPDATE exam SET weight = '{exam.weight}', grade = {exam.grade}, module_id = {exam.moduleid}, WHERE id = {d_id}"
+        db_set(s)
     
 class assignmentModel:
     def __init__(self,cid):
@@ -472,6 +492,11 @@ class assignmentModel:
 
     def get_assignments(self):
         return self.assignments
+    
+    def edit_assignment(self,assignment,d_id):
+        s=f"UPDATE assignments SET title = '{assignment.title}', weight = {assignment.weight}, grade = {module.grade}, coursework_id = {assignment.courseworkid} WHERE id = {d_id}"
+        db_set(s)
+        self.courses[assignment.id] = assignment
     
 # Loads saved data during startup and updates    
 
