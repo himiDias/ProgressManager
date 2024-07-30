@@ -78,7 +78,7 @@ def initialise_db(con):
     year VARCHAR(100),
     grade FLOAT,
     course_id INT,
-    FOREIGN KEY(course_id) REFERENCES courses(id)
+    FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE
     )
     """
     create_module_table = """
@@ -88,7 +88,7 @@ def initialise_db(con):
     credits INT,
     grade FLOAT,
     year_id INT,
-    FOREIGN KEY(year_id) REFERENCES years(id)
+    FOREIGN KEY(year_id) REFERENCES years(id) ON DELETE CASCADE
     )
     """
 
@@ -99,7 +99,7 @@ def initialise_db(con):
     weight INT,
     grade FLOAT,
     module_id INT,
-    FOREIGN KEY(module_id) REFERENCES modules(id) 
+    FOREIGN KEY(module_id) REFERENCES modules(id) ON DELETE CASCADE
     )
     """
 
@@ -110,7 +110,7 @@ def initialise_db(con):
     weight INT,
     grade FLOAT,
     module_id INT,
-    FOREIGN KEY(module_id) REFERENCES modules(id)
+    FOREIGN KEY(module_id) REFERENCES modules(id) ON DELETE CASCADE
     )"""
 
     create_assignments_table = """
@@ -120,7 +120,7 @@ def initialise_db(con):
     weight INT,
     grade FLOAT,
     coursework_id INT,
-    FOREIGN KEY(coursework_id) REFERENCES coursework(id)
+    FOREIGN KEY(coursework_id) REFERENCES coursework(id) ON DELETE CASCADE
     )
     """
 
@@ -384,7 +384,7 @@ class yearModel:
         return self.years
     
     def edit_year(self,year,d_id):
-        s=f"UPDATE years SET title = '{year.title}', grade = {year.grade}, course_id = {year.courseid} WHERE id = {d_id}"
+        s=f"UPDATE years SET year = '{year.title}', grade = {year.grade}, course_id = {year.courseid} WHERE id = {d_id}"
         db_set(s)
         self.years[year.id] = year
     
@@ -463,7 +463,7 @@ class assessmentModel:
         db_set(s)
         
     def edit_e(self,exam,d_id):
-        s=f"UPDATE exam SET weight = '{exam.weight}', grade = {exam.grade}, module_id = {exam.moduleid}, WHERE id = {d_id}"
+        s=f"UPDATE exam SET weight = '{exam.weight}', grade = {exam.grade}, module_id = {exam.moduleid} WHERE id = {d_id}"
         db_set(s)
     
 class assignmentModel:
@@ -494,21 +494,20 @@ class assignmentModel:
         return self.assignments
     
     def edit_assignment(self,assignment,d_id):
-        s=f"UPDATE assignments SET title = '{assignment.title}', weight = {assignment.weight}, grade = {module.grade}, coursework_id = {assignment.courseworkid} WHERE id = {d_id}"
+        s=f"UPDATE assignments SET title = '{assignment.title}', weight = {assignment.weight}, grade = {assignment.grade}, coursework_id = {assignment.courseworkid} WHERE id = {d_id}"
         db_set(s)
-        self.courses[assignment.id] = assignment
+        self.assignments[assignment.id] = assignment
     
 # Loads saved data during startup and updates    
 
-def load_data():
-    coursesM = courseModel()
-    yearModels = []
+def load_data(yearModels,moduleModels,assessmentModels,assignmentModels):
+    #yearModels = []
     courseIds = []
-    moduleModels = []
+    #moduleModels = []
     yearIds = []
-    assessmentModels = []
+    #assessmentModels = []
     moduleIds = []
-    assignmentModels = []
+    #assignmentModels = []
     cwIds = []
 
     recYears = db_get("SELECT * FROM years")
@@ -624,8 +623,40 @@ def test_model():
     my1m3cM.add_assignment(Assignment(0,"CW1",50,0,6))
     my1m3cM.add_assignment(Assignment(1,"CW2",50,0,6))
 
+def test_model2():
+
+    cM = courseModel()
+    yM = []
+    mM = []
+    aseM = []
+    asiM = []
+
+    load_data(yM,mM,aseM,asiM)
+    
+    print("Ym: ",yM)
+    # TEST 1 : Edit a course 
+
+    cM.edit_course(Course(0,"Physics and Engineering",53),1)
+
+    # TEST 2 : Edit a year, change the grade of Maths year 1
+
+    yM[1].edit_year(Year(0,"Year 1",78,2),5)
+
+    # TEST 3 : Edit a module, change the credits of year 2 physics module Advanced Kinematics to 10
+
+    mM[1].edit_module(Module(0,"Advanced Kinematics",10,0,2),3)
+
+    # TEST 4 : Edit weight values of year 3 maths module Predicates to 50 50 split
+
+    aseM[5].edit_cw(Coursework(50,0,6),6)
+    aseM[5].edit_e(Exam(50,0,6),6)
+
+    # TEST 5 : Edit assignment CW1 of physics year 1 module 2 coursework to change grade
+
+    asiM[0].edit_assignment(Assignment(0,"CW1",10,90,1),1)
  
 
 
 #test_model()
-load_data()
+test_model2()
+#load_data()
