@@ -688,12 +688,12 @@ def test_model3():
 
     # TEST 5 : Delete maths
 
-    cM.rem_course(1)
+    ##cM.rem_course(1)
 
 
 
 
 #test_model()
 #test_model2()
-test_model3()
+#test_model3()
 #load_data()
