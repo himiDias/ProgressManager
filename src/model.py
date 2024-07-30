@@ -76,6 +76,7 @@ def initialise_db(con):
     CREATE TABLE IF NOT EXISTS years(
     id INT AUTO_INCREMENT PRIMARY KEY,
     year VARCHAR(100),
+    weight INT,
     grade FLOAT,
     course_id INT,
     FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE
@@ -180,18 +181,24 @@ class Course:
 
 
 class Year:
-    def __init__(self,id,title,grd,cid):
+    def __init__(self,id,title,weight,grd,cid):
         self.id = id
         self.title = title
+        self.weight = weight
         self.grade = grd
         self.courseid = cid
 
+    ### NOT.E UPDATE METHODS ARE PROBABLY REDUDANT GIVEN THE EDIT FUNCTIONS IN THE INDIVIDUAL MODELS
+    ### REMOVE LATER FOR ALL
     def update_grade(self,grade):
         self.grade = grade
     
     def update_title(self,ntitle):
         self.title = ntitle
 
+    def get_weight(self):
+        return self.weight
+    
     def get_grade(self):
         return self.grade
     
@@ -325,6 +332,9 @@ class Assignment:
     
 
 # Models for each part, each model stores an array of its part for a specific parent of that part. E.g if there are two courses, there will be two yearModels for the years from course 1 and course 2
+## NOTE appending to self.courses adn removing from self.courses is bit redundant as the load_data does this already
+### COULD remove these and just re-load data each time there is a change at runtime, but i guess that would decrease
+### performance as most of the data is would have not changed, DECIDE LATER PROBABLY DON'T
 class courseModel:
     def __init__(self):
         self.courses = []
@@ -367,12 +377,13 @@ class yearModel:
         recs = db_get(s)
         i = 0 
         for record in recs:
-            
-            self.years.append(Year(i,record[1],record[2],record[3]))
+            ### NOT.E some params redundant also given the self.courseid attribute, instead of passing in record[4] which is same as cid
+            ## FIX LATER FOR ALL
+            self.years.append(Year(i,record[1],record[2],record[3],record[4]))
             i += 1
 
     def add_year(self,year):
-        s = f"INSERT INTO years (year,grade,course_id) VALUES ('{year.title}',{year.grade},{year.courseid})"
+        s = f"INSERT INTO years (year,weight,grade,course_id) VALUES ('{year.title}',{year.weight},{year.grade},{year.courseid})"
         db_set(s)
         self.years.append(year)
 
@@ -386,7 +397,7 @@ class yearModel:
         return self.years
     
     def edit_year(self,year,d_id):
-        s=f"UPDATE years SET year = '{year.title}', grade = {year.grade}, course_id = {year.courseid} WHERE id = {d_id}"
+        s=f"UPDATE years SET year = '{year.title}',weight = {year.weight}, grade = {year.grade}, course_id = {year.courseid} WHERE id = {d_id}"
         db_set(s)
         self.years[year.id] = year
     
@@ -555,16 +566,16 @@ def test_model():
 
     # TEST 3 : Add 4 years to PhysicsYearsModel
 
-    physicsYearsM.add_year(Year(0,"Year 1",0,1))
-    physicsYearsM.add_year(Year(1,"Year 2",0,1))
-    physicsYearsM.add_year(Year(2,"Year 3",0,1))
-    physicsYearsM.add_year(Year(3,"Year 4",0,1))
+    physicsYearsM.add_year(Year(0,"Year 1",0,0,1))
+    physicsYearsM.add_year(Year(1,"Year 2",10,0,1))
+    physicsYearsM.add_year(Year(2,"Year 3",30,0,1))
+    physicsYearsM.add_year(Year(3,"Year 4",60,0,1))
 
     # TEST 4 : Add 3 years to MathsYearsModel
 
-    mathsYearsM.add_year(Year(0,"Year 1",0,2))
-    mathsYearsM.add_year(Year(1,"Year 2",0,2))
-    mathsYearsM.add_year(Year(2,"Year 3",0,2))
+    mathsYearsM.add_year(Year(0,"Year 1",0,0,2))
+    mathsYearsM.add_year(Year(1,"Year 2",40,0,2))
+    mathsYearsM.add_year(Year(2,"Year 3",60,0,2))
 
     # TEST 5 : Add 2 Modules to first year physics
     pY1M = moduleModel(1)
@@ -644,7 +655,7 @@ def test_model2():
 
     # TEST 2 : Edit a year, change the grade of Maths year 1
 
-    yM[1].edit_year(Year(0,"Year 1",78,2),5)
+    yM[1].edit_year(Year(0,"Year 1",0,78,2),5)
 
     # TEST 3 : Edit a module, change the credits of year 2 physics module Advanced Kinematics to 10
 
@@ -671,24 +682,24 @@ def test_model3():
 
     # TEST 1 : Delete an assignment (CW2) from maths year 1 coursework
 
-    ##asiM[1].rem_assignment(1)
+    asiM[1].rem_assignment(1)
 
     # TEST 2 : Delete coursework from physics year 1 module 2, and exam from maths year 1 module 3
 
-    ##aseM[0].rem_assessment(0)
-    ##aseM[5].rem_assessment(1)
+    aseM[0].rem_assessment(0)
+    aseM[5].rem_assessment(1)
 
     # TEST 3 : Delete module from maths year 1 module 1
 
-    ##mM[2].rem_module(0) 
+    mM[2].rem_module(0) 
 
     # TEST 4 : Delete physics year 4
 
-    ##yM[0].rem_year(3)
+    yM[0].rem_year(3)
 
     # TEST 5 : Delete maths
 
-    ##cM.rem_course(1)
+    cM.rem_course(1)
 
 
 
