@@ -342,8 +342,9 @@ class courseModel:
         db_set(s)
         self.courses.append(course)
     
-    def rem_course(self,title,id):
-        s = f"DELETE FROM courses WHERE title = '{title}'"
+    def rem_course(self,id):
+        c= self.courses[id]
+        s = f"DELETE FROM courses WHERE title = '{c.title}'"
         db_set(s)
         del self.courses[id]
 
@@ -375,8 +376,9 @@ class yearModel:
         db_set(s)
         self.years.append(year)
 
-    def rem_year(self,year,id):
-        s = f"DELETE FROM years WHERE year = '{year}' AND course_id = {self.courseId}"
+    def rem_year(self,id):
+        y = self.years[id]
+        s = f"DELETE FROM years WHERE year = '{y.title}' AND course_id = {self.courseId}"
         db_set(s)
         del self.years[id]
 
@@ -407,8 +409,10 @@ class moduleModel:
         db_set(s)
         self.modules.append(module)
     
-    def rem_module(self,title,id):
-        s = f"DELETE FROM modules WHERE title = '{title}' AND year_id = {self.yearId}"
+    def rem_module(self,id):
+        m = self.modules[id]
+        s = f"DELETE FROM modules WHERE title = '{m.title}' AND year_id = {self.yearId}"
+        db_set(s)
         del self.modules[id]
     
     def get_modules(self):
@@ -449,7 +453,7 @@ class assessmentModel:
     
     def rem_assessment(self,id):
         a = self.assessments[id]
-        if(a) == Coursework:
+        if isinstance(a,Coursework):
             s = f"DELETE FROM coursework WHERE module_id = {a.moduleid}" 
             db_set(s)
         else:
@@ -484,7 +488,7 @@ class assignmentModel:
         db_set(s)
         self.assignments.append(assignment)
 
-    def rem_assigments(self,id):
+    def rem_assignment(self,id):
         a = self.assignments[id]
         s = f"DELETE FROM assignments WHERE title = '{a.title}' AND coursework_id = {a.courseworkid}"
         db_set(s)
@@ -546,8 +550,8 @@ def test_model():
     mathsYearsM = yearModel(2)
 
     # TEST 2 : Add two courses
-    coursesM.add_course(Course(0,"Physics"))
-    coursesM.add_course(Course(1,"Maths"))
+    coursesM.add_course(Course(0,"Physics",0))
+    coursesM.add_course(Course(1,"Maths",0))
 
     # TEST 3 : Add 4 years to PhysicsYearsModel
 
@@ -656,7 +660,40 @@ def test_model2():
     asiM[0].edit_assignment(Assignment(0,"CW1",10,90,1),1)
  
 
+def test_model3():
+    cM = courseModel()
+    yM = []
+    mM = []
+    aseM = []
+    asiM = []
+
+    load_data(yM,mM,aseM,asiM)
+
+    # TEST 1 : Delete an assignment (CW2) from maths year 1 coursework
+
+    ##asiM[1].rem_assignment(1)
+
+    # TEST 2 : Delete coursework from physics year 1 module 2, and exam from maths year 1 module 3
+
+    ##aseM[0].rem_assessment(0)
+    ##aseM[5].rem_assessment(1)
+
+    # TEST 3 : Delete module from maths year 1 module 1
+
+    ##mM[2].rem_module(0) 
+
+    # TEST 4 : Delete physics year 4
+
+    ##yM[0].rem_year(3)
+
+    # TEST 5 : Delete maths
+
+    cM.rem_course(1)
+
+
+
 
 #test_model()
-test_model2()
+#test_model2()
+test_model3()
 #load_data()
