@@ -74,7 +74,9 @@ There will be two databases used within the program, one is runtime in memory an
 
 <b> Table : Year</b>
 
-- year (PK)
+- id (PK)
+- year(title)
+- weight
 - grade
 - course_id (FK)
 
