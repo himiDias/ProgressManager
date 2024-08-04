@@ -7,6 +7,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("University Progress Tracker")
+        self.setWindowIcon(QIcon('./assets/mainP.jpg'))
         self.setGeometry(100,100,1000,800)
         self.stack = QStackedWidget()
         self.setCentralWidget(self.stack)
