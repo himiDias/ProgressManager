@@ -32,8 +32,14 @@ class LoginScreen(QWidget):
         self.setLayout(layout)
 
         titleL = QLabel('Enter DB credentials')
-        userL = QLabel('[Username Image]')
-        passL = QLabel('[Password Image]')
+        userP = QPixmap('./assets/userP.jpg')
+        passP = QPixmap('./assets/passP.jpg')
+        userP = userP.scaled(50,50)
+        passP = passP.scaled(50,50)
+        userL = QLabel()
+        passL = QLabel()
+        userL.setPixmap(userP)
+        passL.setPixmap(passP)
         loginB = QPushButton('Login')
         loginB.clicked.connect(self.checkCred)
 
