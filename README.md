@@ -114,6 +114,8 @@ There will be two databases used within the program, one is runtime in memory an
 
 ## Problems
 
+### Model
+
 - Issue when deleting records (FIXED)
 
   - As the id of the individual objects are determined by which parent they belong to whilst the database tables have incrementing id regardless of what parent a record belongs to.
@@ -125,10 +127,19 @@ There will be two databases used within the program, one is runtime in memory an
   - Currently each module can only have 1 exam and functions have been implemented to manipulate databases given there is only 1 exam per module
     - However, it is easy to modify the code for multiple exams but will only implement in the future when it is required for other users as for now it is not needed for me
 
+### View
+
+- Need to change code to set max columns when displaying the courses widgets
+
+  - Currently max columns is hard coded as 4
+  - Need to change this to be dynamic when the window width changes
+
+- Problem with qss, not important right now but will be for final touches
+
 ## To Do
 
 - Need to retrieve data from database at the start of application but need to recreate all models without knowing how many courses,years,modules e.t.c were created. Could be tricky (Done)
 
 - Need to test if works when multiple records of different parent records are added, may not work due to issue with different ids in the runtime models and the mysql database (DONE)
 
-- Realised some code to do with manipulating the runtime database is redundant having the `load data` function can update the runtime at any point 
+- Realised some code to do with manipulating the runtime database is redundant having the `load data` function can update the runtime at any point

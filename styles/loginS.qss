@@ -1,0 +1,14 @@
+QWidget {
+    background-color: #555;
+    margin:0px;
+    padding: 0px;
+    
+}
+
+QLabel {
+    font-size : 50px;
+    qproperty-alignment : 'AlignCenter';
+    margin-bottom:0px;
+}
+
+ 

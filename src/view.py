@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from pathlib import Path
 import sys
 
 class MainWindow(QMainWindow):
@@ -13,10 +14,12 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.stack)
 
         self.login_screen = LoginScreen(self)
+        self.courses_screen = CoursesScreen(self)
 
         self.stack.addWidget(self.login_screen)
+        self.stack.addWidget(self.courses_screen)
 
-        self.stack.setCurrentWidget(self.login_screen)
+        self.stack.setCurrentWidget(self.courses_screen)
 
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
@@ -31,8 +34,9 @@ class LoginScreen(QWidget):
         self.main_window = main_window
         layout = QVBoxLayout()
         self.setLayout(layout)
-
+ 
         titleL = QLabel('Enter DB credentials')
+        titleL.setObjectName("titleL")
         userP = QPixmap('./assets/userP.jpg')
         passP = QPixmap('./assets/passP.jpg')
         userP = userP.scaled(50,50)
@@ -77,6 +81,35 @@ class LoginScreen(QWidget):
         print(un,pw)
         pass
 
+class CoursesScreen(QWidget):
+    def __init__(self,main_window):
+        super().__init__()
+        self.main_window = main_window
+        self.layout = QGridLayout()
+        self.setLayout(self.layout)
+
+        titleL = QLabel('Courses')
+        self.layout.addWidget(titleL,0,0,alignment=Qt.AlignmentFlag.AlignCenter)
+
+    def displayCourses(self,titles,grades):
+        count = 0
+        row = 1
+         
+        for course in range(len(titles)):
+            tempTitle = QLabel(titles[course])
+            tempGrade = QLabel(grades[course])
+            tempL = QVBoxLayout()
+            tempC = QWidget()
+            tempC.setLayout(tempL)
+            tempL.addWidget(tempTitle)
+            tempL.addWidget(tempGrade)
+            if (count == 4):
+                count = 0
+                row += 1    
+            self.layout.addWidget(tempC,row,count)
+            
+
+        
 
 
 if __name__ == '__main__':
