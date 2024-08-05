@@ -15,9 +15,17 @@ class MainWindow(QMainWindow):
 
         self.login_screen = LoginScreen(self)
         self.courses_screen = CoursesScreen(self)
+        self.years_screen = YearsScreen(self)
+        self.modules_screen = ModulesScreen(self)
+        self.assessments_screen = AssessmentScreen(self)
+        self.assignments_screen = AssignmentsScreen(self)
 
         self.stack.addWidget(self.login_screen)
         self.stack.addWidget(self.courses_screen)
+        self.stack.addWidget(self.years_screen)
+        self.stack.addWidget(self.modules_screen)
+        self.stack.addWidget(self.assessments_screen)
+        self.stack.addWidget(self.assignments_screen)
 
         self.stack.setCurrentWidget(self.courses_screen)
 
@@ -108,7 +116,77 @@ class CoursesScreen(QWidget):
                 row += 1    
             self.layout.addWidget(tempC,row,count)
             
+class YearsScreen(QWidget):
+    def __init__(self,main_window):
+        super().__init__()
+        self.main_window = main_window
+        self.layout = QGridLayout()
+        self.setLayout(self.layout)
 
+        titleL = QLabel('Years')
+        self.layout.addWidget(titleL,0,0,alignment=Qt.AlignmentFlag.AlignCenter)
+    
+    def displayYears(self,titles,weights,grades):
+        # Code to display all years for the course
+        pass
+
+    def displayGraph():
+        # Code to display the graph of progress for the course
+        pass
+
+class ModulesScreen(QWidget):
+    def __init__(self,main_window):
+        super().__init__()
+        self.main_window = main_window
+        self.layout = QGridLayout()
+        self.setLayout(self.layout)
+
+        titleL = QLabel('Modules')
+        self.layout.addWidget(titleL,0,0,alignment=Qt.AlignmentFlag.AlignCenter)
+    
+    def displayModules(self,titles,credits,grades):
+        # Code to display all modules for the year
+        pass
+
+    def displayGraph():
+        # Code to display the graph of progress for the year
+        pass
+
+class AssessmentScreen(QWidget):
+    def __init__(self,main_window):
+        super().__init__()
+        self.main_window = main_window
+        self.layout = QGridLayout()
+        self.setLayout(self.layout)
+
+        titleL = QLabel('Assessments')
+        self.layout.addWidget(titleL,0,0,alignment=Qt.AlignmentFlag.AlignCenter)
+    
+    def displayAssessments(self,titles,weights,grades):
+        # Code to display all assessments for the module
+        pass
+
+    def displayGraph():
+        # Code to display the graph of progress for the module
+        pass
+
+class AssignmentsScreen(QWidget):
+    def __init__(self,main_window):
+        super().__init__()
+        self.main_window = main_window
+        self.layout = QGridLayout()
+        self.setLayout(self.layout)
+
+        titleL = QLabel('Assignments')
+        self.layout.addWidget(titleL,0,0,alignment=Qt.AlignmentFlag.AlignCenter)
+    
+    def displayYears(self,titles,weights,grades):
+        # Code to display all assignments for the coursework
+        pass
+
+    def displayGraph():
+        # Code to display the graph of progress for the coursework
+        pass
         
 
 
