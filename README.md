@@ -41,7 +41,7 @@ Application which can be used to store data about how well the user is doing at 
 - Clicking will add a widget to the screen with an incrementing name
   - Intially the widget will only have its name as there is no content
 - There is an empty graph on the side which updates as years are added
-- The graph is a line graph, which percentage on the y-axis and year on the x-axis
+- The graph is a line graph, which shows percentage on the y-axis and year on the x-axis
 - The plot for each year is the weighted grade from that year for the course
 - The line should have alternating colours between the years (black,white,black)
 - There are 4 horizontal lines that cross the y-axis which represent pass, lower second, higher second and first grade lines.

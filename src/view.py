@@ -127,8 +127,23 @@ class YearsScreen(QWidget):
         self.layout.addWidget(titleL,0,0,alignment=Qt.AlignmentFlag.AlignCenter)
     
     def displayYears(self,titles,weights,grades):
+        count = 0
+        row = 1
         # Code to display all years for the course
-        pass
+        for year in range(len(titles)):
+            tempTitle = QLabel(titles[year])
+            tempWeight = QLabel(weights[year])
+            tempGrade = QLabel(grades[year])
+            tempL = QVBoxLayout()
+            tempC = QWidget()
+            tempC.setLayout(tempL)
+            tempL.addWidget(tempTitle)
+            tempL.addWidget(tempWeight)
+            tempL.addWidget(tempGrade)
+            if (count == 4):
+                count = 0
+                row += 1    
+            self.layout.addWidget(tempC,row,count)
 
     def displayGraph():
         # Code to display the graph of progress for the course
@@ -146,6 +161,22 @@ class ModulesScreen(QWidget):
     
     def displayModules(self,titles,credits,grades):
         # Code to display all modules for the year
+        count = 0
+        row = 1
+        for module in range(len(titles)):
+            tempTitle = QLabel(titles[module])
+            tempCredits = QLabel(credits[module])
+            tempGrade = QLabel(grades[module])
+            tempL = QVBoxLayout()
+            tempC = QWidget()
+            tempC.setLayout(tempL)
+            tempL.addWidget(tempTitle)
+            tempL.addWidget(tempCredits)
+            tempL.addWidget(tempGrade)
+            if (count == 4):
+                count = 0
+                row += 1    
+            self.layout.addWidget(tempC,row,count)
         pass
 
     def displayGraph():
@@ -164,6 +195,22 @@ class AssessmentScreen(QWidget):
     
     def displayAssessments(self,titles,weights,grades):
         # Code to display all assessments for the module
+        count = 0
+        row = 1
+        for assess in range(len(titles)):
+            tempTitle = QLabel(titles[assess])
+            tempWeight = QLabel(weights[assess])
+            tempGrade = QLabel(grades[assess])
+            tempL = QVBoxLayout()
+            tempC = QWidget()
+            tempC.setLayout(tempL)
+            tempL.addWidget(tempTitle)
+            tempL.addWidget(tempWeight)
+            tempL.addWidget(tempGrade)
+            if (count == 4):
+                count = 0
+                row += 1    
+            self.layout.addWidget(tempC,row,count)
         pass
 
     def displayGraph():
@@ -180,8 +227,24 @@ class AssignmentsScreen(QWidget):
         titleL = QLabel('Assignments')
         self.layout.addWidget(titleL,0,0,alignment=Qt.AlignmentFlag.AlignCenter)
     
-    def displayYears(self,titles,weights,grades):
+    def displayAssignments(self,titles,weights,grades):
         # Code to display all assignments for the coursework
+        count = 0
+        row = 1
+        for year in range(len(titles)):
+            tempTitle = QLabel(titles[year])
+            tempWeight = QLabel(weights[year])
+            tempGrade = QLabel(grades[year])
+            tempL = QVBoxLayout()
+            tempC = QWidget()
+            tempC.setLayout(tempL)
+            tempL.addWidget(tempTitle)
+            tempL.addWidget(tempWeight)
+            tempL.addWidget(tempGrade)
+            if (count == 4):
+                count = 0
+                row += 1    
+            self.layout.addWidget(tempC,row,count)
         pass
 
     def displayGraph():
