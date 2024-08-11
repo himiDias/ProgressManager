@@ -2,7 +2,22 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from pathlib import Path
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
+import matplotlib.pyplot as plt
+import numpy as np
 import sys
+
+class MplCanvas(FigureCanvas):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = plt.Figure(figsize=(width,height), dpi = dpi)
+        self.axes = fig.add_subplot(111)
+        self.axes.axhline(y=40.0, color='r', linestyle='-')
+        self.axes.axhline(y=50.0, color='orange', linestyle='-')
+        self.axes.axhline(y=60.0, color='green', linestyle='-')
+        self.axes.axhline(y=70.0, color='darkgreen', linestyle='-')
+        self.draw()
+
+        super(MplCanvas, self).__init__(fig)
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -145,9 +160,14 @@ class YearsScreen(QWidget):
                 row += 1    
             self.layout.addWidget(tempC,row,count)
 
-    def displayGraph():
+    def displayGraph(self,grades,years):
         # Code to display the graph of progress for the course
-        pass
+        # For all graphs, the grades array is the cumulative value of the grades as modules increase
+        g = MplCanvas(self,width=5,height=4,dpi=100)
+        g.axes.plot(grades,years)
+        self.layout.addWidget(g,1,5)
+
+        
 
 class ModulesScreen(QWidget):
     def __init__(self,main_window):
@@ -177,11 +197,12 @@ class ModulesScreen(QWidget):
                 count = 0
                 row += 1    
             self.layout.addWidget(tempC,row,count)
-        pass
 
-    def displayGraph():
+    def displayGraph(self,grades,modules):
         # Code to display the graph of progress for the year
-        pass
+        g = MplCanvas(self,width=5,height=4,dpi=100)
+        g.axes.plot(grades,modules)
+        self.layout.addWidget(g,1,5)
 
 class AssessmentScreen(QWidget):
     def __init__(self,main_window):
@@ -211,11 +232,12 @@ class AssessmentScreen(QWidget):
                 count = 0
                 row += 1    
             self.layout.addWidget(tempC,row,count)
-        pass
 
-    def displayGraph():
+    def displayGraph(self,grades,assessments):
         # Code to display the graph of progress for the module
-        pass
+        g = MplCanvas(self,width=5,height=4,dpi=100)
+        g.axes.plot(grades,assessments)
+        self.layout.addWidget(g,1,5)
 
 class AssignmentsScreen(QWidget):
     def __init__(self,main_window):
@@ -245,11 +267,12 @@ class AssignmentsScreen(QWidget):
                 count = 0
                 row += 1    
             self.layout.addWidget(tempC,row,count)
-        pass
 
-    def displayGraph():
+    def displayGraph(self,grades,assignments):
         # Code to display the graph of progress for the coursework
-        pass
+        g = MplCanvas(self,width=5,height=4,dpi=100)
+        g.axes.plot(grades,assignments)
+        self.layout.addWidget(g,1,5)
         
 
 
