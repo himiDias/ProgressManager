@@ -44,6 +44,10 @@ class MainWindow(QMainWindow):
 
         self.stack.setCurrentWidget(self.courses_screen)
 
+        # TEST FOR DISPLAYING COURSES
+        self.courses_screen.displayCourses(["Physics","Maths","CS","English","Physc"],['45.0','77.0','65.3','15.0','34.2'])
+         
+
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
         self.status_bar.showMessage("ProgressManager v1.0")
@@ -112,7 +116,8 @@ class CoursesScreen(QWidget):
         self.setLayout(self.layout)
 
         titleL = QLabel('Courses')
-        self.layout.addWidget(titleL,0,0,alignment=Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(titleL,0,0,1,4,alignment=Qt.AlignmentFlag.AlignCenter)
+         
 
     def displayCourses(self,titles,grades):
         count = 0
@@ -128,8 +133,13 @@ class CoursesScreen(QWidget):
             tempL.addWidget(tempGrade)
             if (count == 4):
                 count = 0
-                row += 1    
+                row += 1
             self.layout.addWidget(tempC,row,count)
+            count += 1
+    
+    def clearCourses():
+        # Code to clear all courses from screen, called before calling displayCourses so as to not overlap
+        pass
             
 class YearsScreen(QWidget):
     def __init__(self,main_window):
@@ -159,6 +169,7 @@ class YearsScreen(QWidget):
                 count = 0
                 row += 1    
             self.layout.addWidget(tempC,row,count)
+            count +=1
 
     def displayGraph(self,grades,years):
         # Code to display the graph of progress for the course
@@ -197,6 +208,7 @@ class ModulesScreen(QWidget):
                 count = 0
                 row += 1    
             self.layout.addWidget(tempC,row,count)
+            count += 1
 
     def displayGraph(self,grades,modules):
         # Code to display the graph of progress for the year
@@ -232,6 +244,7 @@ class AssessmentScreen(QWidget):
                 count = 0
                 row += 1    
             self.layout.addWidget(tempC,row,count)
+            count += 1
 
     def displayGraph(self,grades,assessments):
         # Code to display the graph of progress for the module
@@ -267,6 +280,7 @@ class AssignmentsScreen(QWidget):
                 count = 0
                 row += 1    
             self.layout.addWidget(tempC,row,count)
+            count += 1
 
     def displayGraph(self,grades,assignments):
         # Code to display the graph of progress for the coursework
