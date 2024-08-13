@@ -61,6 +61,10 @@ class MainWindow(QMainWindow):
         print("TEST GRAPH")
         #(0*70)+(85.6*0.4)=34.24 +(78.1*0.6)= 81.1
         self.years_screen.displayGraph([0,34.24,81.1],['Year 1','Year 2','Year 3'])
+        
+        #TEST FOR CLEARING YEARS + GRAPH
+        print("TEST CLEAR")
+        #self.years_screen.clearYears()
          
         self.stack.setCurrentWidget(self.years_screen)
         self.status_bar = QStatusBar()
@@ -203,9 +207,10 @@ class YearsScreen(QWidget):
     def displayGraph(self,grades,years):
         # Code to display the graph of progress for the course
         # For all graphs, the grades array is the cumulative value of the grades as modules increase
-        g = MplCanvas(self,width=5,height=4,dpi=100)
-        g.axes.plot(years,grades)
-        self.layout.addWidget(g,1,5)
+        self.graph = MplCanvas(self,width=5,height=4,dpi=100)
+        self.graph.axes.plot(years,grades)
+        self.graph.axes.set_ylim([0,100])
+        self.layout.addWidget(self.graph,1,4)
 
     def clearYears(self):
         # Code to clear all courses from screen, called before calling displayCourses so as to not overlap
@@ -223,6 +228,12 @@ class YearsScreen(QWidget):
                 count = 0
                 row += 1
             widgetItem = self.layout.itemAtPosition(row,count)
+        
+        self.layout.removeWidget(self.graph)
+        self.graph.hide()
+        self.graph.deleteLater()
+        self.graph = None
+        self.layout.update()
 
         
 
