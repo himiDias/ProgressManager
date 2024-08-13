@@ -269,9 +269,9 @@ class ModulesScreen(QWidget):
 
     def displayGraph(self,grades,modules):
         # Code to display the graph of progress for the year
-        g = MplCanvas(self,width=5,height=4,dpi=100)
-        g.axes.plot(modules,grades)
-        self.layout.addWidget(g,1,5)
+        self.graph = MplCanvas(self,width=5,height=4,dpi=100)
+        self.graph.axes.plot(modules,grades)
+        self.layout.addWidget(self.graph,1,5)
 
     def clearModules(self):
         # Code to clear all courses from screen, called before calling displayCourses so as to not overlap
@@ -289,6 +289,12 @@ class ModulesScreen(QWidget):
                 count = 0
                 row += 1
             widgetItem = self.layout.itemAtPosition(row,count)
+
+        self.layout.removeWidget(self.graph)
+        self.graph.hide()
+        self.graph.deleteLater()
+        self.graph = None
+        self.layout.update()
 
 class AssessmentScreen(QWidget):
     def __init__(self,main_window):
@@ -322,9 +328,9 @@ class AssessmentScreen(QWidget):
 
     def displayGraph(self,grades,assessments):
         # Code to display the graph of progress for the module
-        g = MplCanvas(self,width=5,height=4,dpi=100)
-        g.axes.plot(assessments,grades)
-        self.layout.addWidget(g,1,5)
+        self.graph = MplCanvas(self,width=5,height=4,dpi=100)
+        self.graph.axes.plot(assessments,grades)
+        self.layout.addWidget(self.graph,1,5)
 
     def clearAssessments(self):
         # Code to clear all courses from screen, called before calling displayCourses so as to not overlap
@@ -342,6 +348,12 @@ class AssessmentScreen(QWidget):
                 count = 0
                 row += 1
             widgetItem = self.layout.itemAtPosition(row,count)
+        
+        self.layout.removeWidget(self.graph)
+        self.graph.hide()
+        self.graph.deleteLater()
+        self.graph = None
+        self.layout.update()
 
 class AssignmentsScreen(QWidget):
     def __init__(self,main_window):
@@ -375,9 +387,9 @@ class AssignmentsScreen(QWidget):
 
     def displayGraph(self,grades,assignments):
         # Code to display the graph of progress for the coursework
-        g = MplCanvas(self,width=5,height=4,dpi=100)
-        g.axes.plot(assignments,grades)
-        self.layout.addWidget(g,1,5)
+        self.graph = MplCanvas(self,width=5,height=4,dpi=100)
+        self.graph.axes.plot(assignments,grades)
+        self.layout.addWidget(self.graph,1,5)
     
     def clearAssignments(self):
         # Code to clear all courses from screen, called before calling displayCourses so as to not overlap
@@ -395,6 +407,12 @@ class AssignmentsScreen(QWidget):
                 count = 0
                 row += 1
             widgetItem = self.layout.itemAtPosition(row,count)
+        
+        self.layout.removeWidget(self.graph)
+        self.graph.hide()
+        self.graph.deleteLater()
+        self.graph = None
+        self.layout.update()
         
 
 
