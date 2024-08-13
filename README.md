@@ -138,6 +138,8 @@ There will be two databases used within the program, one is runtime in memory an
 
 - Graph asthetics need to be done (later), add functionality/buttons to remove boundary lines
 
+- Improve code/performance by deleting widgte when refreshing
+
 ## To Do
 
 - Need to retrieve data from database at the start of application but need to recreate all models without knowing how many courses,years,modules e.t.c were created. Could be tricky (Done)
