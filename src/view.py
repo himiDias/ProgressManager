@@ -15,7 +15,7 @@ class MplCanvas(FigureCanvas):
         self.axes.axhline(y=40.0, color='r', linestyle='-')
         self.axes.axhline(y=50.0, color='orange', linestyle='-')
         self.axes.axhline(y=60.0, color='green', linestyle='-')
-        self.axes.axhline(y=60.0, color='darkgreen', linestyle='-')
+        self.axes.axhline(y=70.0, color='darkgreen', linestyle='-')
         self.draw()
 
          
@@ -54,19 +54,25 @@ class MainWindow(QMainWindow):
         #self.courses_screen.clearCourses()
         #======================================
         #TEST FOR DISPLAYING YEARS
-        print("TEST DISPLAY")
-        self.years_screen.displayYears(['Year 1','Year 2','Year 3'],['0','40','60'],['70','85.6','78.1'])
+        #print("TEST DISPLAY")
+        #self.years_screen.displayYears(['Year 1','Year 2','Year 3'],['0','40','60'],['70','85.6','78.1'])
 
         #TEST FOR DISPLAYING GRAPH
-        print("TEST GRAPH")
+        #print("TEST GRAPH")
         #(0*70)+(85.6*0.4)=34.24 +(78.1*0.6)= 81.1
-        self.years_screen.displayGraph([0,34.24,81.1],['Year 1','Year 2','Year 3'])
+        #self.years_screen.displayGraph([0,34.24,81.1],['Year 1','Year 2','Year 3'])
         
         #TEST FOR CLEARING YEARS + GRAPH
-        print("TEST CLEAR")
+        #print("TEST CLEAR")
         #self.years_screen.clearYears()
+        #=======================================
+        #TEST FOR DISPLAYING MODULES
+        print("TEST DISPLAY")
+        self.modules_screen.displayModules(['Kinematics','Physic I','Physics II','Motions','Forces'],['10','10','20','10','10'],['34.2','60.4','56.0','89.4','73.0'])
+        self.modules_screen.displayGraph([5.7,15.7,34.4,49.3,61.5],['Kinematics','Physic I','Physics II','Motions','Forces'])
+
          
-        self.stack.setCurrentWidget(self.years_screen)
+        self.stack.setCurrentWidget(self.modules_screen)
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
         self.status_bar.showMessage("ProgressManager v1.0")
@@ -271,6 +277,7 @@ class ModulesScreen(QWidget):
         # Code to display the graph of progress for the year
         self.graph = MplCanvas(self,width=5,height=4,dpi=100)
         self.graph.axes.plot(modules,grades)
+        self.graph.axes.set_ylim([0,100])
         self.layout.addWidget(self.graph,1,5)
 
     def clearModules(self):
