@@ -337,6 +337,7 @@ class AssessmentScreen(QWidget):
         # Code to display the graph of progress for the module
         self.graph = MplCanvas(self,width=5,height=4,dpi=100)
         self.graph.axes.plot(assessments,grades)
+        self.graph.axes.set_ylim([0,100])
         self.layout.addWidget(self.graph,1,5)
 
     def clearAssessments(self):
@@ -396,6 +397,7 @@ class AssignmentsScreen(QWidget):
         # Code to display the graph of progress for the coursework
         self.graph = MplCanvas(self,width=5,height=4,dpi=100)
         self.graph.axes.plot(assignments,grades)
+        self.graph.axes.set_ylim([0,100])
         self.layout.addWidget(self.graph,1,5)
     
     def clearAssignments(self):
