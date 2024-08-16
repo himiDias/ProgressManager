@@ -46,6 +46,7 @@ class MainWindow(QMainWindow):
         self.stack.addWidget(self.assignments_screen)
 
 
+        # TESTING IS hardcoded as controller would be responsible for determining and passing in correct values for functions 
         #======================================
         # TEST FOR DISPLAYING COURSES
         print("TEST DISPLAY")
@@ -119,6 +120,7 @@ class MainWindow(QMainWindow):
         self.show()
 
     def setPrevWidget(self):
+        #Take values of stack to controller, determine what needs to be displayed on screen
         if (self.pageStack.isEmpty()):
             print("None in Stack")
             pass
@@ -126,6 +128,12 @@ class MainWindow(QMainWindow):
             s = self.pageStack.getStack()
             for i in s:
                 print(i)
+    
+    def refreshView(self,widget,*args):
+        #function to actually set the current widget, and display data
+        # First clear current display of the chosen widget
+        #Then display new data given on the chosen widget
+        pass
 
 class Stack:
     def __init__(self):
@@ -206,6 +214,7 @@ class LoginScreen(QWidget):
 
     
     def checkCred(self):
+        # Connect to controller, to check creds then load up correct course screen
         un = self.user.text()
         pw = self.passw.text()
         print(un,pw)
