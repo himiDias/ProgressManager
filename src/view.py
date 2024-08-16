@@ -46,33 +46,53 @@ class MainWindow(QMainWindow):
 
         #======================================
         # TEST FOR DISPLAYING COURSES
-        #print("TEST DISPLAY")
-        #self.courses_screen.displayCourses(["Physics","Maths","CS","English","Physc"],['45.0','77.0','65.3','15.0','34.2'])
+        print("TEST DISPLAY")
+        self.courses_screen.displayCourses(["Physics","Maths","CS","English","Physc"],['45.0','77.0','65.3','15.0','34.2'])
 
         # TEST FOR CLEARING COURSES
-        #print("TEST CLEAR")
-        #self.courses_screen.clearCourses()
+        print("TEST CLEAR")
+        self.courses_screen.clearCourses()
         #======================================
         #TEST FOR DISPLAYING YEARS
-        #print("TEST DISPLAY")
-        #self.years_screen.displayYears(['Year 1','Year 2','Year 3'],['0','40','60'],['70','85.6','78.1'])
+        print("TEST DISPLAY")
+        self.years_screen.displayYears(['Year 1','Year 2','Year 3'],['0','40','60'],['70','85.6','78.1'])
 
         #TEST FOR DISPLAYING GRAPH
-        #print("TEST GRAPH")
+        print("TEST GRAPH")
         #(0*70)+(85.6*0.4)=34.24 +(78.1*0.6)= 81.1
-        #self.years_screen.displayGraph([0,34.24,81.1],['Year 1','Year 2','Year 3'])
+        self.years_screen.displayGraph([0,34.24,81.1],['Year 1','Year 2','Year 3'])
         
         #TEST FOR CLEARING YEARS + GRAPH
-        #print("TEST CLEAR")
-        #self.years_screen.clearYears()
+        print("TEST CLEAR")
+        self.years_screen.clearYears()
         #=======================================
-        #TEST FOR DISPLAYING MODULES
+        #TEST FOR DISPLAYING MODULES + GRAPH
         print("TEST DISPLAY")
         self.modules_screen.displayModules(['Kinematics','Physic I','Physics II','Motions','Forces'],['10','10','20','10','10'],['34.2','60.4','56.0','89.4','73.0'])
-        self.modules_screen.displayGraph([5.7,15.7,34.4,49.3,61.5],['Kinematics','Physic I','Physics II','Motions','Forces'])
+        self.modules_screen.displayGraph([0,5.7,15.7,34.4,49.3,61.5],['_','Kinematics','Physic I','Physics II','Motions','Forces'])
+        
+        #TEST FOR CLEARING MODULES + GRAPH
+        print("TEST CLEAR")
+        self.modules_screen.clearModules()
+        #=======================================
+        #TEST FOR DISPLAYING ASSESSMENTS + GRAPH
+        print("TEST DISPLAY")
+        self.assessments_screen.displayAssessments(['Coursework','Exam'],['70','30'],['86','75'])
+        self.assessments_screen.displayGraph([0,60.2,82.7],['_','Coursework','Exam'])
 
+        #TEST FOR CLEARING ASSESSMENTS + GRAPH
+        self.assessments_screen.clearAssessments()
+        #=======================================
+        #TEST FOR DISPLAYING ASSIGNMENTS + GRAPH
+        self.assignments_screen.displayAssignments(['CW1','CW2','CW3a','CW3b'],['5','10','25','30'],['100','100','95','93'])
+        self.assignments_screen.displayGraph([0,13,25.2,57,77],['_','CW1','CW2','CW3a','CW3b'])
+
+        #TEST FOR CLEARING ASSIGNMENTS + GRAPH
+        self.assignments_screen.clearAssignments()
+        #=======================================
+        
          
-        self.stack.setCurrentWidget(self.modules_screen)
+        self.stack.setCurrentWidget(self.assignments_screen)
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
         self.status_bar.showMessage("ProgressManager v1.0")
