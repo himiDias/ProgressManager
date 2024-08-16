@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
 
         # TEST FOR CLEARING COURSES
         print("TEST CLEAR")
-        self.courses_screen.clearCourses()
+        #self.courses_screen.clearCourses()
         #======================================
         #TEST FOR DISPLAYING YEARS
         print("TEST DISPLAY")
@@ -106,7 +106,7 @@ class MainWindow(QMainWindow):
          
 
 
-        self.stack.setCurrentWidget(self.login_screen)
+        self.stack.setCurrentWidget(self.courses_screen)
 
         prev_action = QAction(QIcon('./assets/arrowBack.jpg'),'Previous',self)
         prev_action.triggered.connect(self.setPrevWidget)
@@ -234,14 +234,17 @@ class CoursesScreen(QWidget):
     def displayCourses(self,titles,grades):
         count = 0
         row = 1
+        buttons = []
          
         for course in range(len(titles)):
-            tempTitle = QLabel(titles[course])
             tempGrade = QLabel(grades[course])
+            tempB = QPushButton(titles[course])
+            tempB.clicked.connect(lambda checked,course=titles[course]: self.handle_course_click(course))
+            buttons.append(tempB)
             tempL = QVBoxLayout()
             tempC = QWidget()
             tempC.setLayout(tempL)
-            tempL.addWidget(tempTitle)
+            tempL.addWidget(tempB)
             tempL.addWidget(tempGrade)
             if (count == 4):
                 count = 0
@@ -265,6 +268,10 @@ class CoursesScreen(QWidget):
                 count = 0
                 row += 1
             widgetItem = self.layout.itemAtPosition(row,count)
+    
+    def handle_course_click(self,course):
+        #Code to set current widget to the years screen of the passed in course
+        print(course)
              
             
 class YearsScreen(QWidget):
