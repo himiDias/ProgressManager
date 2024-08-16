@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
 
         # TEST FOR CLEARING COURSES
         print("TEST CLEAR")
-        #self.courses_screen.clearCourses()
+        self.courses_screen.clearCourses()
         #======================================
         #TEST FOR DISPLAYING YEARS
         print("TEST DISPLAY")
@@ -67,7 +67,7 @@ class MainWindow(QMainWindow):
         
         #TEST FOR CLEARING YEARS + GRAPH
         print("TEST CLEAR")
-        self.years_screen.clearYears()
+        #self.years_screen.clearYears()
         #=======================================
         #TEST FOR DISPLAYING MODULES + GRAPH
         print("TEST DISPLAY")
@@ -76,7 +76,7 @@ class MainWindow(QMainWindow):
         
         #TEST FOR CLEARING MODULES + GRAPH
         print("TEST CLEAR")
-        self.modules_screen.clearModules()
+        #self.modules_screen.clearModules()
         #=======================================
         #TEST FOR DISPLAYING ASSESSMENTS + GRAPH
         print("TEST DISPLAY")
@@ -84,14 +84,14 @@ class MainWindow(QMainWindow):
         self.assessments_screen.displayGraph([0,60.2,82.7],['_','Coursework','Exam'])
 
         #TEST FOR CLEARING ASSESSMENTS + GRAPH
-        self.assessments_screen.clearAssessments()
+        #self.assessments_screen.clearAssessments()
         #=======================================
         #TEST FOR DISPLAYING ASSIGNMENTS + GRAPH
         self.assignments_screen.displayAssignments(['CW1','CW2','CW3a','CW3b'],['5','10','25','30'],['100','100','95','93'])
         self.assignments_screen.displayGraph([0,13,25.2,57,77],['_','CW1','CW2','CW3a','CW3b'])
 
         #TEST FOR CLEARING ASSIGNMENTS + GRAPH
-        self.assignments_screen.clearAssignments()
+        #self.assignments_screen.clearAssignments()
         #=======================================
         #TEST FOR PAGE STACK
         print("STACK TEST")
@@ -106,7 +106,7 @@ class MainWindow(QMainWindow):
          
 
 
-        self.stack.setCurrentWidget(self.courses_screen)
+        self.stack.setCurrentWidget(self.assignments_screen)
 
         prev_action = QAction(QIcon('./assets/arrowBack.jpg'),'Previous',self)
         prev_action.triggered.connect(self.setPrevWidget)
@@ -287,15 +287,18 @@ class YearsScreen(QWidget):
     def displayYears(self,titles,weights,grades):
         count = 0
         row = 1
+        buttons = []
         # Code to display all years for the course
         for year in range(len(titles)):
-            tempTitle = QLabel(titles[year])
             tempWeight = QLabel(weights[year])
             tempGrade = QLabel(grades[year])
+            tempB = QPushButton(titles[year])
+            tempB.clicked.connect(lambda checked,year=titles[year]: self.handle_year_click(year))
+            buttons.append(tempB)
             tempL = QVBoxLayout()
             tempC = QWidget()
             tempC.setLayout(tempL)
-            tempL.addWidget(tempTitle)
+            tempL.addWidget(tempB)
             tempL.addWidget(tempWeight)
             tempL.addWidget(tempGrade)
             if (count == 4):
@@ -335,6 +338,10 @@ class YearsScreen(QWidget):
         self.graph = None
         self.layout.update()
 
+    def handle_year_click(self,year):
+        #Code to set current widget to the modules screen of the passed in year
+        print(year)
+
         
 
 class ModulesScreen(QWidget):
@@ -351,14 +358,18 @@ class ModulesScreen(QWidget):
         # Code to display all modules for the year
         count = 0
         row = 1
+        buttons = []
+
         for module in range(len(titles)):
-            tempTitle = QLabel(titles[module])
             tempCredits = QLabel(credits[module])
             tempGrade = QLabel(grades[module])
+            tempB = QPushButton(titles[module])
+            tempB.clicked.connect(lambda checked,module=titles[module]: self.handle_module_click(module))
+            buttons.append(tempB)
             tempL = QVBoxLayout()
             tempC = QWidget()
             tempC.setLayout(tempL)
-            tempL.addWidget(tempTitle)
+            tempL.addWidget(tempB)
             tempL.addWidget(tempCredits)
             tempL.addWidget(tempGrade)
             if (count == 4):
@@ -396,6 +407,10 @@ class ModulesScreen(QWidget):
         self.graph.deleteLater()
         self.graph = None
         self.layout.update()
+    
+    def handle_module_click(self,module):
+        #Code to set current widget to the years screen of the passed in course
+        print(module)
 
 class AssessmentScreen(QWidget):
     def __init__(self,main_window):
@@ -411,14 +426,17 @@ class AssessmentScreen(QWidget):
         # Code to display all assessments for the module
         count = 0
         row = 1
+        buttons = []
         for assess in range(len(titles)):
-            tempTitle = QLabel(titles[assess])
             tempWeight = QLabel(weights[assess])
             tempGrade = QLabel(grades[assess])
+            tempB = QPushButton(titles[assess])
+            tempB.clicked.connect(lambda checked,assess=titles[assess]: self.handle_assessment_click(assess))
+            buttons.append(tempB)
             tempL = QVBoxLayout()
             tempC = QWidget()
             tempC.setLayout(tempL)
-            tempL.addWidget(tempTitle)
+            tempL.addWidget(tempB)
             tempL.addWidget(tempWeight)
             tempL.addWidget(tempGrade)
             if (count == 4):
@@ -456,6 +474,10 @@ class AssessmentScreen(QWidget):
         self.graph.deleteLater()
         self.graph = None
         self.layout.update()
+    
+    def handle_assessment_click(self,assessment):
+        #Code to set current widget to the years screen of the passed in course
+        print(assessment)
 
 class AssignmentsScreen(QWidget):
     def __init__(self,main_window):
@@ -516,6 +538,7 @@ class AssignmentsScreen(QWidget):
         self.graph.deleteLater()
         self.graph = None
         self.layout.update()
+    
         
 
 
