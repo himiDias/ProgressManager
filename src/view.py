@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
 
         # TEST FOR CLEARING COURSES
         print("TEST CLEAR")
-        self.courses_screen.clearCourses()
+        #self.courses_screen.clearCourses()
         #======================================
         #TEST FOR DISPLAYING YEARS
         print("TEST DISPLAY")
@@ -106,7 +106,7 @@ class MainWindow(QMainWindow):
          
 
 
-        self.stack.setCurrentWidget(self.assignments_screen)
+        self.stack.setCurrentWidget(self.modules_screen)
 
         prev_action = QAction(QIcon('./assets/arrowBack.jpg'),'Previous',self)
         prev_action.triggered.connect(self.setPrevWidget)

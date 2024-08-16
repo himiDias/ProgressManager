@@ -151,3 +151,5 @@ There will be two databases used within the program, one is runtime in memory an
 - Realised some code to do with manipulating the runtime database is redundant having the `load data` function can update the runtime at any point
 
 - Could add a further attribute to years,module etc which is the grade adjusted for the weight (FUTURE)
+
+- View only skeleton, spruce up and do lot more styling
