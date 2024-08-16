@@ -26,7 +26,9 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("University Progress Tracker")
         self.setWindowIcon(QIcon('./assets/mainP.jpg'))
         self.setGeometry(100,100,1000,800)
+
         self.stack = QStackedWidget()
+        self.pageStack = Stack()
         self.setCentralWidget(self.stack)
 
         self.login_screen = LoginScreen(self)
@@ -90,14 +92,70 @@ class MainWindow(QMainWindow):
         #TEST FOR CLEARING ASSIGNMENTS + GRAPH
         self.assignments_screen.clearAssignments()
         #=======================================
-        
+        #TEST FOR PAGE STACK
+        print("STACK TEST")
+        self.pageStack.push('Physics')
+        self.pageStack.push('Year 1')
+        self.pageStack.push('Motions')
+
+        self.pageStack.pop()
+        self.pageStack.pop()
+        self.pageStack.pop()
+        #=======================================
          
-        self.stack.setCurrentWidget(self.assignments_screen)
+
+
+        self.stack.setCurrentWidget(self.login_screen)
+
+        prev_action = QAction(QIcon('./assets/arrowBack.jpg'),'Previous',self)
+        prev_action.triggered.connect(self.setPrevWidget)
+        toolbar = QToolBar('Main Toolbar')
+        self.addToolBar(toolbar)
+        toolbar.addAction(prev_action)
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
         self.status_bar.showMessage("ProgressManager v1.0")
 
         self.show()
+
+    def setPrevWidget(self):
+        if (self.pageStack.isEmpty()):
+            print("None in Stack")
+            pass
+        else:
+            s = self.pageStack.getStack()
+            for i in s:
+                print(i)
+
+class Stack:
+    def __init__(self):
+        self.stack = []
+        self.top = -1
+
+    def push(self,item):
+        self.stack.append(item)
+        self.top += 1
+        print(self.top)
+    def pop(self):
+        self.stack.pop(self.top)
+        self.top -= 1
+
+    def getSize(self):
+        return self.top + 1
+    
+    def peak(self):
+        return self.stack[self.top]
+    
+    def isEmpty(self):
+        if self.top == -1:
+            print("Empty")
+            return True
+        else:
+            print("Not Empty")
+            return False
+        
+    def getStack(self):
+        return self.stack
 
 
 class LoginScreen(QWidget):
