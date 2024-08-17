@@ -106,7 +106,7 @@ class MainWindow(QMainWindow):
          
 
 
-        self.stack.setCurrentWidget(self.courses_screen)
+        self.stack.setCurrentWidget(self.modules_screen)
 
         prev_action = QAction(QIcon('./assets/arrowBack.jpg'),'Previous',self)
         prev_action.triggered.connect(self.setPrevWidget)
@@ -367,7 +367,8 @@ class CoursesScreen(QWidget):
             widgetItem = self.layout.itemAtPosition(row,count)
     
     def handle_course_click(self,course):
-        #Code to set current widget to the years screen of the passed in course
+        #Code to set current widget to the years screen of the passed in course, controller would access the chosen course,
+        # then retrieve what needs to be displayed
         print(course)
     
     def getType(self):
