@@ -180,6 +180,32 @@ class addWindow(QWidget):
             wLayout.addWidget(wLabel)
             wLayout.addWidget(wBox)
             layout.addWidget(weightD)
+        elif(IType == "Module"):
+            cLayout = QHBoxLayout()
+            creditD = QWidget()
+            creditD.setLayout(cLayout)
+            cLabel = QLabel("Enter Credits")
+            cBox = QLineEdit(
+                self,
+                placeholderText = "Credits",
+                maxLength = 3
+            )
+            cLayout.addWidget(cLabel)
+            cLayout.addWidget(cBox)
+            layout.addWidget(creditD)
+        
+        gLayout = QHBoxLayout()
+        gradeD = QWidget()
+        gradeD.setLayout(gLayout)
+        gLabel = QLabel("Enter Grade")
+        gBox = QLineEdit(
+            self,
+            placeholderText = 'Grade',
+            maxLength = 3
+        )
+        gLayout.addWidget(gLabel)
+        gLayout.addWidget(gBox)
+        layout.addWidget(gradeD)
 
 class Stack:
     def __init__(self):
