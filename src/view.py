@@ -106,7 +106,7 @@ class MainWindow(QMainWindow):
          
 
 
-        self.stack.setCurrentWidget(self.courses_screen)
+        self.stack.setCurrentWidget(self.years_screen)
 
         prev_action = QAction(QIcon('./assets/arrowBack.jpg'),'Previous',self)
         prev_action.triggered.connect(self.setPrevWidget)
@@ -148,6 +148,38 @@ class addWindow(QWidget):
         super().__init__()
         self.setWindowTitle('Add '+ IType)
         self.setGeometry(100,100,300,200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        titleL = QLabel("Enter "+IType+" Details")
+        layout.addWidget(titleL)
+
+        tLayout = QHBoxLayout()
+        titleD = QWidget()
+        titleD.setLayout(tLayout)
+        tLabel = QLabel(" Enter Title")
+        tBox = QLineEdit(
+            self,
+            placeholderText = 'Title',
+            maxLength = 50
+        )
+        tLayout.addWidget(tLabel)
+        tLayout.addWidget(tBox)
+        layout.addWidget(titleD)
+
+        if(IType == "Year" or IType == "Assessment" or IType == "Assignment"):
+            wLayout = QHBoxLayout()
+            weightD = QWidget()
+            weightD.setLayout(wLayout)
+            wLabel = QLabel("Enter Weight")
+            wBox = QLineEdit(
+                self,
+                placeholderText = "Weight",
+                maxLength = 2
+            )
+            wLayout.addWidget(wLabel)
+            wLayout.addWidget(wBox)
+            layout.addWidget(weightD)
 
 class Stack:
     def __init__(self):
