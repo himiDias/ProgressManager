@@ -99,20 +99,23 @@ class MainWindow(QMainWindow):
         self.pageStack.push('Year 1')
         self.pageStack.push('Motions')
 
-        self.pageStack.pop()
-        self.pageStack.pop()
-        self.pageStack.pop()
+        #self.pageStack.pop()
+        #self.pageStack.pop()
+        #self.pageStack.pop()
         #=======================================
          
 
 
-        self.stack.setCurrentWidget(self.modules_screen)
+        self.stack.setCurrentWidget(self.courses_screen)
 
         prev_action = QAction(QIcon('./assets/arrowBack.jpg'),'Previous',self)
         prev_action.triggered.connect(self.setPrevWidget)
+        add_action = QAction(QIcon('./assets/add.jpg'),'Add',self)
+        add_action.triggered.connect(self.addItem)
         toolbar = QToolBar('Main Toolbar')
         self.addToolBar(toolbar)
         toolbar.addAction(prev_action)
+        toolbar.addAction(add_action)
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
         self.status_bar.showMessage("ProgressManager v1.0")
@@ -129,11 +132,22 @@ class MainWindow(QMainWindow):
             for i in s:
                 print(i)
     
+    def addItem(self):
+
+        self.add_window = addWindow(self.stack.currentWidget().getType())
+        self.add_window.show()
+    
     def refreshView(self,widget,*args):
         #function to actually set the current widget, and display data
         # First clear current display of the chosen widget
         #Then display new data given on the chosen widget
         pass
+
+class addWindow(QWidget):
+    def __init__(self,IType):
+        super().__init__()
+        self.setWindowTitle('Add '+ IType)
+        self.setGeometry(100,100,300,200)
 
 class Stack:
     def __init__(self):
@@ -172,6 +186,7 @@ class LoginScreen(QWidget):
         self.main_window = main_window
         layout = QVBoxLayout()
         self.setLayout(layout)
+        self.type = None
  
         titleL = QLabel('Enter DB credentials')
         titleL.setObjectName("titleL")
@@ -212,6 +227,9 @@ class LoginScreen(QWidget):
         layout.addWidget(password)
         layout.addWidget(loginB)
 
+    def getType(self):
+        return self.type
+
     
     def checkCred(self):
         # Connect to controller, to check creds then load up correct course screen
@@ -224,6 +242,7 @@ class CoursesScreen(QWidget):
     def __init__(self,main_window):
         super().__init__()
         self.main_window = main_window
+        self.type = "Course"
         self.layout = QGridLayout()
         self.setLayout(self.layout)
 
@@ -272,6 +291,9 @@ class CoursesScreen(QWidget):
     def handle_course_click(self,course):
         #Code to set current widget to the years screen of the passed in course
         print(course)
+    
+    def getType(self):
+        return self.type
              
             
 class YearsScreen(QWidget):
@@ -280,6 +302,7 @@ class YearsScreen(QWidget):
         self.main_window = main_window
         self.layout = QGridLayout()
         self.setLayout(self.layout)
+        self.type = "Year"
 
         titleL = QLabel('Years')
         self.layout.addWidget(titleL,0,0,1,4,alignment=Qt.AlignmentFlag.AlignCenter)
@@ -341,6 +364,9 @@ class YearsScreen(QWidget):
     def handle_year_click(self,year):
         #Code to set current widget to the modules screen of the passed in year
         print(year)
+    
+    def getType(self):
+        return self.type
 
         
 
@@ -350,6 +376,7 @@ class ModulesScreen(QWidget):
         self.main_window = main_window
         self.layout = QGridLayout()
         self.setLayout(self.layout)
+        self.type = "Module"
 
         titleL = QLabel('Modules')
         self.layout.addWidget(titleL,0,0,1,4,alignment=Qt.AlignmentFlag.AlignCenter)
@@ -411,6 +438,9 @@ class ModulesScreen(QWidget):
     def handle_module_click(self,module):
         #Code to set current widget to the years screen of the passed in course
         print(module)
+    
+    def getType(self):
+        return self.type
 
 class AssessmentScreen(QWidget):
     def __init__(self,main_window):
@@ -418,6 +448,7 @@ class AssessmentScreen(QWidget):
         self.main_window = main_window
         self.layout = QGridLayout()
         self.setLayout(self.layout)
+        self.type = "Assessment"
 
         titleL = QLabel('Assessments')
         self.layout.addWidget(titleL,0,0,1,4,alignment=Qt.AlignmentFlag.AlignCenter)
@@ -478,6 +509,9 @@ class AssessmentScreen(QWidget):
     def handle_assessment_click(self,assessment):
         #Code to set current widget to the years screen of the passed in course
         print(assessment)
+    
+    def getType(self):
+        return self.type
 
 class AssignmentsScreen(QWidget):
     def __init__(self,main_window):
@@ -485,6 +519,7 @@ class AssignmentsScreen(QWidget):
         self.main_window = main_window
         self.layout = QGridLayout()
         self.setLayout(self.layout)
+        self.type = "Assignment"
 
         titleL = QLabel('Assignments')
         self.layout.addWidget(titleL,0,0,1,4,alignment=Qt.AlignmentFlag.AlignCenter)
@@ -538,6 +573,9 @@ class AssignmentsScreen(QWidget):
         self.graph.deleteLater()
         self.graph = None
         self.layout.update()
+    
+    def getType(self):
+        return self.type
     
         
 
