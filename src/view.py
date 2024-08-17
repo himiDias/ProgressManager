@@ -133,9 +133,11 @@ class MainWindow(QMainWindow):
                 print(i)
     
     def addItem(self):
-
-        self.add_window = addWindow(self.stack.currentWidget().getType())
-        self.add_window.show()
+        if(self.stack.currentWidget().getType()):
+            self.add_window = addWindow(self.stack.currentWidget().getType())
+            self.add_window.show()
+        else:
+            pass
     
     def refreshView(self,widget,*args):
         #function to actually set the current widget, and display data
