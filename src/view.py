@@ -106,7 +106,7 @@ class MainWindow(QMainWindow):
          
 
 
-        self.stack.setCurrentWidget(self.years_screen)
+        self.stack.setCurrentWidget(self.courses_screen)
 
         prev_action = QAction(QIcon('./assets/arrowBack.jpg'),'Previous',self)
         prev_action.triggered.connect(self.setPrevWidget)
@@ -160,13 +160,13 @@ class addWindow(QWidget):
         titleD = QWidget()
         titleD.setLayout(tLayout)
         tLabel = QLabel(" Enter Title")
-        tBox = QLineEdit(
+        self.tBox = QLineEdit(
             self,
             placeholderText = 'Title',
             maxLength = 50
         )
         tLayout.addWidget(tLabel)
-        tLayout.addWidget(tBox)
+        tLayout.addWidget(self.tBox)
         layout.addWidget(titleD)
 
         if(IType == "Year" or IType == "Assessment" or IType == "Assignment"):
@@ -174,40 +174,58 @@ class addWindow(QWidget):
             weightD = QWidget()
             weightD.setLayout(wLayout)
             wLabel = QLabel("Enter Weight")
-            wBox = QLineEdit(
+            self.wBox = QLineEdit(
                 self,
                 placeholderText = "Weight",
                 maxLength = 2
             )
             wLayout.addWidget(wLabel)
-            wLayout.addWidget(wBox)
+            wLayout.addWidget(self.wBox)
             layout.addWidget(weightD)
         elif(IType == "Module"):
             cLayout = QHBoxLayout()
             creditD = QWidget()
             creditD.setLayout(cLayout)
             cLabel = QLabel("Enter Credits")
-            cBox = QLineEdit(
+            self.cBox = QLineEdit(
                 self,
                 placeholderText = "Credits",
                 maxLength = 3
             )
             cLayout.addWidget(cLabel)
-            cLayout.addWidget(cBox)
+            cLayout.addWidget(self.cBox)
             layout.addWidget(creditD)
         
         gLayout = QHBoxLayout()
         gradeD = QWidget()
         gradeD.setLayout(gLayout)
         gLabel = QLabel("Enter Grade")
-        gBox = QLineEdit(
+        self.gBox = QLineEdit(
             self,
             placeholderText = 'Grade',
             maxLength = 3
         )
         gLayout.addWidget(gLabel)
-        gLayout.addWidget(gBox)
+        gLayout.addWidget(self.gBox)
         layout.addWidget(gradeD)
+
+        oLayout = QHBoxLayout()
+        optionsD = QWidget()
+        optionsD.setLayout(oLayout)
+        addB = QPushButton("Add")
+        addB.clicked.connect(self.addNewItem)
+        cancelB = QPushButton("Cancel")
+        cancelB.clicked.connect(self.close)
+        oLayout.addWidget(addB)
+        oLayout.addWidget(cancelB)
+        layout.addWidget(optionsD)
+    
+    def addNewItem(self):
+        #function to check validity of entered data
+        #connect to controller to add values to database
+        #controller will then call refreshView again 
+        pass
+
 
 class Stack:
     def __init__(self):
