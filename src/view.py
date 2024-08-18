@@ -165,7 +165,20 @@ class MainWindow(QMainWindow):
         # First clear current display of the chosen widget
         #Then display new data given on the chosen widget
         self.stack.setCurrentWidget(widget)
-        pass
+
+        arr1_str = [str(i) for i in args[1]]
+        arr2_str = [str(i) for i in args[2]]
+        if type(widget) == CoursesScreen:
+            self.courses_screen.displayCourses(args[0],arr1_str)
+        elif type(widget) == YearsScreen:
+            self.years_screen.displayYears(args[0],arr1_str,arr2_str)
+        elif type(widget) == ModulesScreen:
+            self.modules_screen.displayModules(args[0],arr1_str,arr2_str)
+        elif type(widget) == AssessmentScreen:
+            self.assessments_screen.displayAssessments(args[0],arr1_str,arr2_str)
+        else:
+            self.assignments_screen.displayAssignments(args[0],arr1_str,arr2_str)
+         
 
 class addWindow(QWidget):
     def __init__(self,IType):
@@ -433,7 +446,7 @@ class YearsScreen(QWidget):
             self.layout.addWidget(tempC,row,count)
             count +=1
 
-    def displayGraph(self,grades,years):
+    def displayGraph(self,years,grades):
         # Code to display the graph of progress for the course
         # For all graphs, the grades array is the cumulative value of the grades as modules increase
         self.graph = MplCanvas(self,width=5,height=4,dpi=100)
@@ -508,7 +521,7 @@ class ModulesScreen(QWidget):
             self.layout.addWidget(tempC,row,count)
             count += 1
 
-    def displayGraph(self,grades,modules):
+    def displayGraph(self,modules,grades):
         # Code to display the graph of progress for the year
         self.graph = MplCanvas(self,width=5,height=4,dpi=100)
         self.graph.axes.plot(modules,grades)
@@ -579,7 +592,7 @@ class AssessmentScreen(QWidget):
             self.layout.addWidget(tempC,row,count)
             count += 1
 
-    def displayGraph(self,grades,assessments):
+    def displayGraph(self,assessments,grades):
         # Code to display the graph of progress for the module
         self.graph = MplCanvas(self,width=5,height=4,dpi=100)
         self.graph.axes.plot(assessments,grades)
@@ -647,7 +660,7 @@ class AssignmentsScreen(QWidget):
             self.layout.addWidget(tempC,row,count)
             count += 1
 
-    def displayGraph(self,grades,assignments):
+    def displayGraph(self,assignments,grades):
         # Code to display the graph of progress for the coursework
         self.graph = MplCanvas(self,width=5,height=4,dpi=100)
         self.graph.axes.plot(assignments,grades)
