@@ -48,7 +48,22 @@ class Controller:
                             break
         elif currentS == self.view.years_screen:
             w = self.view.getModuleS()
-            
+            pStack = self.view.pageStack.getStack()
+            course = pStack[0]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM:
+                        years = j.get_years()
+                        if years[0].get_cid() == courseid:
+                            for k in years:
+                                if k.get_title() == title:
+                                    id = k.get_id()
+                                    for l in self.mM:
+                                        modules = l.get_modules()
+                                        if modules[0].get_yid() == id:
+                                            self.displayData(w,modules)
+                                            break
 
 
 

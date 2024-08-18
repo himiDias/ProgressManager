@@ -497,6 +497,7 @@ class YearsScreen(QWidget):
 
     def handle_year_click(self,year):
         #Code to set current widget to the modules screen of the passed in year
+        self.main_window.itemClicked.emit(year)
         print(year)
     
     def getType(self):
@@ -575,6 +576,7 @@ class ModulesScreen(QWidget):
     
     def handle_module_click(self,module):
         #Code to set current widget to the years screen of the passed in course
+        self.main_window.itemClicked.emit(module)
         print(module)
     
     def getType(self):
@@ -650,6 +652,7 @@ class AssessmentScreen(QWidget):
     
     def handle_assessment_click(self,assessment):
         #Code to set current widget to the years screen of the passed in course
+        self.main_window.itemClicked.emit(assessment)
         print(assessment)
     
     def getType(self):
