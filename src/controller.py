@@ -31,7 +31,7 @@ class Controller:
     
     def changeScreen(self,title):
         print("Change screen started")
-        self.view.pageStack.push(title)
+        pStack = self.view.pageStack.getStack()
         currentS = self.view.getCurrentS()
         if currentS == self.view.courses_screen:
             w = self.view.getYearS()
@@ -44,11 +44,11 @@ class Controller:
                         print(years)
                         if years[0].get_cid() == id:
                             print("Found")
+                            self.view.pageStack.push(title)
                             self.displayData(w,years)
                             break
         elif currentS == self.view.years_screen:
             w = self.view.getModuleS()
-            pStack = self.view.pageStack.getStack()
             course = pStack[0]
             for i in self.cM.get_courses():
                 if i.get_title() == course:
@@ -62,8 +62,35 @@ class Controller:
                                     for l in self.mM:
                                         modules = l.get_modules()
                                         if modules[0].get_yid() == id:
+                                            self.view.pageStack.push(title)
                                             self.displayData(w,modules)
                                             break
+        elif currentS == self.view.modules_screen:
+            w = self.view.getAssessmentS()
+            course = pStack[0]
+            year = pStack[1]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM:
+                        years = j.get_years()
+                        if years[0].get_cid() == courseid:
+                            for k in years:
+                                if k.get_title() == year:
+                                    yearid = k.get_id()
+                                    for l in self.mM:
+                                        modules = l.get_modules()
+                                        if modules[0].get_yid() == yearid:
+                                            for m in modules:
+                                                if m.get_title() == title:
+                                                    id = m.get_id()
+                                                    for n in self.aseM:
+                                                        print("TEST")
+                                                        assessments = n.get_assessments()
+                                                        if assessments[0].get_mid() == id:
+                                                            self.view.pageStack.push(title)
+                                                            self.displayData(w,assessments)
+                                                            break
 
 
 
