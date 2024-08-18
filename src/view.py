@@ -384,7 +384,7 @@ class CoursesScreen(QWidget):
         buttons = []
          
         for course in range(len(titles)):
-            tempGrade = QLabel(grades[course])
+            tempGrade = QLabel("Grade: "+grades[course])
             tempB = QPushButton(titles[course])
             tempB.clicked.connect(lambda checked,course=titles[course]: self.handle_course_click(course))
             buttons.append(tempB)
@@ -446,8 +446,8 @@ class YearsScreen(QWidget):
         buttons = []
         # Code to display all years for the course
         for year in range(len(titles)):
-            tempWeight = QLabel(weights[year])
-            tempGrade = QLabel(grades[year])
+            tempWeight = QLabel("Weight: "+weights[year])
+            tempGrade = QLabel("Grade: "+grades[year])
             tempB = QPushButton(titles[year])
             tempB.clicked.connect(lambda checked,year=titles[year]: self.handle_year_click(year))
             buttons.append(tempB)
@@ -526,8 +526,8 @@ class ModulesScreen(QWidget):
         buttons = []
 
         for module in range(len(titles)):
-            tempCredits = QLabel(credits[module])
-            tempGrade = QLabel(grades[module])
+            tempCredits = QLabel("Credits: "+credits[module])
+            tempGrade = QLabel("Grades: "+grades[module])
             tempB = QPushButton(titles[module])
             tempB.clicked.connect(lambda checked,module=titles[module]: self.handle_module_click(module))
             buttons.append(tempB)
@@ -602,8 +602,8 @@ class AssessmentScreen(QWidget):
         row = 1
         buttons = []
         for assess in range(len(titles)):
-            tempWeight = QLabel(weights[assess])
-            tempGrade = QLabel(grades[assess])
+            tempWeight = QLabel("Weight: "+weights[assess])
+            tempGrade = QLabel("Grade: "+grades[assess])
             tempB = QPushButton(titles[assess])
             tempB.clicked.connect(lambda checked,assess=titles[assess]: self.handle_assessment_click(assess))
             buttons.append(tempB)
@@ -678,8 +678,8 @@ class AssignmentsScreen(QWidget):
         row = 1
         for year in range(len(titles)):
             tempTitle = QLabel(titles[year])
-            tempWeight = QLabel(weights[year])
-            tempGrade = QLabel(grades[year])
+            tempWeight = QLabel("Weight: "+weights[year])
+            tempGrade = QLabel("Grade: "+grades[year])
             tempL = QVBoxLayout()
             tempC = QWidget()
             tempC.setLayout(tempL)
