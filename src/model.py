@@ -510,7 +510,7 @@ class assignmentModel:
         
         for record in recs:
             
-            self.assignments.append(Assignment(i,record[1],record[2],record[3],record[4]))
+            self.assignments.append(Assignment(record[0],record[1],record[2],record[3],record[4]))
             
 
     def add_assignment(self,assignment):
