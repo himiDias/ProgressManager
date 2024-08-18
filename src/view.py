@@ -178,19 +178,23 @@ class MainWindow(QMainWindow):
         elif type(widget) == YearsScreen:
             self.years_screen.clearYears()
             self.years_screen.displayYears(args[0],arr1_str,arr2_str)
-            self.years_screen.displayGraph(args[0],args[2])
+            args[0].insert(0,'_')
+            self.years_screen.displayGraph(args[0],args[3])
         elif type(widget) == ModulesScreen:
             self.modules_screen.clearModules()
             self.modules_screen.displayModules(args[0],arr1_str,arr2_str)
-            self.modules_screen.displayGraph(args[0],args[2])
+            args[0].insert(0,'_')
+            self.modules_screen.displayGraph(args[0],args[3])
         elif type(widget) == AssessmentScreen:
             self.assessments_screen.clearAssessments()
             self.assessments_screen.displayAssessments(args[0],arr1_str,arr2_str)
-            self.assessments_screen.displayGraph(args[0],args[2])
+            args[0].insert(0,'_')
+            self.assessments_screen.displayGraph(args[0],args[3])
         else:
             self.assignments_screen.clearAssignments()
             self.assignments_screen.displayAssignments(args[0],arr1_str,arr2_str)
-            self.assignments_screen.displayGraph(args[0],args[2])
+            args[0].insert(0,'_')
+            self.assignments_screen.displayGraph(args[0],args[3])
          
 
 class addWindow(QWidget):

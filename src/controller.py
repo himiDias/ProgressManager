@@ -146,14 +146,35 @@ class Controller:
                     arr1.append(i.get_title())
                     arr2.append(i.get_credits())
                     arr3.append(i.get_grade())
+                self.calculateCumulativeScoreModules(arr2,arr3,arr4)
+                
             else:
                 for i in array:
                     arr1.append(i.get_title())
                     arr2.append(i.get_weight())
                     arr3.append(i.get_grade())
+                self.calculateCumulativeScore(arr2,arr3,arr4)
+                     
             
         self.view.refreshView(widget,arr1,arr2,arr3,arr4)
     
+    def calculateCumulativeScore(self,weight,grades,array):
+        cValue = 0
+        array.append(0)
+        for i in range(0,len(grades)):
+            cValue += grades[i] * (weight[i]/100)
+            array.append(cValue)
+    
+    def calculateCumulativeScoreModules(self,credits,grades,array):
+        cValue = 0
+        totalCredits = sum(credits)
+        array.append(0)
+        for i in range(0,len(grades)):
+            cValue += (credits[i] * grades[i])*totalCredits
+            array.append(cValue)
+
+
+        
 
         
 
