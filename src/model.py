@@ -3,21 +3,27 @@ from getpass import getpass
 import mysql.connector
 from mysql.connector import connect,Error
 
+username = None
+Password = None
+
 #Initial database connection to create an empty database for user
+def initialise_user(user,passw):
+    global username, Password
+    username = user
+    Password = passw
+    try:
+        with connect(
+            host="localhost",
+            user = username,
+            password = Password,
 
-try:
-    with connect(
-        host="localhost",
-        user = input("Enter Username: "),
-        password = getpass("Enter Password: "),
-
-    ) as connection:
-        create_db_query = "CREATE DATABASE IF NOT EXISTS `university-progress`"
-        with connection.cursor() as cursor:
-            cursor.execute(create_db_query)
-            print("Database created/exists, login success")
-except Error as e:
-    print(e)
+        ) as connection:
+            create_db_query = "CREATE DATABASE IF NOT EXISTS `university-progress`"
+            with connection.cursor() as cursor:
+                cursor.execute(create_db_query)
+                print("Database created/exists, login success")
+    except Error:
+        return "Error"
 
 
 
@@ -140,21 +146,19 @@ def initialise_db(con):
     except Error as e:
         print(e)
 
-username = input("Enter Username: ")
-Password = getpass("Enter Password: ")
-
-try:
-    with connect(
-        host="localhost",
-        user = username,
-        password = Password,
-        database="university-progress",
-    ) as connection:
-        print(connection)
-        print("Successfully connected to database")
-        initialise_db(connection)
-except Error as e:
-    print(e)
+def setup_db():
+    try:
+        with connect(
+            host="localhost",
+            user = username,
+            password = Password,
+            database="university-progress",
+        ) as connection:
+            print(connection)
+            print("Successfully connected to database")
+            initialise_db(connection)
+    except Error:
+        return "Error"
 
 # Classes for each part
 class Course:

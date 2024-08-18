@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
+from model import courseModel,yearModel,moduleModel,assessmentModel,assignmentModel
+from controller import Controller
+
 class MplCanvas(FigureCanvas):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         fig = plt.Figure(figsize=(width,height), dpi = dpi)
@@ -106,7 +109,7 @@ class MainWindow(QMainWindow):
          
 
 
-        self.stack.setCurrentWidget(self.modules_screen)
+        self.stack.setCurrentWidget(self.login_screen)
 
         prev_action = QAction(QIcon('./assets/arrowBack.jpg'),'Previous',self)
         prev_action.triggered.connect(self.setPrevWidget)
@@ -259,6 +262,7 @@ class Stack:
 
 
 class LoginScreen(QWidget):
+    loginClicked = pyqtSignal(str,str)
     def __init__(self,main_window):
         super().__init__()
         self.main_window = main_window
@@ -314,6 +318,7 @@ class LoginScreen(QWidget):
         un = self.user.text()
         pw = self.passw.text()
         print(un,pw)
+        self.loginClicked.emit(un,pw)
         pass
 
 class CoursesScreen(QWidget):
@@ -659,7 +664,3 @@ class AssignmentsScreen(QWidget):
         
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    sys.exit(app.exec())
