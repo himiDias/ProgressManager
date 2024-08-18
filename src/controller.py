@@ -91,7 +91,38 @@ class Controller:
                                                             self.view.pageStack.push(title)
                                                             self.displayData(w,assessments)
                                                             break
-
+        elif currentS == self.view.assessments_screen:
+            w = self.view.getAssignmentS()
+            course = pStack[0]
+            year = pStack[1]
+            module = pStack[2]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM:
+                        years = j.get_years()
+                        if years[0].get_cid() == courseid:
+                            for k in years:
+                                if k.get_title() == year:
+                                    yearid = k.get_id()
+                                    for l in self.mM:
+                                        modules = l.get_modules()
+                                        if modules[0].get_yid() == yearid:
+                                            for m in modules:
+                                                if m.get_title() == module:
+                                                    moduleid = m.get_id()
+                                                    for n in self.aseM:
+                                                        assessments = n.get_assessments()
+                                                        if assessments[0].get_mid() == moduleid:
+                                                            for o in assessments:
+                                                                if o.get_title() == title:
+                                                                    id = o.get_id()
+                                                                    for p in self.asiM:
+                                                                        assignments = p.get_assignments()
+                                                                        if assignments[0].get_cid() == id:
+                                                                            self.view.pageStack.push(title)
+                                                                            self.displayData(w,assignments)
+                                                                            break
 
 
 
@@ -104,21 +135,22 @@ class Controller:
         arr1 = []
         arr2 = []
         arr3 = []
-        if type(array[0]) == model.Course:
-            for i in array:
-                arr1.append(i.get_title())
-                arr2.append(i.get_grade())
-        elif type(array[0]) == model.Module:
-            for i in array:
-                arr1.append(i.get_title())
-                arr2.append(i.get_credits())
-                arr3.append(i.get_grade())
-        else:
-            for i in array:
-                arr1.append(i.get_title())
-                arr2.append(i.get_weight())
-                arr3.append(i.get_grade())
-        
+        if array:
+            if type(array[0]) == model.Course:
+                for i in array:
+                    arr1.append(i.get_title())
+                    arr2.append(i.get_grade())
+            elif type(array[0]) == model.Module:
+                for i in array:
+                    arr1.append(i.get_title())
+                    arr2.append(i.get_credits())
+                    arr3.append(i.get_grade())
+            else:
+                for i in array:
+                    arr1.append(i.get_title())
+                    arr2.append(i.get_weight())
+                    arr3.append(i.get_grade())
+            
         self.view.refreshView(widget,arr1,arr2,arr3)
     
 

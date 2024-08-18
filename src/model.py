@@ -3,8 +3,8 @@ from getpass import getpass
 import mysql.connector
 from mysql.connector import connect,Error
 
-username = None
-Password = None
+username = 'himi'
+Password = 'himi'
 
 #Initial database connection to create an empty database for user
 def initialise_user(user,passw):
@@ -260,7 +260,8 @@ class Module:
         return f"Module(id={self.id}, title={self.title}, credits={self.credits}, grade={self.grade}, yearid={self.yearid})"
 
 class Coursework:
-    def __init__(self,weight,grd,mid):
+    def __init__(self,id,weight,grd,mid):
+        self.id = id
         self.title = "Coursework"
         self.weight = weight
         self.grade = grd
@@ -271,6 +272,9 @@ class Coursework:
     
     def update_grade(self,grade):
         self.grade = grade
+
+    def get_id(self):
+        return self.id
     
     def get_weight(self):
         return self.weight
@@ -288,7 +292,8 @@ class Coursework:
         return f"Coursework(title={self.title}, weight={self.weight}, grade={self.grade}, moduleid={self.moduleid})"
 
 class Exam:
-    def __init__(self,weight,grd,mid):
+    def __init__(self,id,weight,grd,mid):
+        self.id = id
         self.title = "Exam"
         self.weight = weight
         self.grade = grd
@@ -300,6 +305,9 @@ class Exam:
     
     def update_grade(self,grade):
         self.grade = grade
+    
+    def get_id(self):
+        return self.id
     
     def get_weight(self):
         return self.weight
@@ -464,9 +472,9 @@ class assessmentModel:
         recs_e = db_get(s1)
 
         for record in recs_c:
-            self.assessments.append(Coursework(record[2],record[3],record[4]))
+            self.assessments.append(Coursework(record[0],record[2],record[3],record[4]))
         for record in recs_e:
-            self.assessments.append(Exam(record[2],record[3],record[4]))
+            self.assessments.append(Exam(record[0],record[2],record[3],record[4]))
     
     def add_cw(self,cw):
         s = f"INSERT INTO coursework (title,weight,grade,module_id) VALUES ('{cw.title}',{cw.weight},{cw.grade},{cw.moduleid})"
@@ -579,41 +587,41 @@ def test_model():
     mathsYearsM = yearModel(2)
 
     # TEST 2 : Add two courses
-    coursesM.add_course(Course(0,"Physics",0))
-    coursesM.add_course(Course(1,"Maths",0))
+    coursesM.add_course(Course(1,"Physics",0))
+    coursesM.add_course(Course(2,"Maths",0))
 
     # TEST 3 : Add 4 years to PhysicsYearsModel
 
-    physicsYearsM.add_year(Year(0,"Year 1",0,0,1))
-    physicsYearsM.add_year(Year(1,"Year 2",10,0,1))
-    physicsYearsM.add_year(Year(2,"Year 3",30,0,1))
-    physicsYearsM.add_year(Year(3,"Year 4",60,0,1))
+    physicsYearsM.add_year(Year(1,"Year 1",0,0,1))
+    physicsYearsM.add_year(Year(2,"Year 2",10,0,1))
+    physicsYearsM.add_year(Year(3,"Year 3",30,0,1))
+    physicsYearsM.add_year(Year(4,"Year 4",60,0,1))
 
     # TEST 4 : Add 3 years to MathsYearsModel
 
-    mathsYearsM.add_year(Year(0,"Year 1",0,0,2))
-    mathsYearsM.add_year(Year(1,"Year 2",40,0,2))
-    mathsYearsM.add_year(Year(2,"Year 3",60,0,2))
+    mathsYearsM.add_year(Year(5,"Year 1",0,0,2))
+    mathsYearsM.add_year(Year(6,"Year 2",40,0,2))
+    mathsYearsM.add_year(Year(7,"Year 3",60,0,2))
 
     # TEST 5 : Add 2 Modules to first year physics
     pY1M = moduleModel(1)
 
-    pY1M.add_module(Module(0,"Introduction to Physics",10,0,1))
-    pY1M.add_module(Module(1,"Kinematics in Mechanics",20,0,1))
+    pY1M.add_module(Module(1,"Introduction to Physics",10,0,1))
+    pY1M.add_module(Module(2,"Kinematics in Mechanics",20,0,1))
 
     # TEST 6 : Add 1 Module to second year physics
 
     pY2M = moduleModel(2)
 
-    pY2M.add_module(Module(0,"Advanced Kinematics",20,0,2))
+    pY2M.add_module(Module(3,"Advanced Kinematics",20,0,2))
 
     # TEST 7 : Add 3 Modules to first year maths
 
     mY1M = moduleModel(5)
 
-    mY1M.add_module(Module(0,"Advanced Algebra",10,0,5))
-    mY1M.add_module(Module(1,"Linear Algebra",10,0,5))
-    mY1M.add_module(Module(2,"Predicated",20,0,5))
+    mY1M.add_module(Module(4,"Advanced Algebra",10,0,5))
+    mY1M.add_module(Module(5,"Linear Algebra",10,0,5))
+    mY1M.add_module(Module(6,"Predicated",20,0,5))
 
     # TEST 8 : Add an exam and coursework section to all modules 
     py1m2M = assessmentModel(2)
@@ -624,23 +632,23 @@ def test_model():
     my1m2M = assessmentModel(5)
     my1m3M = assessmentModel(6)
 
-    py1m2M.add_cw(Coursework(70,0,2))
-    py1m2M.add_e(Exam(30,0,2))
+    py1m2M.add_cw(Coursework(1,70,0,2))
+    py1m2M.add_e(Exam(1,30,0,2))
 
-    py1m1M.add_cw(Coursework(50,0,1))
-    py1m1M.add_e(Exam(50,0,1))
+    py1m1M.add_cw(Coursework(2,50,0,1))
+    py1m1M.add_e(Exam(2,50,0,1))
 
-    py2m1M.add_cw(Coursework(75,0,3))
-    py2m1M.add_e(Exam(25,0,3))
+    py2m1M.add_cw(Coursework(3,75,0,3))
+    py2m1M.add_e(Exam(3,25,0,3))
 
-    my1m1M.add_cw(Coursework(0,0,4))
-    my1m1M.add_e(Exam(100,0,4))
+    my1m1M.add_cw(Coursework(4,0,0,4))
+    my1m1M.add_e(Exam(4,100,0,4))
 
-    my1m2M.add_cw(Coursework(25,0,5))
-    my1m2M.add_e(Exam(75,0,5))
+    my1m2M.add_cw(Coursework(5,25,0,5))
+    my1m2M.add_e(Exam(5,75,0,5))
 
-    my1m3M.add_cw(Coursework(25,0,6))
-    my1m3M.add_e(Exam(75,0,6))
+    my1m3M.add_cw(Coursework(6,25,0,6))
+    my1m3M.add_e(Exam(6,75,0,6))
 
      
 
@@ -649,12 +657,12 @@ def test_model():
     py1m2cM = assignmentModel(1)
     my1m3cM = assignmentModel(6)
 
-    py1m2cM.add_assignment(Assignment(0,"CW1",10,0,1))
-    py1m2cM.add_assignment(Assignment(1,"CW2",40,0,1))
-    py1m2cM.add_assignment(Assignment(2,"CW3",50,0,1))
+    py1m2cM.add_assignment(Assignment(1,"CW1",10,0,1))
+    py1m2cM.add_assignment(Assignment(2,"CW2",40,0,1))
+    py1m2cM.add_assignment(Assignment(3,"CW3",50,0,1))
 
-    my1m3cM.add_assignment(Assignment(0,"CW1",50,0,6))
-    my1m3cM.add_assignment(Assignment(1,"CW2",50,0,6))
+    my1m3cM.add_assignment(Assignment(4,"CW1",50,0,6))
+    my1m3cM.add_assignment(Assignment(5,"CW2",50,0,6))
 
 def test_model2():
 
@@ -666,6 +674,7 @@ def test_model2():
 
     load_data(yM,mM,aseM,asiM)
     
+    print(cM.get_courses())
     print("Ym: ",yM)
     # TEST 1 : Edit a course 
 
@@ -681,8 +690,8 @@ def test_model2():
 
     # TEST 4 : Edit weight values of year 3 maths module Predicates to 50 50 split
 
-    aseM[5].edit_cw(Coursework(50,0,6),6)
-    aseM[5].edit_e(Exam(50,0,6),6)
+    #aseM[5].edit_cw(Coursework(50,0,6),6)
+    #aseM[5].edit_e(Exam(50,0,6),6)
 
     # TEST 5 : Edit assignment CW1 of physics year 1 module 2 coursework to change grade
 
