@@ -62,12 +62,12 @@ class MainWindow(QMainWindow):
         #======================================
         #TEST FOR DISPLAYING YEARS
         print("TEST DISPLAY")
-        self.years_screen.displayYears(['Year 1','Year 2','Year 3'],['0','40','60'],['70','85.6','78.1'])
+        #self.years_screen.displayYears(['Year 1','Year 2','Year 3'],['0','40','60'],['70','85.6','78.1'])
 
         #TEST FOR DISPLAYING GRAPH
         print("TEST GRAPH")
         #(0*70)+(85.6*0.4)=34.24 +(78.1*0.6)= 81.1
-        self.years_screen.displayGraph([0,34.24,81.1],['Year 1','Year 2','Year 3'])
+        #self.years_screen.displayGraph([0,34.24,81.1],['Year 1','Year 2','Year 3'])
         
         #TEST FOR CLEARING YEARS + GRAPH
         print("TEST CLEAR")
@@ -173,17 +173,22 @@ class MainWindow(QMainWindow):
         arr1_str = [str(i) for i in args[1]]
         arr2_str = [str(i) for i in args[2]]
         if type(widget) == CoursesScreen:
+            self.courses_screen.clearCourses()
             self.courses_screen.displayCourses(args[0],arr1_str)
         elif type(widget) == YearsScreen:
+            self.years_screen.clearYears()
             self.years_screen.displayYears(args[0],arr1_str,arr2_str)
             self.years_screen.displayGraph(args[0],args[2])
         elif type(widget) == ModulesScreen:
+            self.modules_screen.clearModules()
             self.modules_screen.displayModules(args[0],arr1_str,arr2_str)
             self.modules_screen.displayGraph(args[0],args[2])
         elif type(widget) == AssessmentScreen:
+            self.assessments_screen.clearAssessments()
             self.assessments_screen.displayAssessments(args[0],arr1_str,arr2_str)
             self.assessments_screen.displayGraph(args[0],args[2])
         else:
+            self.assignments_screen.clearAssignments()
             self.assignments_screen.displayAssignments(args[0],arr1_str,arr2_str)
             self.assignments_screen.displayGraph(args[0],args[2])
          
@@ -428,11 +433,14 @@ class YearsScreen(QWidget):
         self.layout = QGridLayout()
         self.setLayout(self.layout)
         self.type = "Year"
+        self.first = True
 
         titleL = QLabel('Years')
         self.layout.addWidget(titleL,0,0,1,4,alignment=Qt.AlignmentFlag.AlignCenter)
     
     def displayYears(self,titles,weights,grades):
+        if (self.first):
+            self.first = False
         count = 0
         row = 1
         buttons = []
@@ -480,10 +488,11 @@ class YearsScreen(QWidget):
                 row += 1
             widgetItem = self.layout.itemAtPosition(row,count)
         
-        self.layout.removeWidget(self.graph)
-        self.graph.hide()
-        self.graph.deleteLater()
-        self.graph = None
+        if (not self.first):
+            self.layout.removeWidget(self.graph)
+            self.graph.hide()
+            self.graph.deleteLater()
+            self.graph = None
         self.layout.update()
 
     def handle_year_click(self,year):

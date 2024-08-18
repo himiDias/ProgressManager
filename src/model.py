@@ -363,10 +363,10 @@ class courseModel:
         s = f"SELECT * FROM courses"
         recs = db_get(s)
 
-        i=0
+         
         for record in recs:
-            self.courses.append(Course(i,record[1],record[2]))
-            i += 1
+            self.courses.append(Course(record[0],record[1],record[2]))
+             
 
     def add_course(self,course):
         print(course.title)

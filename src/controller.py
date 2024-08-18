@@ -30,13 +30,24 @@ class Controller:
             self.displayData(w,self.cM.get_courses())
     
     def changeScreen(self,title):
+        print("Change screen started")
         self.view.pageStack.push(title)
         currentS = self.view.getCurrentS()
-        if type(currentS) == self.view.CoursesScreen:
+        if currentS == self.view.courses_screen:
             w = self.view.getYearS()
             for i in self.cM.get_courses():
                 if i.get_title() == title:
-                    pass
+                    id = i.get_id()
+                    for j in self.yM:
+                        print("L")
+                        years = j.get_years()
+                        print(years)
+                        if years[0].get_cid() == id:
+                            print("Found")
+                            self.displayData(w,years)
+                            break
+
+
 
 
     
