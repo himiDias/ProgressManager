@@ -397,12 +397,11 @@ class yearModel:
         self.courseId = cid
         s = f"SELECT * FROM years WHERE course_id = {cid}"
         recs = db_get(s)
-        i = 0 
+         
         for record in recs:
             ### NOT.E some params redundant also given the self.courseid attribute, instead of passing in record[4] which is same as cid
             ## FIX LATER FOR ALL
-            self.years.append(Year(i,record[1],record[2],record[3],record[4]))
-            i += 1
+            self.years.append(Year(record[0],record[1],record[2],record[3],record[4]))
 
     def add_year(self,year):
         s = f"INSERT INTO years (year,weight,grade,course_id) VALUES ('{year.title}',{year.weight},{year.grade},{year.courseid})"
@@ -431,11 +430,9 @@ class moduleModel:
 
         s = f"SELECT * FROM modules WHERE year_id = {yid}"
         recs = db_get(s)
-        i = 0 
         for record in recs:
             
-            self.modules.append(Module(i,record[1],record[2],record[3],record[4]))
-            i += 1
+            self.modules.append(Module(record[0],record[1],record[2],record[3],record[4]))
 
     def add_module(self,module):
         s = f"INSERT INTO modules (title,credits,grade,year_id) VALUES ('{module.title}',{module.credits},{module.grade},{module.yearid})"
@@ -510,11 +507,11 @@ class assignmentModel:
 
         s = f"SELECT * FROM assignments WHERE coursework_id = {cid}"
         recs = db_get(s)
-        i = 0 
+        
         for record in recs:
             
             self.assignments.append(Assignment(i,record[1],record[2],record[3],record[4]))
-            i += 1
+            
 
     def add_assignment(self,assignment):
         s = f"INSERT INTO assignments (title,weight,grade,coursework_id) VALUES ('{assignment.title}',{assignment.weight},{assignment.grade},{assignment.courseworkid})"

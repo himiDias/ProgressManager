@@ -46,6 +46,9 @@ class Controller:
                             print("Found")
                             self.displayData(w,years)
                             break
+        elif currentS == self.view.years_screen:
+            w = self.view.getModuleS()
+            
 
 
 
