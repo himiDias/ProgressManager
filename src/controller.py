@@ -10,6 +10,7 @@ class Controller:
         self.asiM = []
 
         self.view.login_screen.loginClicked.connect(self.checkCredentials)
+        self.view.itemClicked.connect(self.changeScreen)
 
 
 
@@ -27,6 +28,17 @@ class Controller:
             w = self.view.getCourseS()
             print("COURSES",self.cM.get_courses())
             self.displayData(w,self.cM.get_courses())
+    
+    def changeScreen(self,title):
+        self.view.pageStack.push(title)
+        currentS = self.view.getCurrentS()
+        if type(currentS) == self.view.CoursesScreen:
+            w = self.view.getYearS()
+            for i in self.cM.get_courses():
+                if i.get_title() == title:
+                    pass
+
+
     
     def getData(self):
         self.cM = model.courseModel()
@@ -52,6 +64,8 @@ class Controller:
                 arr3.append(i.get_grade())
         
         self.view.refreshView(widget,arr1,arr2,arr3)
+    
+
         
 
 

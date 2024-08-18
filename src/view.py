@@ -24,6 +24,7 @@ class MplCanvas(FigureCanvas):
          
 
 class MainWindow(QMainWindow):
+    itemClicked = pyqtSignal(str)
     def __init__(self):
         super().__init__()
         self.setWindowTitle("University Progress Tracker")
@@ -98,9 +99,9 @@ class MainWindow(QMainWindow):
         #=======================================
         #TEST FOR PAGE STACK
         print("STACK TEST")
-        self.pageStack.push('Physics')
-        self.pageStack.push('Year 1')
-        self.pageStack.push('Motions')
+        #self.pageStack.push('Physics')
+        #self.pageStack.push('Year 1')
+        #self.pageStack.push('Motions')
 
         #self.pageStack.pop()
         #self.pageStack.pop()
@@ -159,6 +160,9 @@ class MainWindow(QMainWindow):
     
     def getAssignmentS(self):
         return self.assignments_screen
+    
+    def getCurrentS(self):
+        return self.stack.currentWidget()
     
     def refreshView(self,widget,*args):
         #function to actually set the current widget, and display data
@@ -411,6 +415,7 @@ class CoursesScreen(QWidget):
         #Code to set current widget to the years screen of the passed in course, controller would access the chosen course,
         # then retrieve what needs to be displayed
         print(course)
+        self.main_window.itemClicked.emit(course)
     
     def getType(self):
         return self.type

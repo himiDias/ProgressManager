@@ -551,8 +551,7 @@ def load_data(yearModels,moduleModels,assessmentModels,assignmentModels):
             cwIds.append(record[-1])
             assignmentModels.append(assignmentModel(record[-1]))
 
-    for item in moduleModels:
-        print(item.modules)
+    f 
     
 
 
