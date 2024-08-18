@@ -91,7 +91,7 @@ class Controller:
                                                             self.view.pageStack.push(title)
                                                             self.displayData(w,assessments)
                                                             break
-        elif currentS == self.view.assessments_screen:
+        elif currentS == self.view.assessments_screen and title == "Coursework":
             w = self.view.getAssignmentS()
             course = pStack[0]
             year = pStack[1]
@@ -135,6 +135,7 @@ class Controller:
         arr1 = []
         arr2 = []
         arr3 = []
+        arr4 = []
         if array:
             if type(array[0]) == model.Course:
                 for i in array:
@@ -151,7 +152,7 @@ class Controller:
                     arr2.append(i.get_weight())
                     arr3.append(i.get_grade())
             
-        self.view.refreshView(widget,arr1,arr2,arr3)
+        self.view.refreshView(widget,arr1,arr2,arr3,arr4)
     
 
         
