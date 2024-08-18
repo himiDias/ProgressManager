@@ -203,6 +203,9 @@ class Year:
     def update_title(self,ntitle):
         self.title = ntitle
     
+    def update_weight(self,nweight):
+        self.weight = nweight
+    
     def get_id(self):
         return self.id
 
@@ -322,6 +325,8 @@ class Assignment:
         self.grade = grd
         self.courseworkid = cid
 
+    def update_title(self,ntitle):
+        self.title = ntitle
     def update_weight(self,nWeight):
         self.weight = nWeight
     
