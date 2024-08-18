@@ -327,7 +327,7 @@ class Assignment:
 
     def update_title(self,ntitle):
         self.title = ntitle
-        
+
     def update_weight(self,nWeight):
         self.weight = nWeight
     
@@ -569,7 +569,7 @@ def load_data(yearModels,moduleModels,assessmentModels,assignmentModels):
             cwIds.append(record[-1])
             assignmentModels.append(assignmentModel(record[-1]))
 
-    f 
+
     
 
 
