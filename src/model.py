@@ -174,6 +174,9 @@ class Course:
     def update_title(self,ntitle):
         self.title = ntitle
 
+    def get_id(self):
+        return self.id
+    
     def get_grade(self):
         return self.grade
     
@@ -199,6 +202,9 @@ class Year:
     
     def update_title(self,ntitle):
         self.title = ntitle
+    
+    def get_id(self):
+        return self.id
 
     def get_weight(self):
         return self.weight
@@ -231,6 +237,9 @@ class Module:
 
     def update_grade(self,grade):
         self.grade= grade
+    
+    def get_id(self):
+        return self.id
     
     def get_title(self):
         return self.title
@@ -318,6 +327,9 @@ class Assignment:
     
     def update_grade(self,grade):
         self.grade = grade
+    
+    def get_id(self):
+        return self.id
     
     def get_weight(self):
         return self.weight
