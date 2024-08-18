@@ -142,10 +142,29 @@ class MainWindow(QMainWindow):
         else:
             pass
     
+    def getLoginS(self):
+        return self.login_screen
+    
+    def getCourseS(self):
+        return self.courses_screen
+    
+    def getYearS(self):
+        return self.years_screen
+    
+    def getModuleS(self):
+        return self.modules_screen
+    
+    def getAssessmentS(self):
+        return self.assessments_screen
+    
+    def getAssignmentS(self):
+        return self.assignments_screen
+    
     def refreshView(self,widget,*args):
         #function to actually set the current widget, and display data
         # First clear current display of the chosen widget
         #Then display new data given on the chosen widget
+        self.stack.setCurrentWidget(widget)
         pass
 
 class addWindow(QWidget):
