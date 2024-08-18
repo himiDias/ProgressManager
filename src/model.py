@@ -327,6 +327,7 @@ class Assignment:
 
     def update_title(self,ntitle):
         self.title = ntitle
+        
     def update_weight(self,nWeight):
         self.weight = nWeight
     
