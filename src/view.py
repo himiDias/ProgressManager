@@ -52,8 +52,8 @@ class MainWindow(QMainWindow):
         # TESTING IS hardcoded as controller would be responsible for determining and passing in correct values for functions 
         #======================================
         # TEST FOR DISPLAYING COURSES
-        print("TEST DISPLAY")
-        self.courses_screen.displayCourses(["Physics","Maths","CS","English","Physc"],['45.0','77.0','65.3','15.0','34.2'])
+        #print("TEST DISPLAY")
+        #self.courses_screen.displayCourses(["Physics","Maths","CS","English","Physc"],['45.0','77.0','65.3','15.0','34.2'])
 
         # TEST FOR CLEARING COURSES
         print("TEST CLEAR")
