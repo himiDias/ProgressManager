@@ -436,14 +436,12 @@ class YearsScreen(QWidget):
         self.layout = QGridLayout()
         self.setLayout(self.layout)
         self.type = "Year"
-        self.first = True
+        self.graph = None
 
         titleL = QLabel('Years')
         self.layout.addWidget(titleL,0,0,1,4,alignment=Qt.AlignmentFlag.AlignCenter)
     
     def displayYears(self,titles,weights,grades):
-        if (self.first):
-            self.first = False
         count = 0
         row = 1
         buttons = []
@@ -492,7 +490,7 @@ class YearsScreen(QWidget):
                 row += 1
             widgetItem = self.layout.itemAtPosition(row,count)
         
-        if (not self.first):
+        if (self.graph):
             self.layout.removeWidget(self.graph)
             self.graph.hide()
             self.graph.deleteLater()
@@ -516,14 +514,12 @@ class ModulesScreen(QWidget):
         self.layout = QGridLayout()
         self.setLayout(self.layout)
         self.type = "Module"
-        self.first = True
+        self.graph = None
 
         titleL = QLabel('Modules')
         self.layout.addWidget(titleL,0,0,1,4,alignment=Qt.AlignmentFlag.AlignCenter)
     
     def displayModules(self,titles,credits,grades):
-        if (self.first):
-            self.first = False
         # Code to display all modules for the year
         count = 0
         row = 1
@@ -572,7 +568,7 @@ class ModulesScreen(QWidget):
                 row += 1
             widgetItem = self.layout.itemAtPosition(row,count)
 
-        if (not self.first):
+        if (self.graph):
             self.layout.removeWidget(self.graph)
             self.graph.hide()
             self.graph.deleteLater()
@@ -594,14 +590,12 @@ class AssessmentScreen(QWidget):
         self.layout = QGridLayout()
         self.setLayout(self.layout)
         self.type = "Assessment"
-        self.first = True
+        self.graph = None
 
         titleL = QLabel('Assessments')
         self.layout.addWidget(titleL,0,0,1,4,alignment=Qt.AlignmentFlag.AlignCenter)
     
     def displayAssessments(self,titles,weights,grades):
-        if (self.first):
-            self.first = False
         # Code to display all assessments for the module
         count = 0
         row = 1
@@ -649,7 +643,7 @@ class AssessmentScreen(QWidget):
                 row += 1
             widgetItem = self.layout.itemAtPosition(row,count)
         
-        if (not self.first):
+        if (self.graph):
             self.layout.removeWidget(self.graph)
             self.graph.hide()
             self.graph.deleteLater()
@@ -671,14 +665,12 @@ class AssignmentsScreen(QWidget):
         self.layout = QGridLayout()
         self.setLayout(self.layout)
         self.type = "Assignment"
-        self.first = True
+        self.graph = None
 
         titleL = QLabel('Assignments')
         self.layout.addWidget(titleL,0,0,1,4,alignment=Qt.AlignmentFlag.AlignCenter)
     
     def displayAssignments(self,titles,weights,grades):
-        if (self.first):
-            self.first = False
         # Code to display all assignments for the coursework
         count = 0
         row = 1
@@ -723,7 +715,7 @@ class AssignmentsScreen(QWidget):
                 row += 1
             widgetItem = self.layout.itemAtPosition(row,count)
         
-        if (not self.first):
+        if (self.graph):
             self.layout.removeWidget(self.graph)
             self.graph.hide()
             self.graph.deleteLater()

@@ -38,6 +38,64 @@ class Controller:
             courses = self.cM.get_courses()
             self.displayData(w,courses)
             self.view.pageStack.pop()
+        elif currentS == self.view.modules_screen:
+            w = self.view.getYearS()
+            course = pStack[0]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM:
+                        years = j.get_years()
+                        if (years[0].get_cid() == courseid):
+                            self.displayData(w,years)
+                            self.view.pageStack.pop()
+                            break
+        elif currentS == self.view.assessments_screen:
+            w = self.view.getModuleS()
+            course = pStack[0]
+            year = pStack[1]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM:
+                        years = j.get_years()
+                        if (years[0].get_cid() == courseid):
+                            for k in years:
+                                if k.get_title() == year:
+                                    yearid = k.get_id()
+                                    for l in self.mM:
+                                        modules = l.get_modules()
+                                        if (modules[0].get_yid()==yearid):
+                                            self.displayData(w,modules)
+                                            self.view.pageStack.pop()
+                                            break
+        else:
+            w = self.view.getAssessmentS()
+            course = pStack[0]
+            year = pStack[1]
+            module = pStack[2]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM:
+                        years = j.get_years()
+                        if (years[0].get_cid() == courseid):
+                            for k in years:
+                                if k.get_title() == year:
+                                    yearid = k.get_id()
+                                    for l in self.mM:
+                                        modules = l.get_modules()
+                                        if (modules[0].get_yid() == yearid):
+                                            for m in modules:
+                                                if (m.get_title() == module):
+                                                    moduleid = m.get_id()
+                                                    for n in self.aseM:
+                                                        assessments = n.get_assessments()
+                                                        if (assessments[0].get_mid() == moduleid):
+                                                            self.displayData(w,assessments)
+                                                            self.view.pageStack.pop()
+                                                            break
+                    
 
     def changeScreen(self,title):
         print("Change screen started")
