@@ -288,15 +288,16 @@ class addWindow(QWidget):
         if rb.isChecked():
             self.option = rb.text()
     def addNewItem(self):
-        title = self.tBox.text()
+         
         grade = self.gBox.text()
         type = self.type
+        if (type == "Assessment"):
+            title = self.option
+        else:
+            title = self.tBox.text()
         if (type == "Year" or type == "Assessment" or type == "Assignment"):
             weight = self.wBox.text()
-            if (type == "Assessment"):
-                self.main_window.addItemClicked.emit([type,self.option,weight,grade])
-            else:
-                self.main_window.addItemClicked.emit([type,title,weight,grade])
+            self.main_window.addItemClicked.emit([type,title,weight,grade])
         elif (type == "Module"):
             credits = self.cBox.text()
             self.main_window.addItemClicked.emit([type,title,credits,grade])

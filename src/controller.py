@@ -85,7 +85,7 @@ class Controller:
                         if i.get_title() == course:
                             courseid = i.get_id()
                             for j in self.yM:
-                                years = j.get_year()
+                                years = j.get_years()
                                 if (years[0].get_cid() == courseid):
                                     empty = False
                                     j.add_year(model.Year(id,title,weight,grade,courseid))
@@ -97,7 +97,100 @@ class Controller:
                                 self.yM[-1].add_year(model.Year(id,title,weight,grade,courseid))
                                 self.displayData(self.view.getCurrentS(),years)
                                 break
-                 
+                elif (type == "Assessment"):
+                    if (title == "Coursework"):
+                        id = self.aseM[0].get_nextID_CW()
+                    else:
+                        id = self.aseM[0].get_nextID_E()
+                    course = pStack[0]
+                    year = pStack[1]
+                    module = pStack[2]
+                    for i in self.cM.get_courses():
+                        if i.get_title() == course:
+                            courseid = i.get_id()
+                            for j in self.yM:
+                                years = j.get_years()
+                                if (years[0].get_cid() == courseid):
+                                    for k in years:
+                                        if k.get_title() == year:
+                                            yearid = k.get_id()
+                                            for l in self.mM:
+                                                modules = l.get_modules()
+                                                if (modules[0].get_yid()==yearid):
+                                                    for m in modules:
+                                                        if m.get_title() == module:
+                                                            moduleid = m.get_id()
+                                                            for n in self.aseM:
+                                                                assessments = n.get_assessments()
+                                                                if (assessments[0].get_mid() == moduleid):
+                                                                    empty = False
+                                                                    cwPres = False
+                                                                    ePres = False
+                                                                    for o in assessments:
+                                                                        if o.get_title() == "Coursework":
+                                                                            cwPres = True
+                                                                        else:
+                                                                            ePres = True
+                                                                    if (title == "Coursework" and not cwPres):
+                                                                        n.add_cw(model.Coursework(id,weight,grade,moduleid))
+                                                                        self.displayData(self.view.getCurrentS(),assessments)
+                                                                    elif (title == "Exam" and not ePres):
+                                                                        n.add_e(model.Exam(id,weight,grade,moduleid))
+                                                                        self.displayData(self.view.getCurrentS(),assessments)
+                                                                    else:
+                                                                        print(title," Already Exists in Module")
+                                                                    break
+                                                            if(empty):
+                                                                self.aseM.append(model.assessmentModel(moduleid))
+                                                                assessments = self.aseM[-1].get_assessments()
+                                                                if (title == "Coursework"):
+                                                                    self.aseM[-1].add_cw(model.Coursework(id,weight,grade,moduleid))
+                                                                    self.displayData(self.view.getCurrentS(),assessments)
+                                                                else:
+                                                                    self.aseM[-1].add_e(model.Exam(id,weight,grade,moduleid))
+                                                                    self.displayData(self.view.getCurrentS(),assessments)
+                                                                break
+                else:
+                    id = self.asiM[0].get_nextID()
+                    course = pStack[0]
+                    year = pStack[1]
+                    module = pStack[2]
+                    assessment = pStack[3]
+                    for i in self.cM.get_courses():
+                        if i.get_title() == course:
+                            courseid = i.get_id()
+                            for j in self.yM:
+                                years = j.get_years()
+                                if (years[0].get_cid() == courseid):
+                                    for k in years:
+                                        if k.get_title() == year:
+                                            yearid = k.get_id()
+                                            for l in self.mM:
+                                                modules = l.get_modules()
+                                                if (modules[0].get_yid()==yearid):
+                                                    for m in modules:
+                                                        if m.get_title() == module:
+                                                            moduleid = m.get_id()
+                                                            for n in self.aseM:
+                                                                assessments = n.get_assessments()
+                                                                if (assessments[0].get_mid() == moduleid):
+                                                                    for o in assessments:
+                                                                        if o.get_title() == assessment:
+                                                                            assessmentid = o.get_id()
+                                                                            for p in self.asiM:
+                                                                                assignments = p.get_assignments()
+                                                                                if (assignments[0].get_cid() == assessmentid):
+                                                                                    empty = False
+                                                                                    p.add_assignment(model.Assignment(id,title,weight,grade,assessmentid))
+                                                                                    self.displayData(self.view.getCurrentS(),assignments)
+                                                                                    break
+                                                                            if (empty):
+                                                                                self.asiM.append(model.assignmentModel(assessmentid))
+                                                                                assignments = self.asiM[-1].get_assignments()
+                                                                                self.asiM[-1].add_assignment(model.Assignment(id,title,weight,grade,assessmentid))
+                                                                                self.displayData(self.view.getCurrentS(),assignments)
+                                                                                break
+
                      
                                                 
 
