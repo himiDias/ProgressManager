@@ -11,6 +11,7 @@ class Controller:
 
         self.view.login_screen.loginClicked.connect(self.checkCredentials)
         self.view.itemClicked.connect(self.changeScreen)
+        self.view.previousClicked.connect(self.changeScreenPrev)
 
 
 
@@ -29,6 +30,15 @@ class Controller:
             print("COURSES",self.cM.get_courses())
             self.displayData(w,self.cM.get_courses())
     
+    def changeScreenPrev(self):
+        pStack = self.view.pageStack.getStack()
+        currentS = self.view.getCurrentS()
+        if currentS == self.view.years_screen:
+            w = self.view.getCourseS()
+            courses = self.cM.get_courses()
+            self.displayData(w,courses)
+            self.view.pageStack.pop()
+
     def changeScreen(self,title):
         print("Change screen started")
         pStack = self.view.pageStack.getStack()

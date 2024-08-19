@@ -25,6 +25,7 @@ class MplCanvas(FigureCanvas):
 
 class MainWindow(QMainWindow):
     itemClicked = pyqtSignal(str)
+    previousClicked = pyqtSignal()
     def __init__(self):
         super().__init__()
         self.setWindowTitle("University Progress Tracker")
@@ -132,9 +133,7 @@ class MainWindow(QMainWindow):
             print("None in Stack")
             pass
         else:
-            s = self.pageStack.getStack()
-            for i in s:
-                print(i)
+            self.previousClicked.emit()
     
     def addItem(self):
         if(self.stack.currentWidget().getType()):
