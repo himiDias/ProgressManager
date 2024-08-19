@@ -470,10 +470,11 @@ class YearsScreen(QWidget):
     def displayGraph(self,years,grades):
         # Code to display the graph of progress for the course
         # For all graphs, the grades array is the cumulative value of the grades as modules increase
-        self.graph = MplCanvas(self,width=5,height=4,dpi=100)
-        self.graph.axes.plot(years,grades)
-        self.graph.axes.set_ylim([0,100])
-        self.layout.addWidget(self.graph,1,4)
+        if (len(years) > 1):
+            self.graph = MplCanvas(self,width=5,height=4,dpi=100)
+            self.graph.axes.plot(years,grades)
+            self.graph.axes.set_ylim([0,100])
+            self.layout.addWidget(self.graph,1,4)
 
     def clearYears(self):
         # Code to clear all courses from screen, called before calling displayCourses so as to not overlap
@@ -549,10 +550,11 @@ class ModulesScreen(QWidget):
 
     def displayGraph(self,modules,grades):
         # Code to display the graph of progress for the year
-        self.graph = MplCanvas(self,width=5,height=4,dpi=100)
-        self.graph.axes.plot(modules,grades)
-        self.graph.axes.set_ylim([0,100])
-        self.layout.addWidget(self.graph,1,5)
+        if(len(modules)>1):
+            self.graph = MplCanvas(self,width=5,height=4,dpi=100)
+            self.graph.axes.plot(modules,grades)
+            self.graph.axes.set_ylim([0,100])
+            self.layout.addWidget(self.graph,1,5)
 
     def clearModules(self):
         # Code to clear all courses from screen, called before calling displayCourses so as to not overlap
@@ -625,10 +627,11 @@ class AssessmentScreen(QWidget):
 
     def displayGraph(self,assessments,grades):
         # Code to display the graph of progress for the module
-        self.graph = MplCanvas(self,width=5,height=4,dpi=100)
-        self.graph.axes.plot(assessments,grades)
-        self.graph.axes.set_ylim([0,100])
-        self.layout.addWidget(self.graph,1,5)
+        if(len(assessments) > 1):
+            self.graph = MplCanvas(self,width=5,height=4,dpi=100)
+            self.graph.axes.plot(assessments,grades)
+            self.graph.axes.set_ylim([0,100])
+            self.layout.addWidget(self.graph,1,5)
 
     def clearAssessments(self):
         # Code to clear all courses from screen, called before calling displayCourses so as to not overlap
@@ -698,10 +701,11 @@ class AssignmentsScreen(QWidget):
 
     def displayGraph(self,assignments,grades):
         # Code to display the graph of progress for the coursework
-        self.graph = MplCanvas(self,width=5,height=4,dpi=100)
-        self.graph.axes.plot(assignments,grades)
-        self.graph.axes.set_ylim([0,100])
-        self.layout.addWidget(self.graph,1,5)
+        if (len(assignments) > 1):
+            self.graph = MplCanvas(self,width=5,height=4,dpi=100)
+            self.graph.axes.plot(assignments,grades)
+            self.graph.axes.set_ylim([0,100])
+            self.layout.addWidget(self.graph,1,5)
     
     def clearAssignments(self):
         # Code to clear all courses from screen, called before calling displayCourses so as to not overlap

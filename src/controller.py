@@ -33,6 +33,7 @@ class Controller:
         print("Change screen started")
         pStack = self.view.pageStack.getStack()
         currentS = self.view.getCurrentS()
+        empty = True
         if currentS == self.view.courses_screen:
             w = self.view.getYearS()
             for i in self.cM.get_courses():
@@ -44,9 +45,15 @@ class Controller:
                         print(years)
                         if years[0].get_cid() == id:
                             print("Found")
-                            self.view.pageStack.push(title)
+                            empty = False
                             self.displayData(w,years)
                             break
+                    if(empty): 
+                        self.displayData(w,[])
+                        break
+            self.view.pageStack.push(title)
+                    
+        
         elif currentS == self.view.years_screen:
             w = self.view.getModuleS()
             course = pStack[0]
@@ -62,9 +69,13 @@ class Controller:
                                     for l in self.mM:
                                         modules = l.get_modules()
                                         if modules[0].get_yid() == id:
-                                            self.view.pageStack.push(title)
+                                            empty = False
                                             self.displayData(w,modules)
                                             break
+                                    if(empty):
+                                        self.displayData(w,[])
+                                        break
+            self.view.pageStack.push(title)
         elif currentS == self.view.modules_screen:
             w = self.view.getAssessmentS()
             course = pStack[0]
@@ -88,9 +99,12 @@ class Controller:
                                                         print("TEST")
                                                         assessments = n.get_assessments()
                                                         if assessments[0].get_mid() == id:
-                                                            self.view.pageStack.push(title)
+                                                            empty = False
                                                             self.displayData(w,assessments)
                                                             break
+                                                    if (empty):
+                                                        self.displayData(w,[])
+            self.view.pageStack.push(title)
         elif currentS == self.view.assessments_screen and title == "Coursework":
             w = self.view.getAssignmentS()
             course = pStack[0]
@@ -120,9 +134,12 @@ class Controller:
                                                                     for p in self.asiM:
                                                                         assignments = p.get_assignments()
                                                                         if assignments[0].get_cid() == id:
-                                                                            self.view.pageStack.push(title)
+                                                                            empty = False
                                                                             self.displayData(w,assignments)
                                                                             break
+                                                                    if(empty):
+                                                                        self.displayData(w,[])
+            self.view.pageStack.push(title)
 
 
 
