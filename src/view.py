@@ -206,6 +206,7 @@ class addWindow(QWidget):
         self.setGeometry(100,100,300,200)
         layout = QVBoxLayout()
         self.setLayout(layout)
+        self.option = None
 
         titleL = QLabel("Enter "+IType+" Details")
         layout.addWidget(titleL)
@@ -213,14 +214,22 @@ class addWindow(QWidget):
         tLayout = QHBoxLayout()
         titleD = QWidget()
         titleD.setLayout(tLayout)
-        tLabel = QLabel(" Enter Title")
-        self.tBox = QLineEdit(
-            self,
-            placeholderText = 'Title',
-            maxLength = 50
-        )
-        tLayout.addWidget(tLabel)
-        tLayout.addWidget(self.tBox)
+        if (IType == "Assessment"):
+            cwRB = QRadioButton('Coursework',self)
+            eRB = QRadioButton('Exam',self)
+            cwRB.toggled.connect(self.updateOption)
+            eRB.toggled.connect(self.updateOption)
+            tLayout.addWidget(cwRB)
+            tLayout.addWidget(eRB)
+        else:
+            tLabel = QLabel(" Enter Title")
+            self.tBox = QLineEdit(
+                self,
+                placeholderText = 'Title',
+                maxLength = 50
+            )
+            tLayout.addWidget(tLabel)
+            tLayout.addWidget(self.tBox)
         layout.addWidget(titleD)
 
         if(IType == "Year" or IType == "Assessment" or IType == "Assignment"):
@@ -274,13 +283,20 @@ class addWindow(QWidget):
         oLayout.addWidget(cancelB)
         layout.addWidget(optionsD)
     
+    def updateOption(self):
+        rb = self.sender()
+        if rb.isChecked():
+            self.option = rb.text()
     def addNewItem(self):
         title = self.tBox.text()
         grade = self.gBox.text()
         type = self.type
         if (type == "Year" or type == "Assessment" or type == "Assignment"):
             weight = self.wBox.text()
-            self.main_window.addItemClicked.emit([type,title,weight,grade])
+            if (type == "Assessment"):
+                self.main_window.addItemClicked.emit([type,self.option,weight,grade])
+            else:
+                self.main_window.addItemClicked.emit([type,title,weight,grade])
         elif (type == "Module"):
             credits = self.cBox.text()
             self.main_window.addItemClicked.emit([type,title,credits,grade])
