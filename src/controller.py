@@ -18,6 +18,7 @@ class Controller:
         type = array[0]
         title = array[1]
         pStack = self.view.pageStack.getStack()
+        empty = True
         if type == "Course":
             try:
                 grade = float(array[2])
@@ -59,10 +60,16 @@ class Controller:
                                                 modules = l.get_modules()
                                                 if modules[0].get_yid() == yearid:
                                                     print("Found")
+                                                    empty = False
                                                     l.add_module(model.Module(id,title,credits,grade,yearid))
                                                     self.displayData(self.view.getCurrentS(),modules)
                                                     break
-                                            print("Not found")
+                                            if (empty):
+                                                self.mM.append(model.moduleModel(yearid))
+                                                modules = self.mM[-1].get_modules()
+                                                self.mM[-1].add_module(model.Module(id,title,credits,grade,yearid))
+                                                self.displayData(self.view.getCurrentS(),modules)
+                                                break
                                                 
 
 
