@@ -275,14 +275,14 @@ class addWindow(QWidget):
         layout.addWidget(optionsD)
     
     def addNewItem(self):
-        title = self.tBox
-        grade = self.gBox
+        title = self.tBox.text()
+        grade = self.gBox.text()
         type = self.type
         if (type == "Year" or type == "Assessment" or type == "Assignment"):
-            weight = self.wBox
+            weight = self.wBox.text()
             self.main_window.addItemClicked.emit([type,title,weight,grade])
         elif (type == "Module"):
-            credits = self.cBox
+            credits = self.cBox.text()
             self.main_window.addItemClicked.emit([type,title,credits,grade])
         else:
             self.main_window.addItemClicked.emit([type,title,grade])
