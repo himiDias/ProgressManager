@@ -140,7 +140,7 @@ There will be two databases used within the program, one is runtime in memory an
 
 - Improve code/performance by deleting widgte when refreshing
 
-- Not sure whether the array of buttons is needed when displaying all courses/years... 
+- Not sure whether the array of buttons is needed when displaying all courses/years...
 
 ## To Do
 
@@ -153,3 +153,5 @@ There will be two databases used within the program, one is runtime in memory an
 - Could add a further attribute to years,module etc which is the grade adjusted for the weight (FUTURE)
 
 - View only skeleton, spruce up and do lot more styling
+
+- Controller, grade should be "-" not 0 when when grade not given so graph does not show no grade change
