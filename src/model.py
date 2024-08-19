@@ -146,6 +146,27 @@ def initialise_db(con):
     except Error as e:
         print(e)
 
+def get_next_id(table):
+    try:
+        with connect(
+            host = "localhost",
+            user= username,
+            password = Password,
+            database="university-progress",
+        ) as connection:
+            print(connection)
+            print("Successfully connected to database")
+            try:
+                with connection.cursor() as cursor:
+                    s = "SELECT `AUTO_INCREMENT` FROM `information_schema`.`TABLES` WHERE `TABLE_SCHEMA` = `university-progress` AND `TABLE_NAME` = "+table
+                    cursor.execute(s)
+                    id = cursor.fetchone()
+                    return id[0]
+            except Error as e:
+                print(e)
+    except Error as e:
+        print(e)
+
 def setup_db():
     try:
         with connect(
@@ -395,6 +416,9 @@ class courseModel:
         s=f"UPDATE courses SET title = '{course.title}', grade = {course.grade} WHERE id = {d_id}"
         db_set(s)
         self.courses[course.id] = course
+    
+    def get_nextID(self):
+        return get_next_id("courses")
 
 
   
@@ -430,6 +454,9 @@ class yearModel:
         db_set(s)
         self.years[year.id] = year
     
+    def get_nextID(self):
+        return get_next_id("years")
+    
 
 class moduleModel:
     def __init__(self,yid):
@@ -460,6 +487,9 @@ class moduleModel:
         s=f"UPDATE modules SET title = '{module.title}', credits = {module.credits}, grade = {module.grade}, year_id = {module.yearid} WHERE id = {d_id}"
         db_set(s)
         self.modules[module.id] = module
+    
+    def get_nextID(self):
+        return get_next_id("modules")
 
 class assessmentModel:
     def __init__(self,mid):
@@ -507,6 +537,12 @@ class assessmentModel:
     def edit_e(self,exam,d_id):
         s=f"UPDATE exam SET weight = '{exam.weight}', grade = {exam.grade}, module_id = {exam.moduleid} WHERE id = {d_id}"
         db_set(s)
+
+    def get_nextID_CW(self):
+        return get_next_id("coursework")
+    
+    def get_nextID_E(self):
+        return get_next_id("exam")
     
 class assignmentModel:
     def __init__(self,cid):
@@ -539,6 +575,9 @@ class assignmentModel:
         s=f"UPDATE assignments SET title = '{assignment.title}', weight = {assignment.weight}, grade = {assignment.grade}, coursework_id = {assignment.courseworkid} WHERE id = {d_id}"
         db_set(s)
         self.assignments[assignment.id] = assignment
+    
+    def get_nextID(self):
+        return get_next_id("assignments")
     
 # Loads saved data during startup and updates    
 

@@ -12,8 +12,12 @@ class Controller:
         self.view.login_screen.loginClicked.connect(self.checkCredentials)
         self.view.itemClicked.connect(self.changeScreen)
         self.view.previousClicked.connect(self.changeScreenPrev)
+        self.view.addItemClicked.connect(self.addItem)
 
-
+    def addItem(self,array):
+        type = array[0]
+        if type == "Course":
+            self.cM.add_course(model.Course())
 
 
     def checkCredentials(self,user,passw):

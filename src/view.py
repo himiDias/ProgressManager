@@ -26,6 +26,7 @@ class MplCanvas(FigureCanvas):
 class MainWindow(QMainWindow):
     itemClicked = pyqtSignal(str)
     previousClicked = pyqtSignal()
+    addItemClicked = pyqtSignal(list)
     def __init__(self):
         super().__init__()
         self.setWindowTitle("University Progress Tracker")
@@ -137,7 +138,7 @@ class MainWindow(QMainWindow):
     
     def addItem(self):
         if(self.stack.currentWidget().getType()):
-            self.add_window = addWindow(self.stack.currentWidget().getType())
+            self.add_window = addWindow(self.stack.currentWidget().getType(),self)
             self.add_window.show()
         else:
             pass
@@ -197,7 +198,9 @@ class MainWindow(QMainWindow):
          
 
 class addWindow(QWidget):
-    def __init__(self,IType):
+    def __init__(self,IType,main_window):
+        self.type = IType
+        self.main_window = main_window
         super().__init__()
         self.setWindowTitle('Add '+ IType)
         self.setGeometry(100,100,300,200)
@@ -272,6 +275,21 @@ class addWindow(QWidget):
         layout.addWidget(optionsD)
     
     def addNewItem(self):
+        title = self.tBox
+        grade = self.gBox
+        type = self.type
+        if (type == "Year" or type == "Assessment" or type == "Assignment"):
+            weight = self.wBox
+            self.main_window.addItemClicked.emit([type,title,weight,grade])
+        elif (type == "Module"):
+            credits = self.cBox
+            self.main_window.addItemClicked.emit([type,title,credits,grade])
+        else:
+            self.main_window.addItemClicked.emit([type,title,grade])
+        
+
+        
+         
         #function to check validity of entered data
         #connect to controller to add values to database
         #controller will then call refreshView again 
