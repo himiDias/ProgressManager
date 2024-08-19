@@ -158,7 +158,7 @@ def get_next_id(table):
             print("Successfully connected to database")
             try:
                 with connection.cursor() as cursor:
-                    s = "SELECT `AUTO_INCREMENT` FROM `information_schema`.`TABLES` WHERE `TABLE_SCHEMA` = `university-progress` AND `TABLE_NAME` = "+table
+                    s = "SELECT `AUTO_INCREMENT` FROM `information_schema`.`TABLES` WHERE `TABLE_SCHEMA` = 'university-progress' AND `TABLE_NAME` = "+table
                     cursor.execute(s)
                     id = cursor.fetchone()
                     return id[0]
@@ -418,7 +418,7 @@ class courseModel:
         self.courses[course.id] = course
     
     def get_nextID(self):
-        return get_next_id("courses")
+        return get_next_id("'courses'")
 
 
   
@@ -455,7 +455,7 @@ class yearModel:
         self.years[year.id] = year
     
     def get_nextID(self):
-        return get_next_id("years")
+        return get_next_id("'years'")
     
 
 class moduleModel:
@@ -489,7 +489,7 @@ class moduleModel:
         self.modules[module.id] = module
     
     def get_nextID(self):
-        return get_next_id("modules")
+        return get_next_id("'modules'")
 
 class assessmentModel:
     def __init__(self,mid):
@@ -539,10 +539,10 @@ class assessmentModel:
         db_set(s)
 
     def get_nextID_CW(self):
-        return get_next_id("coursework")
+        return get_next_id("'coursework'")
     
     def get_nextID_E(self):
-        return get_next_id("exam")
+        return get_next_id("'exam'")
     
 class assignmentModel:
     def __init__(self,cid):
@@ -577,7 +577,7 @@ class assignmentModel:
         self.assignments[assignment.id] = assignment
     
     def get_nextID(self):
-        return get_next_id("assignments")
+        return get_next_id("'assignments'")
     
 # Loads saved data during startup and updates    
 

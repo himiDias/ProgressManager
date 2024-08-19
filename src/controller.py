@@ -17,7 +17,8 @@ class Controller:
     def addItem(self,array):
         type = array[0]
         if type == "Course":
-            self.cM.add_course(model.Course())
+            id = self.cM.get_nextID()
+            print(id)
 
 
     def checkCredentials(self,user,passw):
