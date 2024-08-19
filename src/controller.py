@@ -23,7 +23,7 @@ class Controller:
             try:
                 grade = float(array[2])
             except:
-                print("INVALID INPUTS")
+                print("INVALID TYPE")
             else:
                 if  grade <0 or grade > 100.0:
                     print("INVALID INPUTS")
@@ -32,12 +32,12 @@ class Controller:
                     self.cM.add_course(model.Course(id,title,grade))
                     self.displayData(self.view.getCurrentS(),self.cM.get_courses())
                     print(self.cM.get_courses())
-        if type == "Module":
+        elif type == "Module":
             try:
                 credits = int(array[2])
                 grade = float(array[3])
             except:
-                print("INVALID DATA")
+                print("INVALID TYPE")
             else:
                 if (credits < 0 or credits > 180) or (grade < 0 or grade > 100.0):
                     print("INVALID INPUTS")
@@ -48,7 +48,6 @@ class Controller:
                     for i in self.cM.get_courses():
                         if i.get_title() == course:
                             courseid = i.get_id()
-                            print("COurse id ",courseid )
                             for j in self.yM:
                                 years = j.get_years()
                                 print(years)
@@ -70,6 +69,36 @@ class Controller:
                                                 self.mM[-1].add_module(model.Module(id,title,credits,grade,yearid))
                                                 self.displayData(self.view.getCurrentS(),modules)
                                                 break
+        else:
+            try:
+                weight = int(array[2])
+                grade = float(array[3])
+            except:
+                print("INVALID TYPE")
+            else:
+                if (weight < 0 or weight > 100) or (grade < 0 or grade > 100):
+                    print("INVALID INPUT")
+                elif (type == "Year"):
+                    id = self.yM[0].get_nextID()
+                    course = pStack[0]
+                    for i in self.cM.get_courses():
+                        if i.get_title() == course:
+                            courseid = i.get_id()
+                            for j in self.yM:
+                                years = j.get_year()
+                                if (years[0].get_cid() == courseid):
+                                    empty = False
+                                    j.add_year(model.Year(id,title,weight,grade,courseid))
+                                    self.displayData(self.view.getCurrentS(),years)
+                                    break
+                            if(empty):
+                                self.yM.append(model.yearModel(courseid))
+                                years = self.yM[-1].get_years()
+                                self.yM[-1].add_year(model.Year(id,title,weight,grade,courseid))
+                                self.displayData(self.view.getCurrentS(),years)
+                                break
+                 
+                     
                                                 
 
 
