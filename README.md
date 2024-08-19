@@ -155,3 +155,5 @@ There will be two databases used within the program, one is runtime in memory an
 - View only skeleton, spruce up and do lot more styling
 
 - Controller, grade should be "-" not 0 when when grade not given so graph does not show no grade change
+
+- Controller should check if weights added up is less than 100
