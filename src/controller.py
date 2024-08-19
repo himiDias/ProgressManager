@@ -16,8 +16,9 @@ class Controller:
 
     def addItem(self,array):
         type = array[0]
+        title = array[1]
+        pStack = self.view.pageStack.getStack()
         if type == "Course":
-            title = array[1]
             try:
                 grade = float(array[2])
             except:
@@ -30,6 +31,42 @@ class Controller:
                     self.cM.add_course(model.Course(id,title,grade))
                     self.displayData(self.view.getCurrentS(),self.cM.get_courses())
                     print(self.cM.get_courses())
+        if type == "Module":
+            try:
+                credits = int(array[2])
+                grade = float(array[3])
+            except:
+                print("INVALID DATA")
+            else:
+                if (credits < 0 or credits > 180) or (grade < 0 or grade > 100.0):
+                    print("INVALID INPUTS")
+                else:
+                    id = self.mM[0].get_nextID()
+                    course = pStack[0]
+                    year = pStack[1]
+                    for i in self.cM.get_courses():
+                        if i.get_title() == course:
+                            courseid = i.get_id()
+                            print("COurse id ",courseid )
+                            for j in self.yM:
+                                years = j.get_years()
+                                print(years)
+                                if (years[0].get_cid() == courseid):
+                                    for k in years:
+                                        if k.get_title() == year:
+                                            yearid = k.get_id()
+                                            for l in self.mM:
+                                                modules = l.get_modules()
+                                                if modules[0].get_yid() == yearid:
+                                                    print("Found")
+                                                    l.add_module(model.Module(id,title,credits,grade,yearid))
+                                                    self.displayData(self.view.getCurrentS(),modules)
+                                                    break
+                                            print("Not found")
+                                                
+
+
+                
 
 
     def checkCredentials(self,user,passw):

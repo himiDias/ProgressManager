@@ -44,7 +44,7 @@ def db_set(statement):
                     connection.commit()
                     print("Successfully adjusted database")
             except Error as e:
-                print(e)
+                print("Failed to adjust database")
     except Error as e:
         print(e)
 
