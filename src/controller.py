@@ -18,10 +18,18 @@ class Controller:
         type = array[0]
         if type == "Course":
             title = array[1]
-            grade = array[2]
-            id = self.cM.get_nextID()
-            self.cM.add_course(model.Course(id,title,grade))
-            print(self.cM.get_courses())
+            try:
+                grade = float(array[2])
+            except:
+                print("INVALID INPUTS")
+            else:
+                if  grade <0 or grade > 100.0:
+                    print("INVALID INPUTS")
+                else:
+                    id = self.cM.get_nextID()
+                    self.cM.add_course(model.Course(id,title,grade))
+                    self.displayData(self.view.getCurrentS(),self.cM.get_courses())
+                    print(self.cM.get_courses())
 
 
     def checkCredentials(self,user,passw):
