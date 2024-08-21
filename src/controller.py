@@ -13,6 +13,19 @@ class Controller:
         self.view.itemClicked.connect(self.changeScreen)
         self.view.previousClicked.connect(self.changeScreenPrev)
         self.view.addItemClicked.connect(self.addItem)
+        self.view.delItemClicked.connect(self.delItem)
+    
+    def delItem(self,item):
+        pStack = self.view.pageStack.getStack()
+        currentS = self.view.getCurrentS()
+        if len(pStack) == 0:
+            for i in self.cM.get_courses():
+                if i.get_title() == item:
+                    id = i.get_id()
+                    print(id)
+                    self.cM.rem_course(id)
+                    self.displayData(currentS,self.cM.get_courses())
+        pass
 
     def addItem(self,array):
         type = array[0]

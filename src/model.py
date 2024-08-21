@@ -404,10 +404,12 @@ class courseModel:
         self.courses.append(course)
     
     def rem_course(self,id):
-        c= self.courses[id]
-        s = f"DELETE FROM courses WHERE title = '{c.title}'"
+        s = f"DELETE FROM courses WHERE id = '{id}'"
         db_set(s)
-        del self.courses[id]
+        for i in self.courses:
+            if i.get_id() == id:
+                self.courses.remove(i)
+         
 
     def get_courses(self):
         return self.courses
