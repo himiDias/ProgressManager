@@ -603,6 +603,13 @@ def load_data(yearModels,moduleModels,assessmentModels,assignmentModels):
     recExam = db_get("SELECT * FROM exam")
     recAssignments = db_get("SELECT * FROM assignments")
 
+    #Give all modelArray a base model so functions work when no other models exist
+    yearModels.append(yearModel(0))
+    moduleModels.append(moduleModel(0))
+    assessmentModels.append(assessmentModel(0))
+    assignmentModels.append(assignmentModel(0))
+
+    
     for record in recYears:
         if record[-1] not in courseIds:
             courseIds.append(record[-1])
