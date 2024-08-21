@@ -337,8 +337,8 @@ class delWindow(QWidget):
         layout.addWidget(optionsW)
     
     def deleteItem(self):
-        self.close
         self.main_window.delItemClicked.emit(self.Item)
+        self.close()
          
 
 class Stack:
