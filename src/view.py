@@ -33,6 +33,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("University Progress Tracker")
         self.setWindowIcon(QIcon('./assets/mainP.jpg'))
         self.delIcon = QIcon('./assets/bin.jpg')
+        self.editIcon = QIcon('./assets/edit.jpg')
         self.setGeometry(100,100,1000,800)
 
         self.stack = QStackedWidget()
@@ -453,6 +454,7 @@ class CoursesScreen(QWidget):
         row = 1
         CButtons = []
         RButtons = []
+        eButtons = []
          
         for course in range(len(titles)):
             tempGrade = QLabel("Grade: "+grades[course])
@@ -466,7 +468,12 @@ class CoursesScreen(QWidget):
             remB.setIcon(self.main_window.delIcon)
             remB.clicked.connect(lambda checked,course = titles[course]:self.handle_delete_click(course))
             RButtons.append(remB)
+            editB = QPushButton()
+            editB.setIcon(self.main_window.editIcon)
+            editB.clicked.connect(lambda checked,course = titles[course]:self.handle_edit_click(course))
+            eButtons.append(editB)
             titleL.addWidget(tempB)
+            titleL.addWidget(editB)
             titleL.addWidget(remB)
             tempL = QVBoxLayout()
             tempC = QWidget()
@@ -506,6 +513,9 @@ class CoursesScreen(QWidget):
         self.del_window = delWindow(self.main_window,course)
         self.del_window.show()
     
+    def handle_edit_click(self,course):
+        pass
+    
     def getType(self):
         return self.type
              
@@ -527,6 +537,7 @@ class YearsScreen(QWidget):
         row = 1
         buttons = []
         rButtons = []
+        eButtons = []
         # Code to display all years for the course
         for year in range(len(titles)):
             tempWeight = QLabel("Weight: "+weights[year])
@@ -541,7 +552,12 @@ class YearsScreen(QWidget):
             remB.setIcon(self.main_window.delIcon)
             remB.clicked.connect(lambda checked,year=titles[year]: self.handle_delete_click(year))
             rButtons.append(remB)
+            editB = QPushButton()
+            editB.setIcon(self.main_window.editIcon)
+            editB.clicked.connect(lambda checked,year = titles[year]:self.handle_edit_click(year))
+            eButtons.append(editB)
             titleL.addWidget(tempB)
+            titleL.addWidget(editB)
             titleL.addWidget(remB)
             tempL = QVBoxLayout()
             tempC = QWidget()
@@ -597,6 +613,9 @@ class YearsScreen(QWidget):
         self.del_window = delWindow(self.main_window,year)
         self.del_window.show()
     
+    def handle_edit_click(self,year):
+        pass
+    
     def getType(self):
         return self.type
 
@@ -620,6 +639,7 @@ class ModulesScreen(QWidget):
         row = 1
         buttons = []
         rButtons = []
+        eButtons = []
 
         for module in range(len(titles)):
             tempCredits = QLabel("Credits: "+credits[module])
@@ -634,7 +654,12 @@ class ModulesScreen(QWidget):
             remB.setIcon(self.main_window.delIcon)
             remB.clicked.connect(lambda checked,module=titles[module]: self.handle_delete_click(module))
             rButtons.append(remB)
+            editB = QPushButton()
+            editB.setIcon(self.main_window.editIcon)
+            editB.clicked.connect(lambda checked,module = titles[module]:self.handle_edit_click(module))
+            eButtons.append(editB)
             titleL.addWidget(tempB)
+            titleL.addWidget(editB)
             titleL.addWidget(remB)
             tempL = QVBoxLayout()
             tempC = QWidget()
@@ -688,6 +713,9 @@ class ModulesScreen(QWidget):
     def handle_delete_click(self,module):
         self.del_window = delWindow(self.main_window,module)
         self.del_window.show()
+    
+    def handle_edit_click(self,module):
+        pass
 
     def getType(self):
         return self.type
@@ -710,6 +738,7 @@ class AssessmentScreen(QWidget):
         row = 1
         buttons = []
         rButtons = []
+        eButtons = []
         for assess in range(len(titles)):
             tempWeight = QLabel("Weight: "+weights[assess])
             tempGrade = QLabel("Grade: "+grades[assess])
@@ -723,7 +752,12 @@ class AssessmentScreen(QWidget):
             remB.setIcon(self.main_window.delIcon)
             remB.clicked.connect(lambda checked,assess=titles[assess]: self.handle_delete_click(assess))
             rButtons.append(remB)
+            editB = QPushButton()
+            editB.setIcon(self.main_window.editIcon)
+            editB.clicked.connect(lambda checked,assess = titles[assess]:self.handle_edit_click(assess))
+            eButtons.append(editB)
             titleL.addWidget(tempB)
+            titleL.addWidget(editB)
             titleL.addWidget(remB)
             tempL = QVBoxLayout()
             tempC = QWidget()
@@ -777,6 +811,9 @@ class AssessmentScreen(QWidget):
     def handle_delete_click(self,assessment):
         self.del_window = delWindow(self.main_window,assessment)
         self.del_window.show()
+    
+    def handle_edit_click(self,assessment):
+        pass
 
     def getType(self):
         return self.type
@@ -798,19 +835,25 @@ class AssignmentsScreen(QWidget):
         count = 0
         row = 1
         rButtons = []
-        for year in range(len(titles)):
-            tempTitle = QLabel(titles[year])
+        eButtons = []
+        for assignment in range(len(titles)):
+            tempTitle = QLabel(titles[assignment])
             titleW = QWidget()
             titleL = QHBoxLayout()
             titleW.setLayout(titleL)
             remB = QPushButton()
             remB.setIcon(self.main_window.delIcon)
-            remB.clicked.connect(lambda checked,year=titles[year]: self.handle_delete_click(year))
+            remB.clicked.connect(lambda checked,assignment=titles[assignment]: self.handle_delete_click(assignment))
             rButtons.append(remB)
+            editB = QPushButton()
+            editB.setIcon(self.main_window.editIcon)
+            editB.clicked.connect(lambda checked,assignment = titles[assignment]:self.handle_edit_click(assignment))
+            eButtons.append(editB)
             titleL.addWidget(tempTitle)
+            titleL.addWidget(editB)
             titleL.addWidget(remB)
-            tempWeight = QLabel("Weight: "+weights[year])
-            tempGrade = QLabel("Grade: "+grades[year])
+            tempWeight = QLabel("Weight: "+weights[assignment])
+            tempGrade = QLabel("Grade: "+grades[assignment])
             tempL = QVBoxLayout()
             tempC = QWidget()
             tempC.setLayout(tempL)
@@ -858,6 +901,9 @@ class AssignmentsScreen(QWidget):
     def handle_delete_click(self,assignment):
         self.del_window = delWindow(self.main_window,assignment)
         self.del_window.show()
+    
+    def handle_edit_click(self,assignment):
+        pass
     
     def getType(self):
         return self.type
