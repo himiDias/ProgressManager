@@ -162,8 +162,8 @@ There will be two databases used within the program, one is runtime in memory an
 
 - Controller should override typed in grades, if there are child items that contribute to grade
 
-- Issue with deleting when item have same name, will instead delete first occurence of that name, need to add functinoality that checks whether item of same name already exists before adding
+- Issue with deleting when item have same name, will instead delete first occurence of that name, need to add functinoality that checks whether item of same name already exists before adding (DONE)
 
-- Issue with being able to add elements with no title
+- Issue with being able to add elements with no title (DONE)
 
 - Possible redundant code in controller alerts, with `if not(exists)` being used for when there isn't even a model in the array to add to
