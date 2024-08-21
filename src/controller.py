@@ -626,6 +626,37 @@ class Controller:
         
         return valid
 
+    def updateGrade(self,weights,grades):
+        currentS = self.view.getCurrentS()
+        pStack = self.view.pageStack.getStack()
+        newGrade = self.calculateGrade(weights,grades)
+        if len(pStack) == 1:
+            course = pStack[0]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    i.update_grade(newGrade)
+        pass
+    
+    def calculateGrade(self,weights,grades):
+        grade = 0
+        for i in range(0,len(grades)):
+            grade += grades[i] * (weights[i]/100)
+        
+        return grade
+    
+    def getWeights(self,model):
+        weights = []
+        for i in model:
+            weights.append(i.get_weight())
+        
+        return weights
+    
+    def getGrades(self,model):
+        grades = []
+        for i in model:
+            grades.append(i.get_grade())
+        
+        return grades
 
 
         
