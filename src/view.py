@@ -419,17 +419,26 @@ class CoursesScreen(QWidget):
     def displayCourses(self,titles,grades):
         count = 0
         row = 1
-        buttons = []
+        CButtons = []
+        RButtons = []
          
         for course in range(len(titles)):
             tempGrade = QLabel("Grade: "+grades[course])
+            titleL = QHBoxLayout()
+            titleW = QWidget()
+            titleW.setLayout(titleL)
             tempB = QPushButton(titles[course])
             tempB.clicked.connect(lambda checked,course=titles[course]: self.handle_course_click(course))
-            buttons.append(tempB)
+            CButtons.append(tempB)
+            remB = QPushButton("Delete")
+            remB.clicked.connect(lambda checked,course = titles[course]:self.handle_delete_click(course))
+            RButtons.append(remB)
+            titleL.addWidget(tempB)
+            titleL.addWidget(remB)
             tempL = QVBoxLayout()
             tempC = QWidget()
             tempC.setLayout(tempL)
-            tempL.addWidget(tempB)
+            tempL.addWidget(titleW)
             tempL.addWidget(tempGrade)
             if (count == 4):
                 count = 0
@@ -459,6 +468,9 @@ class CoursesScreen(QWidget):
         # then retrieve what needs to be displayed
         print(course)
         self.main_window.itemClicked.emit(course)
+    
+    def hande_delete_click(self,course):
+        pass
     
     def getType(self):
         return self.type
