@@ -267,7 +267,7 @@ class addWindow(QWidget):
         self.gBox = QLineEdit(
             self,
             placeholderText = 'Grade',
-            maxLength = 4
+            maxLength = 5
         )
         gLayout.addWidget(gLabel)
         gLayout.addWidget(self.gBox)
