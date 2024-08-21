@@ -312,6 +312,31 @@ class addWindow(QWidget):
         #controller will then call refreshView again 
         pass
 
+class delWindow(QWidget):
+    def __init__(self,main_window,ITitle):
+        self.main_window = main_window
+        self.Item = ITitle
+        super().__init__()
+        self.setWindowTitle('Delete'+ ITitle)
+        self.setGeometry(100,100,300,200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        title = QLabel("Are you sure you want to delete this "+ITitle+". Deleting will delete all child objects")
+        oLayout = QHBoxLayout()
+        optionsW = QWidget()
+        optionsW.setLayout(oLayout)
+        deleteB = QPushButton("Delete")
+        deleteB.clicked.connect(self.deleteItem)
+        cancelB = QPushButton("Cancel")
+        cancelB.clicked.connect(self.close)
+        oLayout.addWidget(deleteB)
+        oLayout.addWidget(cancelB)
+        layout.addWidget(title)
+        layout.addWidget(optionsW)
+    
+    def deleteItem(self):
+        pass
 
 class Stack:
     def __init__(self):
@@ -469,8 +494,9 @@ class CoursesScreen(QWidget):
         print(course)
         self.main_window.itemClicked.emit(course)
     
-    def hande_delete_click(self,course):
-        pass
+    def handle_delete_click(self,course):
+        self.del_window = delWindow(self.main_window,course)
+        self.del_window.show()
     
     def getType(self):
         return self.type
@@ -559,7 +585,8 @@ class YearsScreen(QWidget):
         print(year)
     
     def handle_delete_click(self,year):
-        pass
+        self.del_window = delWindow(self.main_window,year)
+        self.del_window.show()
     
     def getType(self):
         return self.type
@@ -649,7 +676,8 @@ class ModulesScreen(QWidget):
         print(module)
     
     def handle_delete_click(self,module):
-        pass
+        self.del_window = delWindow(self.main_window,module)
+        self.del_window.show()
 
     def getType(self):
         return self.type
@@ -736,7 +764,8 @@ class AssessmentScreen(QWidget):
         print(assessment)
     
     def handle_delete_click(self,assessment):
-        pass
+        self.del_window = delWindow(self.main_window,assessment)
+        self.del_window.show()
 
     def getType(self):
         return self.type
@@ -815,7 +844,8 @@ class AssignmentsScreen(QWidget):
         self.layout.update()
     
     def handle_delete_click(self,assignment):
-        pass
+        self.del_window = delWindow(self.main_window,assignment)
+        self.del_window.show()
     
     def getType(self):
         return self.type
