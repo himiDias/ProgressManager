@@ -25,7 +25,7 @@ class Controller:
                     print(id)
                     self.cM.rem_course(id)
                     self.displayData(currentS,self.cM.get_courses())
-        if len(pStack) == 1:
+        elif len(pStack) == 1:
             course = pStack[0]
             for i in self.cM.get_courses():
                 if i.get_title() == course:
@@ -38,7 +38,89 @@ class Controller:
                                     id = k.get_id()
                                     j.rem_year(id)
                                     self.displayData(currentS,years)
-        pass
+        elif len(pStack) == 2:
+            course = pStack[0]
+            year = pStack[1]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM:
+                        years = j.get_years()
+                        if years[0].get_cid() == courseid:
+                            for k in years:
+                                if k.get_title() == year:
+                                    yearid = k.get_id()
+                                    for l in self.mM:
+                                        modules = l.get_modules()
+                                        if modules[0].get_yid() == yearid:
+                                            for m in modules:
+                                                if m.get_title() == item:
+                                                    id = m.get_id()
+                                                    l.rem_module(id)
+                                                    self.displayData(currentS,modules)
+        elif len(pStack) == 3:
+            course = pStack[0]
+            year = pStack[1]
+            module = pStack[2]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM:
+                        years = j.get_years()
+                        if years[0].get_cid() == courseid:
+                            for k in years:
+                                if k.get_title() == year:
+                                    yearid = k.get_id()
+                                    for l in self.mM:
+                                        modules = l.get_modules()
+                                        if modules[0].get_yid() == yearid:
+                                            for m in modules:
+                                                if m.get_title() == module: 
+                                                    moduleid = m.get_id()
+                                                    for n in self.aseM:
+                                                        assessments = n.get_assessments()
+                                                        if assessments[0].get_mid() == moduleid:                                                             
+                                                            if item == "Coursework":
+                                                                n.rem_cw()
+                                                            else:
+                                                                n.rem_e()
+                                                            self.displayData(currentS,assessments)
+        else:
+            course = pStack[0]
+            year = pStack[1]
+            module = pStack[2]
+            assessment = pStack[3]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM:
+                        years = j.get_years()
+                        if years[0].get_cid() == courseid:
+                            for k in years:
+                                if k.get_title() == year:
+                                    yearid = k.get_id()
+                                    for l in self.mM:
+                                        modules = l.get_modules()
+                                        if modules[0].get_yid() == yearid:
+                                            for m in modules:
+                                                if m.get_title() == module:
+                                                    moduleid = m.get_id()
+                                                    for n in self.aseM:
+                                                        assessments = n.get_assessments()
+                                                        if assessments[0].get_mid() == moduleid:
+                                                            for o in assessments:
+                                                                if o.get_title() == assessment:
+                                                                    assessmentid = o.get_id()
+                                                                    for p in self.asiM:
+                                                                        assignments = p.get_assignments()
+                                                                        if assignments[0].get_cid() == assessmentid:
+                                                                            for q in assignments:
+                                                                                if q.get_title() == item:
+                                                                                    id = q.get_id()
+                                                                                    p.rem_assignment(id)
+                                                                                    self.displayData(currentS,assignments)
+
+
 
     def addItem(self,array):
         type = array[0]
@@ -303,6 +385,8 @@ class Controller:
                                                             self.displayData(w,assessments)
                                                             self.view.pageStack.pop()
                                                             break
+        print(pStack)
+        print(len(pStack))
                     
 
     def changeScreen(self,title):
@@ -416,6 +500,8 @@ class Controller:
                                                                     if(empty):
                                                                         self.displayData(w,[])
             self.view.pageStack.push(title)
+        print(pStack)
+        print(len(pStack))
 
 
 
