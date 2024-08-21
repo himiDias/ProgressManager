@@ -415,8 +415,8 @@ class courseModel:
     def get_courses(self):
         return self.courses
     
-    def edit_course(self,course,d_id):
-        s=f"UPDATE courses SET title = '{course.title}', grade = {course.grade} WHERE id = {d_id}"
+    def edit_course(self,course):
+        s=f"UPDATE courses SET title = '{course.title}', grade = {course.grade} WHERE id = {course.id}"
         db_set(s)
         for i in self.courses:
             if i.get_id == course.id:
@@ -455,8 +455,8 @@ class yearModel:
     def get_years(self):
         return self.years
     
-    def edit_year(self,year,d_id):
-        s=f"UPDATE years SET year = '{year.title}',weight = {year.weight}, grade = {year.grade}, course_id = {year.courseid} WHERE id = {d_id}"
+    def edit_year(self,year):
+        s=f"UPDATE years SET year = '{year.title}',weight = {year.weight}, grade = {year.grade}, course_id = {year.courseid} WHERE id = {year.id}"
         db_set(s)
         for i in self.years:
             if i.get_id == year.id:
@@ -491,8 +491,8 @@ class moduleModel:
     def get_modules(self):
         return self.modules
     
-    def edit_module(self,module,d_id):
-        s=f"UPDATE modules SET title = '{module.title}', credits = {module.credits}, grade = {module.grade}, year_id = {module.yearid} WHERE id = {d_id}"
+    def edit_module(self,module):
+        s=f"UPDATE modules SET title = '{module.title}', credits = {module.credits}, grade = {module.grade}, year_id = {module.yearid} WHERE id = {module.id}"
         db_set(s)
         for i in self.modules:
             if i.get_id == module.id:
@@ -544,15 +544,15 @@ class assessmentModel:
             if i.get_title() == "Exam":
                 self.assessments.remove(i)
     
-    def edit_cw(self,coursework,d_id):
-        s=f"UPDATE coursework SET weight = '{coursework.weight}', grade = {coursework.grade}, module_id = {coursework.moduleid} WHERE id = {d_id}"
+    def edit_cw(self,coursework):
+        s=f"UPDATE coursework SET weight = '{coursework.weight}', grade = {coursework.grade}, module_id = {coursework.moduleid} WHERE id = {coursework.id}"
         db_set(s)
         for i in self.assessments:
             if i.title == "Coursework":
                 i = coursework
         
-    def edit_e(self,exam,d_id):
-        s=f"UPDATE exam SET weight = '{exam.weight}', grade = {exam.grade}, module_id = {exam.moduleid} WHERE id = {d_id}"
+    def edit_e(self,exam):
+        s=f"UPDATE exam SET weight = '{exam.weight}', grade = {exam.grade}, module_id = {exam.moduleid} WHERE id = {exam.id}"
         db_set(s)
         for i in self.assessments:
             if i.title == "Exam":
@@ -592,10 +592,12 @@ class assignmentModel:
     def get_assignments(self):
         return self.assignments
     
-    def edit_assignment(self,assignment,d_id):
-        s=f"UPDATE assignments SET title = '{assignment.title}', weight = {assignment.weight}, grade = {assignment.grade}, coursework_id = {assignment.courseworkid} WHERE id = {d_id}"
+    def edit_assignment(self,assignment):
+        s=f"UPDATE assignments SET title = '{assignment.title}', weight = {assignment.weight}, grade = {assignment.grade}, coursework_id = {assignment.courseworkid} WHERE id = {assignment.id}"
         db_set(s)
-        self.assignments[assignment.id] = assignment
+        for i in self.assignments:
+            if i.get_id() == assignment.id:
+                i = assignment
     
     def get_nextID(self):
         return get_next_id("'assignments'")
