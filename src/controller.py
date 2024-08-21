@@ -38,6 +38,7 @@ class Controller:
                                     id = k.get_id()
                                     j.rem_year(id)
                                     self.displayData(currentS,years)
+                                    self.updateGrade(years,len(pStack))
                                     if not (years):
                                         self.yM.remove(j)
         elif len(pStack) == 2:
@@ -60,6 +61,7 @@ class Controller:
                                                     id = m.get_id()
                                                     l.rem_module(id)
                                                     self.displayData(currentS,modules)
+                                                    self.updateGrade(modules,len(pStack))
                                                     if not (modules):
                                                         self.mM.remove(l)
         elif len(pStack) == 3:
@@ -89,6 +91,7 @@ class Controller:
                                                             else:
                                                                 n.rem_e()
                                                             self.displayData(currentS,assessments)
+                                                            self.updateGrade(assessments,len(pStack))
                                                             if not(assessments):
                                                                 self.aseM.remove(n)
         else:
@@ -125,6 +128,7 @@ class Controller:
                                                                                     id = q.get_id()
                                                                                     p.rem_assignment(id)
                                                                                     self.displayData(currentS,assignments)
+                                                                                    self.updateGrade(assignments,len(pStack))
                                                                                     if not(assignments):
                                                                                         self.asiM.remove(p)
 
