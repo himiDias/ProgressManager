@@ -30,7 +30,7 @@ class Controller:
             for i in self.cM.get_courses():
                 if i.get_title() == course:
                     courseid = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         years = j.get_years()
                         if years[0].get_cid() == courseid:
                             for k in years:
@@ -38,19 +38,21 @@ class Controller:
                                     id = k.get_id()
                                     j.rem_year(id)
                                     self.displayData(currentS,years)
+                                    if not (years):
+                                        self.yM.remove(j)
         elif len(pStack) == 2:
             course = pStack[0]
             year = pStack[1]
             for i in self.cM.get_courses():
                 if i.get_title() == course:
                     courseid = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         years = j.get_years()
                         if years[0].get_cid() == courseid:
                             for k in years:
                                 if k.get_title() == year:
                                     yearid = k.get_id()
-                                    for l in self.mM:
+                                    for l in self.mM[1:]:
                                         modules = l.get_modules()
                                         if modules[0].get_yid() == yearid:
                                             for m in modules:
@@ -58,6 +60,8 @@ class Controller:
                                                     id = m.get_id()
                                                     l.rem_module(id)
                                                     self.displayData(currentS,modules)
+                                                    if not (modules):
+                                                        self.mM.remove(l)
         elif len(pStack) == 3:
             course = pStack[0]
             year = pStack[1]
@@ -65,19 +69,19 @@ class Controller:
             for i in self.cM.get_courses():
                 if i.get_title() == course:
                     courseid = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         years = j.get_years()
                         if years[0].get_cid() == courseid:
                             for k in years:
                                 if k.get_title() == year:
                                     yearid = k.get_id()
-                                    for l in self.mM:
+                                    for l in self.mM[1:]:
                                         modules = l.get_modules()
                                         if modules[0].get_yid() == yearid:
                                             for m in modules:
                                                 if m.get_title() == module: 
                                                     moduleid = m.get_id()
-                                                    for n in self.aseM:
+                                                    for n in self.aseM[1:]:
                                                         assessments = n.get_assessments()
                                                         if assessments[0].get_mid() == moduleid:                                                             
                                                             if item == "Coursework":
@@ -85,6 +89,8 @@ class Controller:
                                                             else:
                                                                 n.rem_e()
                                                             self.displayData(currentS,assessments)
+                                                            if not(assessments):
+                                                                self.aseM.remove(n)
         else:
             course = pStack[0]
             year = pStack[1]
@@ -93,25 +99,25 @@ class Controller:
             for i in self.cM.get_courses():
                 if i.get_title() == course:
                     courseid = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         years = j.get_years()
                         if years[0].get_cid() == courseid:
                             for k in years:
                                 if k.get_title() == year:
                                     yearid = k.get_id()
-                                    for l in self.mM:
+                                    for l in self.mM[1:]:
                                         modules = l.get_modules()
                                         if modules[0].get_yid() == yearid:
                                             for m in modules:
                                                 if m.get_title() == module:
                                                     moduleid = m.get_id()
-                                                    for n in self.aseM:
+                                                    for n in self.aseM[1:]:
                                                         assessments = n.get_assessments()
                                                         if assessments[0].get_mid() == moduleid:
                                                             for o in assessments:
                                                                 if o.get_title() == assessment:
                                                                     assessmentid = o.get_id()
-                                                                    for p in self.asiM:
+                                                                    for p in self.asiM[1:]:
                                                                         assignments = p.get_assignments()
                                                                         if assignments[0].get_cid() == assessmentid:
                                                                             for q in assignments:
@@ -119,6 +125,8 @@ class Controller:
                                                                                     id = q.get_id()
                                                                                     p.rem_assignment(id)
                                                                                     self.displayData(currentS,assignments)
+                                                                                    if not(assignments):
+                                                                                        self.asiM.remove(p)
 
 
 
@@ -156,14 +164,14 @@ class Controller:
                     for i in self.cM.get_courses():
                         if i.get_title() == course:
                             courseid = i.get_id()
-                            for j in self.yM:
+                            for j in self.yM[1:]:
                                 years = j.get_years()
                                 print(years)
                                 if (years[0].get_cid() == courseid):
                                     for k in years:
                                         if k.get_title() == year:
                                             yearid = k.get_id()
-                                            for l in self.mM:
+                                            for l in self.mM[1:]:
                                                 modules = l.get_modules()
                                                 if modules[0].get_yid() == yearid:
                                                     print("Found")
@@ -192,7 +200,7 @@ class Controller:
                     for i in self.cM.get_courses():
                         if i.get_title() == course:
                             courseid = i.get_id()
-                            for j in self.yM:
+                            for j in self.yM[1:]:
                                 years = j.get_years()
                                 if (years[0].get_cid() == courseid):
                                     empty = False
@@ -216,19 +224,19 @@ class Controller:
                     for i in self.cM.get_courses():
                         if i.get_title() == course:
                             courseid = i.get_id()
-                            for j in self.yM:
+                            for j in self.yM[1:]:
                                 years = j.get_years()
                                 if (years[0].get_cid() == courseid):
                                     for k in years:
                                         if k.get_title() == year:
                                             yearid = k.get_id()
-                                            for l in self.mM:
+                                            for l in self.mM[1:]:
                                                 modules = l.get_modules()
                                                 if (modules[0].get_yid()==yearid):
                                                     for m in modules:
                                                         if m.get_title() == module:
                                                             moduleid = m.get_id()
-                                                            for n in self.aseM:
+                                                            for n in self.aseM[1:]:
                                                                 assessments = n.get_assessments()
                                                                 if (assessments[0].get_mid() == moduleid):
                                                                     empty = False
@@ -267,25 +275,25 @@ class Controller:
                     for i in self.cM.get_courses():
                         if i.get_title() == course:
                             courseid = i.get_id()
-                            for j in self.yM:
+                            for j in self.yM[1:]:
                                 years = j.get_years()
                                 if (years[0].get_cid() == courseid):
                                     for k in years:
                                         if k.get_title() == year:
                                             yearid = k.get_id()
-                                            for l in self.mM:
+                                            for l in self.mM[1:]:
                                                 modules = l.get_modules()
                                                 if (modules[0].get_yid()==yearid):
                                                     for m in modules:
                                                         if m.get_title() == module:
                                                             moduleid = m.get_id()
-                                                            for n in self.aseM:
+                                                            for n in self.aseM[1:]:
                                                                 assessments = n.get_assessments()
                                                                 if (assessments[0].get_mid() == moduleid):
                                                                     for o in assessments:
                                                                         if o.get_title() == assessment:
                                                                             assessmentid = o.get_id()
-                                                                            for p in self.asiM:
+                                                                            for p in self.asiM[1:]:
                                                                                 assignments = p.get_assignments()
                                                                                 if (assignments[0].get_cid() == assessmentid):
                                                                                     empty = False
@@ -334,7 +342,7 @@ class Controller:
             for i in self.cM.get_courses():
                 if i.get_title() == course:
                     courseid = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         years = j.get_years()
                         if (years[0].get_cid() == courseid):
                             self.displayData(w,years)
@@ -347,13 +355,13 @@ class Controller:
             for i in self.cM.get_courses():
                 if i.get_title() == course:
                     courseid = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         years = j.get_years()
                         if (years[0].get_cid() == courseid):
                             for k in years:
                                 if k.get_title() == year:
                                     yearid = k.get_id()
-                                    for l in self.mM:
+                                    for l in self.mM[1:]:
                                         modules = l.get_modules()
                                         if (modules[0].get_yid()==yearid):
                                             self.displayData(w,modules)
@@ -367,19 +375,19 @@ class Controller:
             for i in self.cM.get_courses():
                 if i.get_title() == course:
                     courseid = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         years = j.get_years()
                         if (years[0].get_cid() == courseid):
                             for k in years:
                                 if k.get_title() == year:
                                     yearid = k.get_id()
-                                    for l in self.mM:
+                                    for l in self.mM[1:]:
                                         modules = l.get_modules()
                                         if (modules[0].get_yid() == yearid):
                                             for m in modules:
                                                 if (m.get_title() == module):
                                                     moduleid = m.get_id()
-                                                    for n in self.aseM:
+                                                    for n in self.aseM[1:]:
                                                         assessments = n.get_assessments()
                                                         if (assessments[0].get_mid() == moduleid):
                                                             self.displayData(w,assessments)
@@ -399,7 +407,7 @@ class Controller:
             for i in self.cM.get_courses():
                 if i.get_title() == title:
                     id = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         print("L")
                         years = j.get_years()
                         print(years)
@@ -420,13 +428,13 @@ class Controller:
             for i in self.cM.get_courses():
                 if i.get_title() == course:
                     courseid = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         years = j.get_years()
                         if years[0].get_cid() == courseid:
                             for k in years:
                                 if k.get_title() == title:
                                     id = k.get_id()
-                                    for l in self.mM:
+                                    for l in self.mM[1:]:
                                         modules = l.get_modules()
                                         if modules[0].get_yid() == id:
                                             empty = False
@@ -443,19 +451,19 @@ class Controller:
             for i in self.cM.get_courses():
                 if i.get_title() == course:
                     courseid = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         years = j.get_years()
                         if years[0].get_cid() == courseid:
                             for k in years:
                                 if k.get_title() == year:
                                     yearid = k.get_id()
-                                    for l in self.mM:
+                                    for l in self.mM[1:]:
                                         modules = l.get_modules()
                                         if modules[0].get_yid() == yearid:
                                             for m in modules:
                                                 if m.get_title() == title:
                                                     id = m.get_id()
-                                                    for n in self.aseM:
+                                                    for n in self.aseM[1:]:
                                                         print("TEST")
                                                         assessments = n.get_assessments()
                                                         if assessments[0].get_mid() == id:
@@ -473,25 +481,25 @@ class Controller:
             for i in self.cM.get_courses():
                 if i.get_title() == course:
                     courseid = i.get_id()
-                    for j in self.yM:
+                    for j in self.yM[1:]:
                         years = j.get_years()
                         if years[0].get_cid() == courseid:
                             for k in years:
                                 if k.get_title() == year:
                                     yearid = k.get_id()
-                                    for l in self.mM:
+                                    for l in self.mM[1:]:
                                         modules = l.get_modules()
                                         if modules[0].get_yid() == yearid:
                                             for m in modules:
                                                 if m.get_title() == module:
                                                     moduleid = m.get_id()
-                                                    for n in self.aseM:
+                                                    for n in self.aseM[1:]:
                                                         assessments = n.get_assessments()
                                                         if assessments[0].get_mid() == moduleid:
                                                             for o in assessments:
                                                                 if o.get_title() == title:
                                                                     id = o.get_id()
-                                                                    for p in self.asiM:
+                                                                    for p in self.asiM[1:]:
                                                                         assignments = p.get_assignments()
                                                                         if assignments[0].get_cid() == id:
                                                                             empty = False

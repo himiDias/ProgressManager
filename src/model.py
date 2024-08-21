@@ -609,7 +609,7 @@ def load_data(yearModels,moduleModels,assessmentModels,assignmentModels):
     assessmentModels.append(assessmentModel(0))
     assignmentModels.append(assignmentModel(0))
 
-    
+
     for record in recYears:
         if record[-1] not in courseIds:
             courseIds.append(record[-1])
