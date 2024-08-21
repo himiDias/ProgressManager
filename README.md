@@ -150,7 +150,7 @@ There will be two databases used within the program, one is runtime in memory an
 
 - Need to test if works when multiple records of different parent records are added, may not work due to issue with different ids in the runtime models and the mysql database (DONE)
 
-- Realised some code to do with manipulating the runtime database is redundant having the `load data` function can update the runtime at any point
+- Realised some code to do with manipulating the runtime database is redundant having the `load data` function can update the runtime at any point (DONE)
 
 - Could add a further attribute to years,module etc which is the grade adjusted for the weight (FUTURE)
 
@@ -161,3 +161,5 @@ There will be two databases used within the program, one is runtime in memory an
 - Controller should check if weights added up is less than 100
 
 - Controller should override typed in grades, if there are child items that contribute to grade
+
+- Issue with deleting when item have same name, will instead delete first occurence of that name, need to add functinoality that checks whether item of same name already exists before adding 
