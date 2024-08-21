@@ -549,7 +549,10 @@ class Controller:
         totalCredits = sum(credits)
         array.append(0)
         for i in range(0,len(grades)):
-            cValue += (credits[i] * grades[i])/totalCredits
+            if (totalCredits == 0):
+                cValue = 0
+            else:
+                cValue += (credits[i] * grades[i])/totalCredits
             array.append(cValue)
 
 
