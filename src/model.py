@@ -45,6 +45,7 @@ def db_set(statement):
                     print("Successfully adjusted database")
             except Error as e:
                 print("Failed to adjust database")
+                print(e)
     except Error as e:
         print(e)
 
@@ -417,7 +418,9 @@ class courseModel:
     def edit_course(self,course,d_id):
         s=f"UPDATE courses SET title = '{course.title}', grade = {course.grade} WHERE id = {d_id}"
         db_set(s)
-        self.courses[course.id] = course
+        for i in self.courses:
+            if i.get_id == course.id:
+                i = course
     
     def get_nextID(self):
         return get_next_id("'courses'")
@@ -455,7 +458,9 @@ class yearModel:
     def edit_year(self,year,d_id):
         s=f"UPDATE years SET year = '{year.title}',weight = {year.weight}, grade = {year.grade}, course_id = {year.courseid} WHERE id = {d_id}"
         db_set(s)
-        self.years[year.id] = year
+        for i in self.years:
+            if i.get_id == year.id:
+                i = year
     
     def get_nextID(self):
         return get_next_id("'years'")

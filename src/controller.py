@@ -202,6 +202,7 @@ class Controller:
                                                         empty = False
                                                         l.add_module(model.Module(id,title,credits,grade,yearid))
                                                         self.displayData(self.view.getCurrentS(),modules)
+                                                        self.updateGrade(modules,len(pStack))
                                                         self.view.add_window.close()
                                                         break
                                             if not(exists):
@@ -210,6 +211,7 @@ class Controller:
                                                     modules = self.mM[-1].get_modules()
                                                     self.mM[-1].add_module(model.Module(id,title,credits,grade,yearid))
                                                     self.displayData(self.view.getCurrentS(),modules)
+                                                    self.updateGrade(modules,len(pStack))
                                                     self.view.add_window.close()
                                                     break
 
@@ -245,6 +247,7 @@ class Controller:
                                         empty = False
                                         j.add_year(model.Year(id,title,weight,grade,courseid))
                                         self.displayData(self.view.getCurrentS(),years)
+                                        self.updateGrade(years,len(pStack))
                                         self.view.add_window.close()
                                         break
                             if not(exists):
@@ -253,6 +256,7 @@ class Controller:
                                     years = self.yM[-1].get_years()
                                     self.yM[-1].add_year(model.Year(id,title,weight,grade,courseid))
                                     self.displayData(self.view.getCurrentS(),years)
+                                    self.updateGrade(years,len(pStack))
                                     self.view.add_window.close()
                                     break
                 elif (type == "Assessment"):
@@ -602,6 +606,8 @@ class Controller:
         for i in range(0,len(grades)):
             cValue += grades[i] * (weight[i]/100)
             array.append(cValue)
+        
+        return cValue
     
     def calculateCumulativeScoreModules(self,credits,grades,array):
         cValue = 0
@@ -613,6 +619,8 @@ class Controller:
             else:
                 cValue += (credits[i] * grades[i])/totalCredits
             array.append(cValue)
+        
+        return cValue
     
 
     def checkWeights(self,weights):
@@ -626,23 +634,40 @@ class Controller:
         
         return valid
 
-    def updateGrade(self,weights,grades):
-        currentS = self.view.getCurrentS()
+    def updateGrade(self,array,pStackL):
         pStack = self.view.pageStack.getStack()
-        newGrade = self.calculateGrade(weights,grades)
-        if len(pStack) == 1:
+        temp = []
+        grades = self.getGrades(array)
+        if(pStackL == 2):
+            credits = self.getCredits(array)
+            newGrade = self.calculateCumulativeScoreModules(credits,grades,temp)
+        else:
+            weights = self.getWeights(array)
+            newGrade = self.calculateCumulativeScore(weights,grades,temp)
+        
+        if pStackL == 1:
             course = pStack[0]
             for i in self.cM.get_courses():
                 if i.get_title() == course:
+                    print(newGrade)
                     i.update_grade(newGrade)
+                    self.cM.edit_course(model.Course(i.get_id(),i.get_title(),i.get_grade()),i.get_id())
+        if pStackL == 2:
+            course = pStack[0]
+            year = pStack[1]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM[1:]:
+                        if j.courseId == courseid:
+                            years = j.get_years()
+                            for k in years:
+                                if k.get_title() == year:
+                                    k.update_grade(newGrade)
+                                    j.edit_year(model.Year(k.get_id(),k.get_title(),k.get_weight(),k.get_grade(),courseid),k.get_id())
+                                    self.updateGrade(years,pStackL - 1)
         pass
     
-    def calculateGrade(self,weights,grades):
-        grade = 0
-        for i in range(0,len(grades)):
-            grade += grades[i] * (weights[i]/100)
-        
-        return grade
     
     def getWeights(self,model):
         weights = []
@@ -657,6 +682,13 @@ class Controller:
             grades.append(i.get_grade())
         
         return grades
+    
+    def getCredits(self,model):
+        credits = []
+        for i in model:
+            credits.append(i.get_credits())
+        
+        return credits
 
 
         
