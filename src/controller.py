@@ -25,6 +25,19 @@ class Controller:
                     print(id)
                     self.cM.rem_course(id)
                     self.displayData(currentS,self.cM.get_courses())
+        if len(pStack) == 1:
+            course = pStack[0]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM:
+                        years = j.get_years()
+                        if years[0].get_cid() == courseid:
+                            for k in years:
+                                if k.get_title() == item:
+                                    id = k.get_id()
+                                    j.rem_year(id)
+                                    self.displayData(currentS,years)
         pass
 
     def addItem(self,array):
