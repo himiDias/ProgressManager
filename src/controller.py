@@ -651,7 +651,7 @@ class Controller:
                 if i.get_title() == course:
                     print(newGrade)
                     i.update_grade(newGrade)
-                    self.cM.edit_course(model.Course(i.get_id(),i.get_title(),i.get_grade()),i.get_id())
+                    self.cM.edit_course(model.Course(i.get_id(),i.get_title(),i.get_grade()))
         if pStackL == 2:
             course = pStack[0]
             year = pStack[1]
@@ -664,7 +664,7 @@ class Controller:
                             for k in years:
                                 if k.get_title() == year:
                                     k.update_grade(newGrade)
-                                    j.edit_year(model.Year(k.get_id(),k.get_title(),k.get_weight(),k.get_grade(),courseid),k.get_id())
+                                    j.edit_year(model.Year(k.get_id(),k.get_title(),k.get_weight(),k.get_grade(),courseid))
                                     self.updateGrade(years,pStackL - 1)
         pass
     
