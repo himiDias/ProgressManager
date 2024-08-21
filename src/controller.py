@@ -134,6 +134,7 @@ class Controller:
         type = array[0]
         title = array[1]
         pStack = self.view.pageStack.getStack()
+        exists = False
         empty = True
         if type == "Course":
             try:
@@ -144,11 +145,16 @@ class Controller:
                 if  grade <0 or grade > 100.0:
                     print("INVALID INPUTS")
                 else:
-                    id = self.cM.get_nextID()
-                    self.cM.add_course(model.Course(id,title,grade))
-                    self.displayData(self.view.getCurrentS(),self.cM.get_courses())
-                    print(self.cM.get_courses())
-                    self.view.add_window.close()
+                    for i in self.cM.get_courses():
+                        if i.get_title() == title:
+                            exists = True
+                            print("Title already exists")
+                    if not(exists):
+                        id = self.cM.get_nextID()
+                        self.cM.add_course(model.Course(id,title,grade))
+                        self.displayData(self.view.getCurrentS(),self.cM.get_courses())
+                        print(self.cM.get_courses())
+                        self.view.add_window.close()
         elif type == "Module":
             try:
                 credits = int(array[2])
