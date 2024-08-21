@@ -158,7 +158,7 @@ There will be two databases used within the program, one is runtime in memory an
 
 - Controller, grade should be "-" not 0 when when grade not given so graph does not show no grade change
 
-- Controller should check if weights added up is less than 100
+- Controller should check if weights added up is equal to 100
 
 - Controller should override typed in grades, if there are child items that contribute to grade
 
