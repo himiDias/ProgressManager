@@ -282,6 +282,8 @@ class addWindow(QWidget):
         cancelB.clicked.connect(self.close)
         oLayout.addWidget(addB)
         oLayout.addWidget(cancelB)
+        self.alertL = QLabel()
+        layout.addWidget(self.alertL)
         layout.addWidget(optionsD)
     
     def updateOption(self):
