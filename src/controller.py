@@ -144,6 +144,8 @@ class Controller:
             else:
                 if  grade <0 or grade > 100.0:
                     print("INVALID INPUTS")
+                elif not title:
+                    print("INVALID TITLE")
                 else:
                     for i in self.cM.get_courses():
                         if i.get_title() == title:
