@@ -27,6 +27,7 @@ class MainWindow(QMainWindow):
     itemClicked = pyqtSignal(str)
     previousClicked = pyqtSignal()
     addItemClicked = pyqtSignal(list)
+    delItemClicked = pyqtSignal(str)
     def __init__(self):
         super().__init__()
         self.setWindowTitle("University Progress Tracker")
@@ -336,7 +337,7 @@ class delWindow(QWidget):
         layout.addWidget(optionsW)
     
     def deleteItem(self):
-        pass
+        self.main_window.delItemClicked.emit(self.Item)
 
 class Stack:
     def __init__(self):
