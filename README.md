@@ -163,3 +163,5 @@ There will be two databases used within the program, one is runtime in memory an
 - Controller should override typed in grades, if there are child items that contribute to grade
 
 - Issue with deleting when item have same name, will instead delete first occurence of that name, need to add functinoality that checks whether item of same name already exists before adding 
+
+- Issue with being able to add elements with no title
