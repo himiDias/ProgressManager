@@ -497,7 +497,7 @@ class moduleModel:
         for i in self.modules:
             if i.get_id == module.id:
                 i = module
-        self.modules[module.id] = module
+         
     
     def get_nextID(self):
         return get_next_id("'modules'")

@@ -296,10 +296,12 @@ class Controller:
                                                                     if (title == "Coursework" and not cwPres):
                                                                         n.add_cw(model.Coursework(id,weight,grade,moduleid))
                                                                         self.displayData(self.view.getCurrentS(),assessments)
+                                                                        self.updateGrade(assessments,len(pStack))
                                                                         self.view.add_window.close()
                                                                     elif (title == "Exam" and not ePres):
                                                                         n.add_e(model.Exam(id,weight,grade,moduleid))
                                                                         self.displayData(self.view.getCurrentS(),assessments)
+                                                                        self.updateGrade(assessments,len(pStack))
                                                                         self.view.add_window.close()
                                                                     else:
                                                                         print(title," Already Exists in Module")
@@ -310,10 +312,12 @@ class Controller:
                                                                 if (title == "Coursework"):
                                                                     self.aseM[-1].add_cw(model.Coursework(id,weight,grade,moduleid))
                                                                     self.displayData(self.view.getCurrentS(),assessments)
+                                                                    self.updateGrade(assessments,len(pStack))
                                                                     self.view.add_window.close()
                                                                 else:
                                                                     self.aseM[-1].add_e(model.Exam(id,weight,grade,moduleid))
                                                                     self.displayData(self.view.getCurrentS(),assessments)
+                                                                    self.updateGrade(assessments,len(pStack))
                                                                     self.view.add_window.close()
                                                                 break
                 else:
@@ -355,6 +359,7 @@ class Controller:
                                                                                         empty = False
                                                                                         p.add_assignment(model.Assignment(id,title,weight,grade,assessmentid))
                                                                                         self.displayData(self.view.getCurrentS(),assignments)
+                                                                                        self.updateGrade(assignments,len(pStack))
                                                                                         self.view.add_window.close()
                                                                                         break
                                                                             if not(exists):
@@ -363,6 +368,7 @@ class Controller:
                                                                                     assignments = self.asiM[-1].get_assignments()
                                                                                     self.asiM[-1].add_assignment(model.Assignment(id,title,weight,grade,assessmentid))
                                                                                     self.displayData(self.view.getCurrentS(),assignments)
+                                                                                    self.updateGrade(assignments,len(pStack))
                                                                                     self.view.add_window.close()
                                                                                     break
 
@@ -652,7 +658,7 @@ class Controller:
                     print(newGrade)
                     i.update_grade(newGrade)
                     self.cM.edit_course(model.Course(i.get_id(),i.get_title(),i.get_grade()))
-        if pStackL == 2:
+        elif pStackL == 2:
             course = pStack[0]
             year = pStack[1]
             for i in self.cM.get_courses():
@@ -666,6 +672,58 @@ class Controller:
                                     k.update_grade(newGrade)
                                     j.edit_year(model.Year(k.get_id(),k.get_title(),k.get_weight(),k.get_grade(),courseid))
                                     self.updateGrade(years,pStackL - 1)
+                                    break
+        elif pStackL == 3:
+            course = pStack[0]
+            year = pStack[1]
+            module = pStack[2]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM[1:]:
+                        if j.courseId == courseid:
+                            years = j.get_years()
+                            for k in years:
+                                if k.get_title() == year:
+                                    yearid = k.get_id()
+                                    for l in self.mM[1:]:
+                                        if l.yearId == yearid:
+                                            modules = l.get_modules()
+                                            for m in modules:
+                                                if m.get_title() == module:
+                                                    m.update_grade(newGrade)
+                                                    l.edit_module(model.Module(m.get_id(),m.get_title(),m.get_credits(),m.get_grade(),m.get_yid()))
+                                                    self.updateGrade(modules,pStackL - 1)
+                                                    break
+        elif pStackL == 4:
+            course = pStack[0]
+            year = pStack[1]
+            module = pStack[2]
+            assessment = pStack[3]
+            for i in self.cM.get_courses():
+                if i.get_title() == course:
+                    courseid = i.get_id()
+                    for j in self.yM[1:]:
+                        if j.courseId == courseid:
+                            years = j.get_years()
+                            for k in years:
+                                if k.get_title() == year:
+                                    yearid = k.get_id()
+                                    for l in self.mM[1:]:
+                                        if l.yearId == yearid:
+                                            modules = l.get_modules()
+                                            for m in modules:
+                                                if m.get_title() == module:
+                                                    moduleid = m.get_id()
+                                                    for n in self.aseM[1:]:
+                                                        if n.moduleId == moduleid:
+                                                            assessments = n.get_assessments()
+                                                            for o in assessments:
+                                                                if o.get_title() == assessment:
+                                                                    o.update_grade(newGrade)
+                                                                    n.edit_cw(model.Coursework(o.get_id(),o.get_weight(),o.get_grade(),o.get_mid()))
+                                                                    self.updateGrade(assessments,pStackL -1)
+                                                                    break
         pass
     
     
