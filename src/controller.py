@@ -362,10 +362,6 @@ class Controller:
                                                                                     self.view.add_window.close()
                                                                                     break
 
-                     
-                                                
-
-
                 
 
 
@@ -617,6 +613,19 @@ class Controller:
             else:
                 cValue += (credits[i] * grades[i])/totalCredits
             array.append(cValue)
+    
+
+    def checkWeights(self,weights):
+        valid = False
+        weightSum = 0
+        for i in weights:
+            weightSum+=i
+        
+        if weightSum == 100:
+            valid = True
+        
+        return valid
+
 
 
         
