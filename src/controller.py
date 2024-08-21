@@ -148,6 +148,7 @@ class Controller:
                     self.cM.add_course(model.Course(id,title,grade))
                     self.displayData(self.view.getCurrentS(),self.cM.get_courses())
                     print(self.cM.get_courses())
+                    self.view.add_window.close()
         elif type == "Module":
             try:
                 credits = int(array[2])
@@ -178,13 +179,16 @@ class Controller:
                                                     empty = False
                                                     l.add_module(model.Module(id,title,credits,grade,yearid))
                                                     self.displayData(self.view.getCurrentS(),modules)
+                                                    self.view.add_window.close()
                                                     break
                                             if (empty):
                                                 self.mM.append(model.moduleModel(yearid))
                                                 modules = self.mM[-1].get_modules()
                                                 self.mM[-1].add_module(model.Module(id,title,credits,grade,yearid))
                                                 self.displayData(self.view.getCurrentS(),modules)
+                                                self.view.add_window.close()
                                                 break
+
         else:
             try:
                 weight = int(array[2])
@@ -206,12 +210,14 @@ class Controller:
                                     empty = False
                                     j.add_year(model.Year(id,title,weight,grade,courseid))
                                     self.displayData(self.view.getCurrentS(),years)
+                                    self.view.add_window.close()
                                     break
                             if(empty):
                                 self.yM.append(model.yearModel(courseid))
                                 years = self.yM[-1].get_years()
                                 self.yM[-1].add_year(model.Year(id,title,weight,grade,courseid))
                                 self.displayData(self.view.getCurrentS(),years)
+                                self.view.add_window.close()
                                 break
                 elif (type == "Assessment"):
                     if (title == "Coursework"):
@@ -250,9 +256,11 @@ class Controller:
                                                                     if (title == "Coursework" and not cwPres):
                                                                         n.add_cw(model.Coursework(id,weight,grade,moduleid))
                                                                         self.displayData(self.view.getCurrentS(),assessments)
+                                                                        self.view.add_window.close()
                                                                     elif (title == "Exam" and not ePres):
                                                                         n.add_e(model.Exam(id,weight,grade,moduleid))
                                                                         self.displayData(self.view.getCurrentS(),assessments)
+                                                                        self.view.add_window.close()
                                                                     else:
                                                                         print(title," Already Exists in Module")
                                                                     break
@@ -262,9 +270,11 @@ class Controller:
                                                                 if (title == "Coursework"):
                                                                     self.aseM[-1].add_cw(model.Coursework(id,weight,grade,moduleid))
                                                                     self.displayData(self.view.getCurrentS(),assessments)
+                                                                    self.view.add_window.close()
                                                                 else:
                                                                     self.aseM[-1].add_e(model.Exam(id,weight,grade,moduleid))
                                                                     self.displayData(self.view.getCurrentS(),assessments)
+                                                                    self.view.add_window.close()
                                                                 break
                 else:
                     id = self.asiM[0].get_nextID()
@@ -299,12 +309,14 @@ class Controller:
                                                                                     empty = False
                                                                                     p.add_assignment(model.Assignment(id,title,weight,grade,assessmentid))
                                                                                     self.displayData(self.view.getCurrentS(),assignments)
+                                                                                    self.view.add_window.close()
                                                                                     break
                                                                             if (empty):
                                                                                 self.asiM.append(model.assignmentModel(assessmentid))
                                                                                 assignments = self.asiM[-1].get_assignments()
                                                                                 self.asiM[-1].add_assignment(model.Assignment(id,title,weight,grade,assessmentid))
                                                                                 self.displayData(self.view.getCurrentS(),assignments)
+                                                                                self.view.add_window.close()
                                                                                 break
 
                      
