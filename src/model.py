@@ -494,6 +494,9 @@ class moduleModel:
     def edit_module(self,module,d_id):
         s=f"UPDATE modules SET title = '{module.title}', credits = {module.credits}, grade = {module.grade}, year_id = {module.yearid} WHERE id = {d_id}"
         db_set(s)
+        for i in self.modules:
+            if i.get_id == module.id:
+                i = module
         self.modules[module.id] = module
     
     def get_nextID(self):
@@ -544,10 +547,16 @@ class assessmentModel:
     def edit_cw(self,coursework,d_id):
         s=f"UPDATE coursework SET weight = '{coursework.weight}', grade = {coursework.grade}, module_id = {coursework.moduleid} WHERE id = {d_id}"
         db_set(s)
+        for i in self.assessments:
+            if i.title == "Coursework":
+                i = coursework
         
     def edit_e(self,exam,d_id):
         s=f"UPDATE exam SET weight = '{exam.weight}', grade = {exam.grade}, module_id = {exam.moduleid} WHERE id = {d_id}"
         db_set(s)
+        for i in self.assessments:
+            if i.title == "Exam":
+                i = exam
 
     def get_nextID_CW(self):
         return get_next_id("'coursework'")
