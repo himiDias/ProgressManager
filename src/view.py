@@ -259,7 +259,7 @@ class addWindow(QWidget):
             cLayout.addWidget(cLabel)
             cLayout.addWidget(self.cBox)
             layout.addWidget(creditD)
-        
+        gInfoL = QLabel("Adding child nodes to element will override set grade with calculated grade")
         gLayout = QHBoxLayout()
         gradeD = QWidget()
         gradeD.setLayout(gLayout)
@@ -271,6 +271,7 @@ class addWindow(QWidget):
         )
         gLayout.addWidget(gLabel)
         gLayout.addWidget(self.gBox)
+        layout.addWidget(gInfoL)
         layout.addWidget(gradeD)
 
         oLayout = QHBoxLayout()
