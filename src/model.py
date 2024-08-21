@@ -443,10 +443,11 @@ class yearModel:
         self.years.append(year)
 
     def rem_year(self,id):
-        y = self.years[id]
-        s = f"DELETE FROM years WHERE year = '{y.title}' AND course_id = {self.courseId}"
+        s = f"DELETE FROM years WHERE id = '{id}' AND course_id = {self.courseId}"
         db_set(s)
-        del self.years[id]
+        for i in self.years:
+            if i.get_id() == id:
+                self.years.remove(i)
 
     def get_years(self):
         return self.years
@@ -477,11 +478,11 @@ class moduleModel:
         self.modules.append(module)
     
     def rem_module(self,id):
-        m = self.modules[id]
-        s = f"DELETE FROM modules WHERE title = '{m.title}' AND year_id = {self.yearId}"
+        s = f"DELETE FROM modules WHERE id = '{id}' AND year_id = {self.yearId}"
         db_set(s)
-        del self.modules[id]
-    
+        for i in self.modules:
+            if i.get_id() == id:
+                self.modules.remove(i)
     def get_modules(self):
         return self.modules
     
@@ -521,16 +522,19 @@ class assessmentModel:
     def get_assessments(self):
         return self.assessments
     
-    def rem_assessment(self,id):
-        a = self.assessments[id]
-        if isinstance(a,Coursework):
-            s = f"DELETE FROM coursework WHERE module_id = {a.moduleid}" 
-            db_set(s)
-        else:
-            s = f"DELETE FROM exam WHERE module_id = {a.moduleid}"
-            db_set(s)
-
-        del self.assessments[id]
+    def rem_cw(self):
+        s = f"DELETE FROM coursework WHERE module_id = {self.moduleId}" 
+        db_set(s)
+        for i in self.assessments:
+            if i.get_title() == "Coursework":
+                self.assessments.remove(i)
+    
+    def rem_e(self):
+        s = f"DELETE FROM exam WHERE module_id = {self.moduleId}"
+        db_set(s)
+        for i in self.assessments:
+            if i.get_title() == "Exam":
+                self.assessments.remove(i)
     
     def edit_cw(self,coursework,d_id):
         s=f"UPDATE coursework SET weight = '{coursework.weight}', grade = {coursework.grade}, module_id = {coursework.moduleid} WHERE id = {d_id}"
@@ -565,10 +569,11 @@ class assignmentModel:
         self.assignments.append(assignment)
 
     def rem_assignment(self,id):
-        a = self.assignments[id]
-        s = f"DELETE FROM assignments WHERE title = '{a.title}' AND coursework_id = {a.courseworkid}"
+        s = f"DELETE FROM assignments WHERE id = '{id}' AND coursework_id = {self.courseworkId}"
         db_set(s)
-        del self.assignments[id]
+        for i in self.assignments:
+            if i.get_id() == id:
+                self.assignments.remove(i)
 
     def get_assignments(self):
         return self.assignments
