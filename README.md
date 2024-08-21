@@ -127,6 +127,8 @@ There will be two databases used within the program, one is runtime in memory an
   - Currently each module can only have 1 exam and functions have been implemented to manipulate databases given there is only 1 exam per module
     - However, it is easy to modify the code for multiple exams but will only implement in the future when it is required for other users as for now it is not needed for me
 
+- CUrrently class attributes are public so the get and set methods in class are redundant, also some code is written using getter and setter, whilst some directly accesses attributes, will need to encapsulate and change code in future
+
 ### View
 
 - Need to change code to set max columns when displaying the courses widgets
