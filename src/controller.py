@@ -17,7 +17,30 @@ class Controller:
         self.view.editItemClicked.connect(self.editItem)
     
     def editItem(self,array):
-        pass
+        pStack = self.view.pageStack.getStack()
+        currentS = self.view.getCurrentS()
+        type = array[0]
+        title = array[1]
+        prevTitle = array[2]
+        exists = False
+        if type == "Course":
+            if not title:
+                print("INVALID TITLE")
+                self.view.add_window.alertL.setText("Invalid Title")
+            else:
+                for i in self.cM.get_courses():
+                    if i.get_title() == title:
+                        print("Title already exists")
+                        self.view.add_window.alertL.setText("Title name already exists")
+                    else:
+                        for j in self.cM.get_courses():
+                            if j.get_title() == prevTitle:
+                                id = j.get_id()
+                                self.cM.edit_course(model.Course(id,title,j.get_grade()))
+                                self.displayData(currentS,self.cM.get_courses()) 
+                                self.view.edit_window.close()
+
+
     def delItem(self,item):
         pStack = self.view.pageStack.getStack()
         currentS = self.view.getCurrentS()
