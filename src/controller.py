@@ -53,7 +53,6 @@ class Controller:
                     print("INVALID TITLE")
                     self.view.edit_window.alertL.setText("Invalid Title")
                 else:
-                    id = self.mM[0].get_nextID()
                     course = pStack[0]
                     year = pStack[1]
                     for i in self.cM.get_courses():
@@ -75,22 +74,15 @@ class Controller:
                                                             print("Title already exists")
                                                             self.view.add_window.alertL.setText("Title name already exists")
                                                     if not(exists):
-                                                        print("Found")
-                                                        empty = False
-                                                        l.add_module(model.Module(id,title,credits,grade,yearid))
-                                                        self.displayData(self.view.getCurrentS(),modules)
-                                                        self.updateGrade(modules,len(pStack))
-                                                        self.view.add_window.close()
-                                                        break
-                                            if not(exists):
-                                                if (empty):
-                                                    self.mM.append(model.moduleModel(yearid))
-                                                    modules = self.mM[-1].get_modules()
-                                                    self.mM[-1].add_module(model.Module(id,title,credits,grade,yearid))
-                                                    self.displayData(self.view.getCurrentS(),modules)
-                                                    self.updateGrade(modules,len(pStack))
-                                                    self.view.add_window.close()
-                                                    break
+                                                        for x in modules:
+                                                            if x.get_title() == prevTitle:
+                                                                x.update_title(title)
+                                                                x.update_credits(credits)
+                                                                l.edit_module(model.Module(x.get_id(),x.get_title,x.get_credits,x.get_grade,yearid))
+                                                                self.displayData(self.view.getCurrentS(),modules)
+                                                                self.updateGrade(modules,len(pStack))
+                                                                self.view.add_window.close()
+                                                                break
 
         else:
             try:
