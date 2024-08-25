@@ -26,19 +26,229 @@ class Controller:
         if type == "Course":
             if not title:
                 print("INVALID TITLE")
-                self.view.add_window.alertL.setText("Invalid Title")
+                self.view.edit_window.alertL.setText("Invalid Title")
             else:
                 for i in self.cM.get_courses():
                     if i.get_title() == title:
                         print("Title already exists")
-                        self.view.add_window.alertL.setText("Title name already exists")
+                        self.view.edit_window.alertL.setText("Title name already exists")
                     else:
                         for j in self.cM.get_courses():
                             if j.get_title() == prevTitle:
                                 j.update_title(title)
                                 self.cM.edit_course(model.Course(j.get_id(),j.get_title(),j.get_grade()))
                                 self.displayData(currentS,self.cM.get_courses())
-                                print("Display Data") 
+                                break
+        elif type == "Module":
+            try:
+                credits = int(array[3])      
+            except:
+                print("INVALID TYPE")
+                self.view.edit_window.alertL.setText("Credits must be Integer")
+            else:
+                if (credits < 0 or credits > 180):
+                    print("INVALID INPUTS")
+                    self.view.edit_window.alertL.setText("Credits must be between 0-180")
+                elif not(title):
+                    print("INVALID TITLE")
+                    self.view.edit_window.alertL.setText("Invalid Title")
+                else:
+                    id = self.mM[0].get_nextID()
+                    course = pStack[0]
+                    year = pStack[1]
+                    for i in self.cM.get_courses():
+                        if i.get_title() == course:
+                            courseid = i.get_id()
+                            for j in self.yM[1:]:
+                                years = j.get_years()
+                                print(years)
+                                if (years[0].get_cid() == courseid):
+                                    for k in years:
+                                        if k.get_title() == year:
+                                            yearid = k.get_id()
+                                            for l in self.mM[1:]:
+                                                modules = l.get_modules()
+                                                if modules[0].get_yid() == yearid:
+                                                    for x in modules:
+                                                        if x.get_title() == title:
+                                                            exists = True
+                                                            print("Title already exists")
+                                                            self.view.add_window.alertL.setText("Title name already exists")
+                                                    if not(exists):
+                                                        print("Found")
+                                                        empty = False
+                                                        l.add_module(model.Module(id,title,credits,grade,yearid))
+                                                        self.displayData(self.view.getCurrentS(),modules)
+                                                        self.updateGrade(modules,len(pStack))
+                                                        self.view.add_window.close()
+                                                        break
+                                            if not(exists):
+                                                if (empty):
+                                                    self.mM.append(model.moduleModel(yearid))
+                                                    modules = self.mM[-1].get_modules()
+                                                    self.mM[-1].add_module(model.Module(id,title,credits,grade,yearid))
+                                                    self.displayData(self.view.getCurrentS(),modules)
+                                                    self.updateGrade(modules,len(pStack))
+                                                    self.view.add_window.close()
+                                                    break
+
+        else:
+            try:
+                weight = int(array[2])
+                grade = float(array[3])
+            except:
+                print("INVALID TYPE")
+                self.view.add_window.alertL.setText("Grade must be Integer/Real\nWeight must be Integer")
+            else:
+                if (weight < 0 or weight > 100) or (grade < 0 or grade > 100):
+                    print("INVALID INPUT")
+                    self.view.add_window.alertL.setText("Grade and Weight must be between 0-100")
+                elif not(title):
+                    print("INVALID TITLE")
+                    self.view.add_window.alertL.setText("Invalid Title")
+                elif (type == "Year"):
+                    id = self.yM[0].get_nextID()
+                    course = pStack[0]
+                    for i in self.cM.get_courses():
+                        if i.get_title() == course:
+                            courseid = i.get_id()
+                            for j in self.yM[1:]:
+                                years = j.get_years()
+                                if (years[0].get_cid() == courseid):
+                                    for x in years:
+                                        if x.get_title() == title:
+                                            exists = True
+                                            print("Title already exists")
+                                            self.view.add_window.alertL.setText("Title name already exists")
+                                    if not (exists):
+                                        empty = False
+                                        j.add_year(model.Year(id,title,weight,grade,courseid))
+                                        self.displayData(self.view.getCurrentS(),years)
+                                        self.updateGrade(years,len(pStack))
+                                        self.view.add_window.close()
+                                        break
+                            if not(exists):
+                                if(empty):
+                                    self.yM.append(model.yearModel(courseid))
+                                    years = self.yM[-1].get_years()
+                                    self.yM[-1].add_year(model.Year(id,title,weight,grade,courseid))
+                                    self.displayData(self.view.getCurrentS(),years)
+                                    self.updateGrade(years,len(pStack))
+                                    self.view.add_window.close()
+                                    break
+                elif (type == "Assessment"):
+                    if (title == "Coursework"):
+                        id = self.aseM[0].get_nextID_CW()
+                    else:
+                        id = self.aseM[0].get_nextID_E()
+                    course = pStack[0]
+                    year = pStack[1]
+                    module = pStack[2]
+                    for i in self.cM.get_courses():
+                        if i.get_title() == course:
+                            courseid = i.get_id()
+                            for j in self.yM[1:]:
+                                years = j.get_years()
+                                if (years[0].get_cid() == courseid):
+                                    for k in years:
+                                        if k.get_title() == year:
+                                            yearid = k.get_id()
+                                            for l in self.mM[1:]:
+                                                modules = l.get_modules()
+                                                if (modules[0].get_yid()==yearid):
+                                                    for m in modules:
+                                                        if m.get_title() == module:
+                                                            moduleid = m.get_id()
+                                                            for n in self.aseM[1:]:
+                                                                assessments = n.get_assessments()
+                                                                if (assessments[0].get_mid() == moduleid):
+                                                                    empty = False
+                                                                    cwPres = False
+                                                                    ePres = False
+                                                                    for o in assessments:
+                                                                        if o.get_title() == "Coursework":
+                                                                            cwPres = True
+                                                                        else:
+                                                                            ePres = True
+                                                                    if (title == "Coursework" and not cwPres):
+                                                                        n.add_cw(model.Coursework(id,weight,grade,moduleid))
+                                                                        self.displayData(self.view.getCurrentS(),assessments)
+                                                                        self.updateGrade(assessments,len(pStack))
+                                                                        self.view.add_window.close()
+                                                                    elif (title == "Exam" and not ePres):
+                                                                        n.add_e(model.Exam(id,weight,grade,moduleid))
+                                                                        self.displayData(self.view.getCurrentS(),assessments)
+                                                                        self.updateGrade(assessments,len(pStack))
+                                                                        self.view.add_window.close()
+                                                                    else:
+                                                                        print(title," Already Exists in Module")
+                                                                    break
+                                                            if(empty):
+                                                                self.aseM.append(model.assessmentModel(moduleid))
+                                                                assessments = self.aseM[-1].get_assessments()
+                                                                if (title == "Coursework"):
+                                                                    self.aseM[-1].add_cw(model.Coursework(id,weight,grade,moduleid))
+                                                                    self.displayData(self.view.getCurrentS(),assessments)
+                                                                    self.updateGrade(assessments,len(pStack))
+                                                                    self.view.add_window.close()
+                                                                else:
+                                                                    self.aseM[-1].add_e(model.Exam(id,weight,grade,moduleid))
+                                                                    self.displayData(self.view.getCurrentS(),assessments)
+                                                                    self.updateGrade(assessments,len(pStack))
+                                                                    self.view.add_window.close()
+                                                                break
+                else:
+                    id = self.asiM[0].get_nextID()
+                    course = pStack[0]
+                    year = pStack[1]
+                    module = pStack[2]
+                    assessment = pStack[3]
+                    for i in self.cM.get_courses():
+                        if i.get_title() == course:
+                            courseid = i.get_id()
+                            for j in self.yM[1:]:
+                                years = j.get_years()
+                                if (years[0].get_cid() == courseid):
+                                    for k in years:
+                                        if k.get_title() == year:
+                                            yearid = k.get_id()
+                                            for l in self.mM[1:]:
+                                                modules = l.get_modules()
+                                                if (modules[0].get_yid()==yearid):
+                                                    for m in modules:
+                                                        if m.get_title() == module:
+                                                            moduleid = m.get_id()
+                                                            for n in self.aseM[1:]:
+                                                                assessments = n.get_assessments()
+                                                                if (assessments[0].get_mid() == moduleid):
+                                                                    for o in assessments:
+                                                                        if o.get_title() == assessment:
+                                                                            assessmentid = o.get_id()
+                                                                            for p in self.asiM[1:]:
+                                                                                assignments = p.get_assignments()
+                                                                                if (assignments[0].get_cid() == assessmentid):
+                                                                                    for x in assignments:
+                                                                                        if x.get_title == title:
+                                                                                            exists= True
+                                                                                            print("Title already exists")
+                                                                                            self.view.add_window.alertL.setText("Title name already exists")
+                                                                                    if not(exists):
+                                                                                        empty = False
+                                                                                        p.add_assignment(model.Assignment(id,title,weight,grade,assessmentid))
+                                                                                        self.displayData(self.view.getCurrentS(),assignments)
+                                                                                        self.updateGrade(assignments,len(pStack))
+                                                                                        self.view.add_window.close()
+                                                                                        break
+                                                                            if not(exists):
+                                                                                if (empty):
+                                                                                    self.asiM.append(model.assignmentModel(assessmentid))
+                                                                                    assignments = self.asiM[-1].get_assignments()
+                                                                                    self.asiM[-1].add_assignment(model.Assignment(id,title,weight,grade,assessmentid))
+                                                                                    self.displayData(self.view.getCurrentS(),assignments)
+                                                                                    self.updateGrade(assignments,len(pStack))
+                                                                                    self.view.add_window.close()
+                                                                                    break
+                                 
 
 
     def delItem(self,item):
