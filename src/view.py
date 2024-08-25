@@ -205,6 +205,7 @@ class editWindow(QWidget):
     def __init__(self,IType,main_window,title,grade,*args):
         self.type = IType
         self.main_window = main_window
+        self.pTitle = title
         super().__init__()
         self.setWindowTitle('Edit '+ IType)
         self.setGeometry(100,100,300,200)
@@ -298,12 +299,12 @@ class editWindow(QWidget):
         title = self.tBox.text()
         if (type == "Year" or type == "Assessment" or type == "Assignment"):
             weight = self.wBox.text()
-            self.main_window.editItemClicked.emit([type,title,weight])
+            self.main_window.editItemClicked.emit([type,title,self.pTitle,weight])
         elif (type == "Module"):
             credits = self.cBox.text()
-            self.main_window.editItemClicked.emit([type,title,credits])
+            self.main_window.editItemClicked.emit([type,title,self.pTitle,credits])
         else:
-            self.main_window.editItemClicked.emit([type,title])
+            self.main_window.editItemClicked.emit([type,title,self.pTitle])
 
 
 
