@@ -28,6 +28,7 @@ class MainWindow(QMainWindow):
     previousClicked = pyqtSignal()
     addItemClicked = pyqtSignal(list)
     delItemClicked = pyqtSignal(str)
+    editItemClicked = pyqtSignal(list)
     def __init__(self):
         super().__init__()
         self.setWindowTitle("University Progress Tracker")
@@ -199,6 +200,101 @@ class MainWindow(QMainWindow):
             args[0].insert(0,'_')
             self.assignments_screen.displayGraph(args[0],args[3])
          
+
+class editWindow(QWidget):
+    def __init__(self,IType,main_window,title,grade,*args):
+        self.type = IType
+        self.main_window = main_window
+        super().__init__()
+        self.setWindowTitle('Edit '+ IType)
+        self.setGeometry(100,100,300,200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        titleL = QLabel("Edit Details")
+        layout.addWidget(titleL)
+
+        tLayout = QHBoxLayout()
+        titleD = QWidget()
+        titleD.setLayout(tLayout)
+        tLabel = QLabel("Enter Title")
+        self.tBox = QLineEdit(
+            self,
+            maxLength = 50
+        )
+        self.tBox.setText(title)
+        tLayout.addWidget(tLabel)
+        tLayout.addWidget(self.tBox)
+        layout.addWidget(titleD)
+
+        if (IType == "Year" or IType == "Assessment" or IType == "Assignment"):
+            wLayout = QHBoxLayout()
+            weightD = QWidget()
+            weightD.setLayout(wLayout)
+            wLabel = QLabel("Enter Weight")
+            self.wBox = QLineEdit(
+                self,
+                maxLength = 2
+            )
+            self.wBox.setText(args[0])
+            wLayout.addWidget(wLabel)
+            wLayout.addWidget(self.wBox)
+            layout.addWidget(weightD)
+        elif (IType == "Module"):
+            cLayout = QHBoxLayout()
+            creditsD = QWidget()
+            creditsD.setLayout(cLayout)
+            cLabel = QLabel("Enter Credits")
+            self.cBox = QLineEdit(
+                self,
+                maxLength = 3
+            )
+            self.cBox.setText(args[0])
+            cLayout.addWidget(cLabel)
+            cLayout.addWidget(self.cBox)
+            layout.addWidget(creditsD)
+        
+        gInfoL = QLabel("Grade cannot be changed as it is dependant on child nodes")
+        layout.addWidget(gInfoL)
+
+        gLayout = QHBoxLayout()
+        gradeD = QWidget()
+        gradeD.setLayout(gLayout)
+        gLabel = QLabel("Grade")
+        self.gBox = QLineEdit()
+        self.gBox.setText(grade)
+        self.gBox.setReadOnly(True)
+        gLayout.addWidget(gLabel)
+        gLayout.addWidget(self.gBox)
+        layout.addWidget(gradeD)
+
+        oLayout = QHBoxLayout()
+        optionsD = QWidget()
+        optionsD.setLayout(oLayout)
+        saveB = QPushButton("Save")
+        saveB.clicked.connect(self.editItem)
+        cancelB = QPushButton("Cancel")
+        cancelB.clicked.connect(self.close)
+        oLayout.addWidget(saveB)
+        oLayout.addWidget(cancelB)
+        self.alertL = QLabel()
+        layout.addWidget(self.alertL)
+        layout.addWidget(optionsD)
+    
+    def editItem(self):
+        type = self.type
+        title = self.tBox.text()
+        if (type == "Year" or type == "Assessment" or type == "Assignment"):
+            weight = self.wBox.text()
+            self.main_window.editItemClicked.emit([type,title,weight])
+        elif (type == "Module"):
+            credits = self.cBox.text()
+            self.main_window.editItemClicked.emit([type,title,credits])
+        else:
+            self.main_window.editItemClicked.emit([type,title])
+
+
+
 
 class addWindow(QWidget):
     def __init__(self,IType,main_window):
@@ -470,7 +566,7 @@ class CoursesScreen(QWidget):
             RButtons.append(remB)
             editB = QPushButton()
             editB.setIcon(self.main_window.editIcon)
-            editB.clicked.connect(lambda checked,course = titles[course]:self.handle_edit_click(course))
+            editB.clicked.connect(lambda checked,course = titles[course],grade = grades[course]:self.handle_edit_click(course,grade))
             eButtons.append(editB)
             titleL.addWidget(tempB)
             titleL.addWidget(editB)
@@ -513,7 +609,9 @@ class CoursesScreen(QWidget):
         self.del_window = delWindow(self.main_window,course)
         self.del_window.show()
     
-    def handle_edit_click(self,course):
+    def handle_edit_click(self,course,grade):
+        self.edit_window = editWindow("Course",self.main_window,course,grade)
+        self.edit_window.show()
         pass
     
     def getType(self):
