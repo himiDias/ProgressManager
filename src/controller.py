@@ -14,7 +14,10 @@ class Controller:
         self.view.previousClicked.connect(self.changeScreenPrev)
         self.view.addItemClicked.connect(self.addItem)
         self.view.delItemClicked.connect(self.delItem)
+        self.view.editItemClicked.connect(self.editItem)
     
+    def editItem(self,array):
+        pass
     def delItem(self,item):
         pStack = self.view.pageStack.getStack()
         currentS = self.view.getCurrentS()
