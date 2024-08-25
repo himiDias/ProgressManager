@@ -170,4 +170,6 @@ There will be two databases used within the program, one is runtime in memory an
 
 - Possible redundant code in controller alerts, with `if not(exists)` being used for when there isn't even a model in the array to add to
 
+- Issue with closing edit window after successful edit, issue with not refreshing display after edit
+
 - (FUTURE) add an attribute to say whether year is a masters year, can put credits to 120 and 180 so as to get better graphs immediately instead of having to add all modules to get correct graph
