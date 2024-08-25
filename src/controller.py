@@ -38,7 +38,6 @@ class Controller:
                                 id = j.get_id()
                                 self.cM.edit_course(model.Course(id,title,j.get_grade()))
                                 self.displayData(currentS,self.cM.get_courses()) 
-                                self.view.edit_window.close()
 
 
     def delItem(self,item):

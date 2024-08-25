@@ -306,6 +306,8 @@ class editWindow(QWidget):
         else:
             self.main_window.editItemClicked.emit([type,title,self.pTitle])
 
+         
+
 
 
 
