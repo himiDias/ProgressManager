@@ -612,7 +612,6 @@ class CoursesScreen(QWidget):
     def handle_edit_click(self,course,grade):
         self.edit_window = editWindow("Course",self.main_window,course,grade)
         self.edit_window.show()
-        pass
     
     def getType(self):
         return self.type
@@ -652,7 +651,7 @@ class YearsScreen(QWidget):
             rButtons.append(remB)
             editB = QPushButton()
             editB.setIcon(self.main_window.editIcon)
-            editB.clicked.connect(lambda checked,year = titles[year]:self.handle_edit_click(year))
+            editB.clicked.connect(lambda checked,year = titles[year],grade = grades[year],weight = weights[year]:self.handle_edit_click(year,grade,weight))
             eButtons.append(editB)
             titleL.addWidget(tempB)
             titleL.addWidget(editB)
@@ -711,8 +710,9 @@ class YearsScreen(QWidget):
         self.del_window = delWindow(self.main_window,year)
         self.del_window.show()
     
-    def handle_edit_click(self,year):
-        pass
+    def handle_edit_click(self,year,grade,weight):
+        self.edit_window = editWindow("Year",self.main_window,year,grade,weight)
+        self.edit_window.show()
     
     def getType(self):
         return self.type
@@ -754,7 +754,7 @@ class ModulesScreen(QWidget):
             rButtons.append(remB)
             editB = QPushButton()
             editB.setIcon(self.main_window.editIcon)
-            editB.clicked.connect(lambda checked,module = titles[module]:self.handle_edit_click(module))
+            editB.clicked.connect(lambda checked,module = titles[module],grade = grades[module],credits = credits[module]:self.handle_edit_click(module,grade,credits))
             eButtons.append(editB)
             titleL.addWidget(tempB)
             titleL.addWidget(editB)
@@ -812,8 +812,9 @@ class ModulesScreen(QWidget):
         self.del_window = delWindow(self.main_window,module)
         self.del_window.show()
     
-    def handle_edit_click(self,module):
-        pass
+    def handle_edit_click(self,module,grade,credits):
+        self.edit_window = editWindow("Module",self.main_window,module,grade,credits)
+        self.edit_window.show()
 
     def getType(self):
         return self.type
@@ -852,7 +853,7 @@ class AssessmentScreen(QWidget):
             rButtons.append(remB)
             editB = QPushButton()
             editB.setIcon(self.main_window.editIcon)
-            editB.clicked.connect(lambda checked,assess = titles[assess]:self.handle_edit_click(assess))
+            editB.clicked.connect(lambda checked,assess = titles[assess],grade = grades[assess],weight = weights[assess]:self.handle_edit_click(assess,grade,weight))
             eButtons.append(editB)
             titleL.addWidget(tempB)
             titleL.addWidget(editB)
@@ -910,8 +911,9 @@ class AssessmentScreen(QWidget):
         self.del_window = delWindow(self.main_window,assessment)
         self.del_window.show()
     
-    def handle_edit_click(self,assessment):
-        pass
+    def handle_edit_click(self,assessment,grade,weight):
+        self.edit_window = editWindow("Assessment",self.main_window,assessment,grade,weight)
+        self.edit_window.show()
 
     def getType(self):
         return self.type
@@ -945,7 +947,7 @@ class AssignmentsScreen(QWidget):
             rButtons.append(remB)
             editB = QPushButton()
             editB.setIcon(self.main_window.editIcon)
-            editB.clicked.connect(lambda checked,assignment = titles[assignment]:self.handle_edit_click(assignment))
+            editB.clicked.connect(lambda checked,assignment = titles[assignment],grade = grades[assignment],weight = weights[assignment]:self.handle_edit_click(assignment,grade,weight))
             eButtons.append(editB)
             titleL.addWidget(tempTitle)
             titleL.addWidget(editB)
@@ -1000,8 +1002,9 @@ class AssignmentsScreen(QWidget):
         self.del_window = delWindow(self.main_window,assignment)
         self.del_window.show()
     
-    def handle_edit_click(self,assignment):
-        pass
+    def handle_edit_click(self,assignment,grade,weight):
+        self.edit_window = editWindow("Assignment",self.main_window,assignment,grade,weight)
+        self.edit_window.show()
     
     def getType(self):
         return self.type
