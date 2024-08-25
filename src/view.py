@@ -217,12 +217,24 @@ class editWindow(QWidget):
         tLayout = QHBoxLayout()
         titleD = QWidget()
         titleD.setLayout(tLayout)
-        tLabel = QLabel("Enter Title")
-        self.tBox = QLineEdit(
-            self,
-            maxLength = 50
-        )
-        self.tBox.setText(title)
+        if (IType == "Assessment"):
+            tInfoL = QLabel("Assessment title cannot be changed")
+            layout.addWidget(tInfoL)
+            tLabel = QLabel("Title")
+            self.tBox = QLineEdit(
+                self,
+                maxLength = 50
+            )
+            self.tBox.setText(title)
+            self.tBox.setReadOnly(True)
+        else:
+            tLabel = QLabel("Title")
+            self.tBox = QLineEdit(
+                self,
+                maxLength = 50
+            )
+            self.tBox.setText(title)
+
         tLayout.addWidget(tLabel)
         tLayout.addWidget(self.tBox)
         layout.addWidget(titleD)
