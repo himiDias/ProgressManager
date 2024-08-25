@@ -35,9 +35,10 @@ class Controller:
                     else:
                         for j in self.cM.get_courses():
                             if j.get_title() == prevTitle:
-                                id = j.get_id()
-                                self.cM.edit_course(model.Course(id,title,j.get_grade()))
-                                self.displayData(currentS,self.cM.get_courses()) 
+                                j.update_title(title)
+                                self.cM.edit_course(model.Course(j.get_id(),j.get_title(),j.get_grade()))
+                                self.displayData(currentS,self.cM.get_courses())
+                                print("Display Data") 
 
 
     def delItem(self,item):
