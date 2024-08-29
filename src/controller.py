@@ -97,7 +97,6 @@ class Controller:
                     print("INVALID TITLE")
                     self.view.edit_window.alertL.setText("Invalid Title")
                 elif (type == "Year"):
-                    id = self.yM[0].get_nextID()
                     course = pStack[0]
                     for i in self.cM.get_courses():
                         if i.get_title() == course:
@@ -109,7 +108,7 @@ class Controller:
                                         if x.get_title() == title and x.get_title() != prevTitle:
                                             exists = True
                                             print("Title already exists")
-                                            self.view.add_window.alertL.setText("Title name already exists")
+                                            self.view.edit_window.alertL.setText("Title name already exists")
                                     if not (exists):
                                         for x in years:
                                             if x.get_title() == prevTitle:
@@ -120,10 +119,6 @@ class Controller:
                                                 self.updateGrade(years,len(pStack))
                                                 break
                 elif (type == "Assessment"):
-                    if (title == "Coursework"):
-                        id = self.aseM[0].get_nextID_CW()
-                    else:
-                        id = self.aseM[0].get_nextID_E()
                     course = pStack[0]
                     year = pStack[1]
                     module = pStack[2]
@@ -145,43 +140,23 @@ class Controller:
                                                             for n in self.aseM[1:]:
                                                                 assessments = n.get_assessments()
                                                                 if (assessments[0].get_mid() == moduleid):
-                                                                    empty = False
-                                                                    cwPres = False
-                                                                    ePres = False
-                                                                    for o in assessments:
-                                                                        if o.get_title() == "Coursework":
-                                                                            cwPres = True
-                                                                        else:
-                                                                            ePres = True
-                                                                    if (title == "Coursework" and not cwPres):
-                                                                        n.add_cw(model.Coursework(id,weight,grade,moduleid))
-                                                                        self.displayData(self.view.getCurrentS(),assessments)
-                                                                        self.updateGrade(assessments,len(pStack))
-                                                                        self.view.add_window.close()
-                                                                    elif (title == "Exam" and not ePres):
-                                                                        n.add_e(model.Exam(id,weight,grade,moduleid))
-                                                                        self.displayData(self.view.getCurrentS(),assessments)
-                                                                        self.updateGrade(assessments,len(pStack))
-                                                                        self.view.add_window.close()
-                                                                    else:
-                                                                        print(title," Already Exists in Module")
-                                                                    break
-                                                            if(empty):
-                                                                self.aseM.append(model.assessmentModel(moduleid))
-                                                                assessments = self.aseM[-1].get_assessments()
-                                                                if (title == "Coursework"):
-                                                                    self.aseM[-1].add_cw(model.Coursework(id,weight,grade,moduleid))
-                                                                    self.displayData(self.view.getCurrentS(),assessments)
-                                                                    self.updateGrade(assessments,len(pStack))
-                                                                    self.view.add_window.close()
-                                                                else:
-                                                                    self.aseM[-1].add_e(model.Exam(id,weight,grade,moduleid))
-                                                                    self.displayData(self.view.getCurrentS(),assessments)
-                                                                    self.updateGrade(assessments,len(pStack))
-                                                                    self.view.add_window.close()
-                                                                break
+                                                                    if (title == "Coursework"):
+                                                                        for x in assessments:
+                                                                            if x.get_title() == "Coursework":
+                                                                                x.update_weight(weight)
+                                                                                n.edit_cw(model.Coursework(x.get_id(),x.get_weight(),x.get_grade(),moduleid))
+                                                                                self.displayData(currentS,assessments)
+                                                                                self.updateGrade(assessments,len(pStack))
+                                                                                break
+                                                                    elif (title == "Exam"):
+                                                                        for x in assessments:
+                                                                            if x.get_title() == "Exam":
+                                                                                x.update_weight(weight)
+                                                                                n.edit_e(model.Exam(x.get_id(),x.get_weight(),x.get_grade(),moduleid))
+                                                                                self.displayData(currentS,assessments)
+                                                                                self.updateGrade(assessments,len(pStack))
+                                                                                break
                 else:
-                    id = self.asiM[0].get_nextID()
                     course = pStack[0]
                     year = pStack[1]
                     module = pStack[2]
@@ -214,7 +189,7 @@ class Controller:
                                                                                         if x.get_title == title:
                                                                                             exists= True
                                                                                             print("Title already exists")
-                                                                                            self.view.add_window.alertL.setText("Title name already exists")
+                                                                                            self.view.edit_window.alertL.setText("Title name already exists")
                                                                                     if not(exists):
                                                                                         for x in assignments:
                                                                                             if x.get_title() == prevTitle:
