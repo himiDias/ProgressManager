@@ -174,6 +174,6 @@ There will be two databases used within the program, one is runtime in memory an
 
 - Should be allowed to change grade in the assignments editing
 
-- Issue with not correctly loading assessments/not saving when only adding 1 assessment
+- Issue with not correctly loading assessments/not saving when only adding 1 assessment as coursewokr
 
 - (FUTURE) add an attribute to say whether year is a masters year, can put credits to 120 and 180 so as to get better graphs immediately instead of having to add all modules to get correct graph
