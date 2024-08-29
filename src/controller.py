@@ -157,48 +157,59 @@ class Controller:
                                                                                 self.updateGrade(assessments,len(pStack))
                                                                                 break
                 else:
-                    course = pStack[0]
-                    year = pStack[1]
-                    module = pStack[2]
-                    assessment = pStack[3]
-                    for i in self.cM.get_courses():
-                        if i.get_title() == course:
-                            courseid = i.get_id()
-                            for j in self.yM[1:]:
-                                years = j.get_years()
-                                if (years[0].get_cid() == courseid):
-                                    for k in years:
-                                        if k.get_title() == year:
-                                            yearid = k.get_id()
-                                            for l in self.mM[1:]:
-                                                modules = l.get_modules()
-                                                if (modules[0].get_yid()==yearid):
-                                                    for m in modules:
-                                                        if m.get_title() == module:
-                                                            moduleid = m.get_id()
-                                                            for n in self.aseM[1:]:
-                                                                assessments = n.get_assessments()
-                                                                if (assessments[0].get_mid() == moduleid):
-                                                                    for o in assessments:
-                                                                        if o.get_title() == assessment:
-                                                                            assessmentid = o.get_id()
-                                                                            for p in self.asiM[1:]:
-                                                                                assignments = p.get_assignments()
-                                                                                if (assignments[0].get_cid() == assessmentid):
-                                                                                    for x in assignments:
-                                                                                        if x.get_title == title:
-                                                                                            exists= True
-                                                                                            print("Title already exists")
-                                                                                            self.view.edit_window.alertL.setText("Title name already exists")
-                                                                                    if not(exists):
-                                                                                        for x in assignments:
-                                                                                            if x.get_title() == prevTitle:
-                                                                                                x.update_title(title)
-                                                                                                x.update_weight(weight)  
-                                                                                                p.edit_assignment(model.Assignment(x.get_id(),x.get_title(),x.get_weight(),x.get_grade(),assessmentid))
-                                                                                                self.displayData(currentS,assignments)
-                                                                                                self.updateGrade(assignments,len(pStack))
-                                                                                                break
+                    try:
+                        grade = float(array[4])                
+                    except:
+                        print("INVALID TYPE")
+                        self.view.edit_window.alertL.setText("Grade must be Integer/Float")
+                    else:
+                        if (grade < 0 or grade > 100):
+                            print("INVALID INPUT")
+                            self.view.edit_window.alertL.setText("Grade must be between 0-100")
+                        else:
+                            course = pStack[0]
+                            year = pStack[1]
+                            module = pStack[2]
+                            assessment = pStack[3]
+                            for i in self.cM.get_courses():
+                                if i.get_title() == course:
+                                    courseid = i.get_id()
+                                    for j in self.yM[1:]:
+                                        years = j.get_years()
+                                        if (years[0].get_cid() == courseid):
+                                            for k in years:
+                                                if k.get_title() == year:
+                                                    yearid = k.get_id()
+                                                    for l in self.mM[1:]:
+                                                        modules = l.get_modules()
+                                                        if (modules[0].get_yid()==yearid):
+                                                            for m in modules:
+                                                                if m.get_title() == module:
+                                                                    moduleid = m.get_id()
+                                                                    for n in self.aseM[1:]:
+                                                                        assessments = n.get_assessments()
+                                                                        if (assessments[0].get_mid() == moduleid):
+                                                                            for o in assessments:
+                                                                                if o.get_title() == assessment:
+                                                                                    assessmentid = o.get_id()
+                                                                                    for p in self.asiM[1:]:
+                                                                                        assignments = p.get_assignments()
+                                                                                        if (assignments[0].get_cid() == assessmentid):
+                                                                                            for x in assignments:
+                                                                                                if x.get_title == title:
+                                                                                                    exists= True
+                                                                                                    print("Title already exists")
+                                                                                                    self.view.edit_window.alertL.setText("Title name already exists")
+                                                                                            if not(exists):
+                                                                                                for x in assignments:
+                                                                                                    if x.get_title() == prevTitle:
+                                                                                                        x.update_title(title)
+                                                                                                        x.update_weight(weight)
+                                                                                                        x.update_grade(grade)  
+                                                                                                        p.edit_assignment(model.Assignment(x.get_id(),x.get_title(),x.get_weight(),x.get_grade(),assessmentid))
+                                                                                                        self.displayData(currentS,assignments)
+                                                                                                        self.updateGrade(assignments,len(pStack))
+                                                                                                        break
                                                                              
                                  
 
