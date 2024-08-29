@@ -69,7 +69,7 @@ class Controller:
                                                 modules = l.get_modules()
                                                 if modules[0].get_yid() == yearid:
                                                     for x in modules:
-                                                        if x.get_title() == title:
+                                                        if x.get_title() == title and x.get_title() != prevTitle:
                                                             exists = True
                                                             print("Title already exists")
                                                             self.view.add_window.alertL.setText("Title name already exists")
