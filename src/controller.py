@@ -85,7 +85,7 @@ class Controller:
 
         else:
             try:
-                weight = int(array[2])                
+                weight = int(array[3])                
             except:
                 print("INVALID TYPE")
                 self.view.edit_window.alertL.setText("Weight must be Integer")
@@ -106,26 +106,19 @@ class Controller:
                                 years = j.get_years()
                                 if (years[0].get_cid() == courseid):
                                     for x in years:
-                                        if x.get_title() == title:
+                                        if x.get_title() == title and x.get_title() != prevTitle:
                                             exists = True
                                             print("Title already exists")
                                             self.view.add_window.alertL.setText("Title name already exists")
                                     if not (exists):
-                                        empty = False
-                                        j.add_year(model.Year(id,title,weight,grade,courseid))
-                                        self.displayData(self.view.getCurrentS(),years)
-                                        self.updateGrade(years,len(pStack))
-                                        self.view.add_window.close()
-                                        break
-                            if not(exists):
-                                if(empty):
-                                    self.yM.append(model.yearModel(courseid))
-                                    years = self.yM[-1].get_years()
-                                    self.yM[-1].add_year(model.Year(id,title,weight,grade,courseid))
-                                    self.displayData(self.view.getCurrentS(),years)
-                                    self.updateGrade(years,len(pStack))
-                                    self.view.add_window.close()
-                                    break
+                                        for x in years:
+                                            if x.get_title() == prevTitle:
+                                                x.update_title(title)
+                                                x.update_weight(weight)
+                                                j.edit_year(model.Year(x.get_id(),x.get_title(),x.get_weight(),x.get_grade(),courseid))
+                                                self.displayData(currentS,years)
+                                                self.updateGrade(years,len(pStack))
+                                                break
                 elif (type == "Assessment"):
                     if (title == "Coursework"):
                         id = self.aseM[0].get_nextID_CW()
@@ -223,21 +216,15 @@ class Controller:
                                                                                             print("Title already exists")
                                                                                             self.view.add_window.alertL.setText("Title name already exists")
                                                                                     if not(exists):
-                                                                                        empty = False
-                                                                                        p.add_assignment(model.Assignment(id,title,weight,grade,assessmentid))
-                                                                                        self.displayData(self.view.getCurrentS(),assignments)
-                                                                                        self.updateGrade(assignments,len(pStack))
-                                                                                        self.view.add_window.close()
-                                                                                        break
-                                                                            if not(exists):
-                                                                                if (empty):
-                                                                                    self.asiM.append(model.assignmentModel(assessmentid))
-                                                                                    assignments = self.asiM[-1].get_assignments()
-                                                                                    self.asiM[-1].add_assignment(model.Assignment(id,title,weight,grade,assessmentid))
-                                                                                    self.displayData(self.view.getCurrentS(),assignments)
-                                                                                    self.updateGrade(assignments,len(pStack))
-                                                                                    self.view.add_window.close()
-                                                                                    break
+                                                                                        for x in assignments:
+                                                                                            if x.get_title() == prevTitle:
+                                                                                                x.update_title(title)
+                                                                                                x.update_weight(weight)  
+                                                                                                p.edit_assignment(model.Assignment(x.get_id(),x.get_title(),x.get_weight(),x.get_grade(),assessmentid))
+                                                                                                self.displayData(currentS,assignments)
+                                                                                                self.updateGrade(assignments,len(pStack))
+                                                                                                break
+                                                                             
                                  
 
 
