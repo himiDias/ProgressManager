@@ -72,7 +72,7 @@ class Controller:
                                                         if x.get_title() == title and x.get_title() != prevTitle:
                                                             exists = True
                                                             print("Title already exists")
-                                                            self.view.add_window.alertL.setText("Title name already exists")
+                                                            self.view.edit_window.alertL.setText("Title name already exists")
                                                     if not(exists):
                                                         for x in modules:
                                                             if x.get_title() == prevTitle:
@@ -85,18 +85,17 @@ class Controller:
 
         else:
             try:
-                weight = int(array[2])
-                grade = float(array[3])
+                weight = int(array[2])                
             except:
                 print("INVALID TYPE")
-                self.view.add_window.alertL.setText("Grade must be Integer/Real\nWeight must be Integer")
+                self.view.edit_window.alertL.setText("Weight must be Integer")
             else:
-                if (weight < 0 or weight > 100) or (grade < 0 or grade > 100):
+                if (weight < 0 or weight > 100):
                     print("INVALID INPUT")
-                    self.view.add_window.alertL.setText("Grade and Weight must be between 0-100")
+                    self.view.edit_window.alertL.setText("Weight must be between 0-100")
                 elif not(title):
                     print("INVALID TITLE")
-                    self.view.add_window.alertL.setText("Invalid Title")
+                    self.view.edit_window.alertL.setText("Invalid Title")
                 elif (type == "Year"):
                     id = self.yM[0].get_nextID()
                     course = pStack[0]
