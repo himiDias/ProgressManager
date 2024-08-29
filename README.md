@@ -148,31 +148,17 @@ There will be two databases used within the program, one is runtime in memory an
 
 ## To Do
 
-- Need to retrieve data from database at the start of application but need to recreate all models without knowing how many courses,years,modules e.t.c were created. Could be tricky (Done)
-
-- Need to test if works when multiple records of different parent records are added, may not work due to issue with different ids in the runtime models and the mysql database (DONE)
-
 - Realised some code to do with manipulating the runtime database is redundant having the `load data` function can update the runtime at any point (DONE)
 
 - Could add a further attribute to years,module etc which is the grade adjusted for the weight (FUTURE)
-
-- View only skeleton, spruce up and do lot more styling
 
 - Controller, grade should be "-" not 0 when when grade not given so graph does not show no grade change
 
 - Controller should check if weights added up is equal to 100
 
-- Controller should override typed in grades, if there are child items that contribute to grade
-
-- Issue with deleting when item have same name, will instead delete first occurence of that name, need to add functinoality that checks whether item of same name already exists before adding (DONE)
-
-- Issue with being able to add elements with no title (DONE)
-
 - Possible redundant code in controller alerts, with `if not(exists)` being used for when there isn't even a model in the array to add to
 
 - Issue with alert messages on edit window as controller does not have access to edit window
-
-- Should be allowed to change grade in the assignments editing
 
 - Issue with not correctly loading assessments/not saving when only adding 1 assessment as coursewokr
 
