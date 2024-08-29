@@ -78,10 +78,9 @@ class Controller:
                                                             if x.get_title() == prevTitle:
                                                                 x.update_title(title)
                                                                 x.update_credits(credits)
-                                                                l.edit_module(model.Module(x.get_id(),x.get_title,x.get_credits,x.get_grade,yearid))
-                                                                self.displayData(self.view.getCurrentS(),modules)
+                                                                l.edit_module(model.Module(x.get_id(),x.get_title(),x.get_credits(),x.get_grade(),yearid))
+                                                                self.displayData(currentS,modules)
                                                                 self.updateGrade(modules,len(pStack))
-                                                                self.view.add_window.close()
                                                                 break
 
         else:
