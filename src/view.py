@@ -267,16 +267,24 @@ class editWindow(QWidget):
             cLayout.addWidget(self.cBox)
             layout.addWidget(creditsD)
         
-        gInfoL = QLabel("Grade cannot be changed as it is dependant on child nodes")
-        layout.addWidget(gInfoL)
-
         gLayout = QHBoxLayout()
         gradeD = QWidget()
-        gradeD.setLayout(gLayout)
-        gLabel = QLabel("Grade")
-        self.gBox = QLineEdit()
-        self.gBox.setText(grade)
-        self.gBox.setReadOnly(True)
+        gradeD.setLayout(gLayout)     
+        if (IType != "Assignment"):
+            gInfoL = QLabel("Grade cannot be changed as it is dependant on child nodes")
+            layout.addWidget(gInfoL)
+
+            gLabel = QLabel("Grade")
+            self.gBox = QLineEdit()
+            self.gBox.setText(grade)
+            self.gBox.setReadOnly(True)
+        else:
+            gLabel = QLabel("Enter Grade")
+            self.gBox = QLineEdit(
+                self,
+                maxLength = 5
+            )
+            self.gBox.setText(grade)
         gLayout.addWidget(gLabel)
         gLayout.addWidget(self.gBox)
         layout.addWidget(gradeD)
@@ -299,7 +307,11 @@ class editWindow(QWidget):
         title = self.tBox.text()
         if (type == "Year" or type == "Assessment" or type == "Assignment"):
             weight = self.wBox.text()
-            self.main_window.editItemClicked.emit([type,title,self.pTitle,weight])
+            if (type == "Assignment"):
+                grade = self.gBox.text()
+                self.main_window.editItemClicked.emit([type,title,self.pTitle,weight,grade])
+            else:
+                self.main_window.editItemClicked.emit([type,title,self.pTitle,weight])
         elif (type == "Module"):
             credits = self.cBox.text()
             self.main_window.editItemClicked.emit([type,title,self.pTitle,credits])
