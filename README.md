@@ -138,7 +138,7 @@ There will be two databases used within the program, one is runtime in memory an
 
 - Problem with qss, not important right now but will be for final touches
 
-- Graph asthetics need to be done (later), add functionality/buttons to remove boundary lines
+- Graph asthetics need to be done (later), add functionality/buttons to remove boundary lines, add a maximise button to open graph window with more details
 
 - Improve code/performance by deleting widgte when refreshing
 
