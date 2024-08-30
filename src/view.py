@@ -40,6 +40,7 @@ class MainWindow(QMainWindow):
         self.stack = QStackedWidget()
         self.pageStack = Stack()
         self.setCentralWidget(self.stack)
+        self.edit_window = None
 
         self.login_screen = LoginScreen(self)
         self.courses_screen = CoursesScreen(self)
@@ -317,7 +318,7 @@ class editWindow(QWidget):
             self.main_window.editItemClicked.emit([type,title,self.pTitle,credits])
         else:
             self.main_window.editItemClicked.emit([type,title,self.pTitle])
-        self.close()
+         
 
          
 
@@ -638,8 +639,8 @@ class CoursesScreen(QWidget):
         self.del_window.show()
     
     def handle_edit_click(self,course,grade):
-        self.edit_window = editWindow("Course",self.main_window,course,grade)
-        self.edit_window.show()
+        self.main_window.edit_window = editWindow("Course",self.main_window,course,grade)
+        self.main_window.edit_window.show()
     
     def getType(self):
         return self.type
