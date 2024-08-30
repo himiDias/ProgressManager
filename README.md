@@ -152,13 +152,9 @@ There will be two databases used within the program, one is runtime in memory an
 
 - Could add a further attribute to years,module etc which is the grade adjusted for the weight (FUTURE)
 
-- Controller, grade should be "-" not 0 when when grade not given so graph does not show no grade change
-
 - Controller should check if weights added up is equal to 100
 
 - Possible redundant code in controller alerts, with `if not(exists)` being used for when there isn't even a model in the array to add to
-
-- Issue with alert messages on edit window as controller does not have access to edit window
 
 - Issue with not correctly loading assessments/not saving when only adding 1 assessment as coursewokr
 
