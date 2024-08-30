@@ -82,6 +82,7 @@ class Controller:
                                                                 l.edit_module(model.Module(x.get_id(),x.get_title(),x.get_credits(),x.get_grade(),yearid))
                                                                 self.displayData(currentS,modules)
                                                                 self.updateGrade(modules,len(pStack))
+                                                                self.view.edit_window.close()
                                                                 break
 
         else:
@@ -118,6 +119,7 @@ class Controller:
                                                 j.edit_year(model.Year(x.get_id(),x.get_title(),x.get_weight(),x.get_grade(),courseid))
                                                 self.displayData(currentS,years)
                                                 self.updateGrade(years,len(pStack))
+                                                self.view.edit_window.close()
                                                 break
                 elif (type == "Assessment"):
                     course = pStack[0]
@@ -148,6 +150,7 @@ class Controller:
                                                                                 n.edit_cw(model.Coursework(x.get_id(),x.get_weight(),x.get_grade(),moduleid))
                                                                                 self.displayData(currentS,assessments)
                                                                                 self.updateGrade(assessments,len(pStack))
+                                                                                self.view.edit_window.close()
                                                                                 break
                                                                     elif (title == "Exam"):
                                                                         for x in assessments:
@@ -156,6 +159,7 @@ class Controller:
                                                                                 n.edit_e(model.Exam(x.get_id(),x.get_weight(),x.get_grade(),moduleid))
                                                                                 self.displayData(currentS,assessments)
                                                                                 self.updateGrade(assessments,len(pStack))
+                                                                                self.view.edit_window.close()
                                                                                 break
                 else:
                     try:
@@ -210,6 +214,7 @@ class Controller:
                                                                                                         p.edit_assignment(model.Assignment(x.get_id(),x.get_title(),x.get_weight(),x.get_grade(),assessmentid))
                                                                                                         self.displayData(currentS,assignments)
                                                                                                         self.updateGrade(assignments,len(pStack))
+                                                                                                        self.view.edit_window.close()
                                                                                                         break
                                                                              
                                  
