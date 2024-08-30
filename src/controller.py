@@ -38,6 +38,7 @@ class Controller:
                                 j.update_title(title)
                                 self.cM.edit_course(model.Course(j.get_id(),j.get_title(),j.get_grade()))
                                 self.displayData(currentS,self.cM.get_courses())
+                                self.view.edit_window.close()
                                 break
         elif type == "Module":
             try:
