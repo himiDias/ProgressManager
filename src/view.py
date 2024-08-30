@@ -248,7 +248,7 @@ class editWindow(QWidget):
             wLabel = QLabel("Enter Weight")
             self.wBox = QLineEdit(
                 self,
-                maxLength = 2
+                maxLength = 3
             )
             self.wBox.setText(args[0])
             wLayout.addWidget(wLabel)
@@ -740,8 +740,8 @@ class YearsScreen(QWidget):
         self.del_window.show()
     
     def handle_edit_click(self,year,grade,weight):
-        self.edit_window = editWindow("Year",self.main_window,year,grade,weight)
-        self.edit_window.show()
+        self.main_window.edit_window = editWindow("Year",self.main_window,year,grade,weight)
+        self.main_window.edit_window.show()
     
     def getType(self):
         return self.type
@@ -842,8 +842,8 @@ class ModulesScreen(QWidget):
         self.del_window.show()
     
     def handle_edit_click(self,module,grade,credits):
-        self.edit_window = editWindow("Module",self.main_window,module,grade,credits)
-        self.edit_window.show()
+        self.main_window.edit_window = editWindow("Module",self.main_window,module,grade,credits)
+        self.main_window.edit_window.show()
 
     def getType(self):
         return self.type
@@ -941,8 +941,8 @@ class AssessmentScreen(QWidget):
         self.del_window.show()
     
     def handle_edit_click(self,assessment,grade,weight):
-        self.edit_window = editWindow("Assessment",self.main_window,assessment,grade,weight)
-        self.edit_window.show()
+        self.main_window.edit_window = editWindow("Assessment",self.main_window,assessment,grade,weight)
+        self.main_window.edit_window.show()
 
     def getType(self):
         return self.type
@@ -1032,8 +1032,8 @@ class AssignmentsScreen(QWidget):
         self.del_window.show()
     
     def handle_edit_click(self,assignment,grade,weight):
-        self.edit_window = editWindow("Assignment",self.main_window,assignment,grade,weight)
-        self.edit_window.show()
+        self.main_window.edit_window = editWindow("Assignment",self.main_window,assignment,grade,weight)
+        self.main_window.edit_window.show()
     
     def getType(self):
         return self.type
