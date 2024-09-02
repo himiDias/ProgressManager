@@ -515,6 +515,7 @@ class LoginScreen(QWidget):
     def __init__(self,main_window):
         super().__init__()
         self.main_window = main_window
+        self.setStyleSheet(open("./styles/loginS.qss", "r").read())
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.type = None
