@@ -36,6 +36,7 @@ class MainWindow(QMainWindow):
         self.delIcon = QIcon('./assets/bin.jpg')
         self.editIcon = QIcon('./assets/edit.jpg')
         self.setGeometry(100,100,1000,800)
+        self.setStyleSheet(open("./styles/mainWin.qss", "r").read())
         self.winSize = self.size()
 
         self.stack = QStackedWidget()
