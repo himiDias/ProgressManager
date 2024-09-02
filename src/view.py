@@ -36,6 +36,7 @@ class MainWindow(QMainWindow):
         self.delIcon = QIcon('./assets/bin.jpg')
         self.editIcon = QIcon('./assets/edit.jpg')
         self.setGeometry(100,100,1000,800)
+        self.winSize = self.size()
 
         self.stack = QStackedWidget()
         self.pageStack = Stack()
@@ -129,7 +130,7 @@ class MainWindow(QMainWindow):
         toolbar.addAction(add_action)
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
-        self.status_bar.showMessage("ProgressManager v1.0")
+        self.status_bar.showMessage("ProgressManager v1.0" + "Window - Height:" +str(self.winSize.height()) + " Width:" + str(self.winSize.width()))
 
         self.show()
 
