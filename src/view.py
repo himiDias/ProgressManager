@@ -130,9 +130,16 @@ class MainWindow(QMainWindow):
         toolbar.addAction(add_action)
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
-        self.status_bar.showMessage("ProgressManager v1.0" + "Window - Height:" +str(self.winSize.height()) + " Width:" + str(self.winSize.width()))
+        self.status_bar.showMessage("ProgressManager v1.0" + "Window - Height:" +str(self.size().height()) + " Width:" + str(self.size().width()))
 
         self.show()
+
+    def resizeEvent(self,event):
+        width = self.size().width()
+        height = self.size().height()
+
+        self.status_bar.showMessage("ProgressManager v1.0" + "Window - Height:" +str(height) + "Width: " + str(width))
+        super().resizeEvent(event)
 
     def setPrevWidget(self):
         #Take values of stack to controller, determine what needs to be displayed on screen
