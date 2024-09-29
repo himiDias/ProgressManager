@@ -1,5 +1,5 @@
 QMainWindow {
-    background-color: #001524;
+    background-color: #00FFFF;
     margin:0px;
     padding: 0px;
 }

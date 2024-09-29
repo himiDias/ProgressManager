@@ -1,5 +1,4 @@
 QWidget {
-    background-color: #00375E;
     margin:0px;
     padding: 0px;
     
