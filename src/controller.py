@@ -426,11 +426,11 @@ class Controller:
 
         else:
             try:
-                weight = int(array[2])
+                weight = float(array[2])
                 grade = float(array[3])
             except:
                 print("INVALID TYPE")
-                self.view.add_window.alertL.setText("Grade must be Integer/Real\nWeight must be Integer")
+                self.view.add_window.alertL.setText("Grade must be Integer/Real\nWeight must be Integer/Real")
             else:
                 if (weight < 0 or weight > 100) or (grade < 0 or grade > 100):
                     print("INVALID INPUT")

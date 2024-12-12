@@ -12,16 +12,16 @@ def initialise_user(user,passw):
     username = user
     Password = passw
     try:
-        with connect(
+        connection =  connect(
             host="localhost",
             user = username,
             password = Password,
 
-        ) as connection:
-            create_db_query = "CREATE DATABASE IF NOT EXISTS `university-progress`"
-            with connection.cursor() as cursor:
-                cursor.execute(create_db_query)
-                print("Database created/exists, login success")
+        )
+        create_db_query = "CREATE DATABASE IF NOT EXISTS `university-progress`"
+        cursor = connection.cursor()
+        cursor.execute(create_db_query)
+        print("Database created/exists, login success")
     except Error:
         return "Error"
 
@@ -30,43 +30,43 @@ def initialise_user(user,passw):
 # function to change values in database, takes a sql query
 def db_set(statement):
     try:
-        with connect(
+        connection =  connect(
             host="localhost",
             user = username,
             password = Password,
             database="university-progress",
-        ) as connection:
-            print(connection)
-            print("Successfully connected to database")
-            try:
-                with connection.cursor() as cursor:
-                    cursor.execute(statement)
-                    connection.commit()
-                    print("Successfully adjusted database")
-            except Error as e:
-                print("Failed to adjust database")
-                print(e)
+        )  
+        print(connection)
+        print("Successfully connected to database")
+        try:
+            cursor =  connection.cursor() 
+            cursor.execute(statement)
+            connection.commit()
+            print("Successfully adjusted database")
+        except Error as e:
+            print("Failed to adjust database")
+            print(e)
     except Error as e:
         print(e)
 
 # function to get values in database, takes sql query
 def db_get(statement):
     try:
-        with connect(
+        connection =  connect(
             host = "localhost",
             user= username,
             password = Password,
             database="university-progress",
-        ) as connection:
-            print(connection)
-            print("Successfully connected to database")
-            try:
-                with connection.cursor() as cursor:
-                    cursor.execute(statement)
-                    records = cursor.fetchall()
-                    return records
-            except Error as e:
-                print(e)
+        ) 
+        print(connection)
+        print("Successfully connected to database")
+        try:
+            cursor = connection.cursor() 
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+        except Error as e:
+            print(e)
     except Error as e:
         print(e)
 
@@ -125,7 +125,7 @@ def initialise_db(con):
     CREATE TABLE IF NOT EXISTS assignments(
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100),
-    weight INT,
+    weight FLOAT,
     grade FLOAT,
     coursework_id INT,
     FOREIGN KEY(coursework_id) REFERENCES coursework(id) ON DELETE CASCADE
@@ -134,51 +134,51 @@ def initialise_db(con):
 
 
     try:
-        with con.cursor() as cursor:
-            cursor.execute(create_course_table)
-            cursor.execute(create_years_table)
-            cursor.execute(create_module_table)
-            cursor.execute(create_cw_table)
-            cursor.execute(create_exam_table)
-            cursor.execute(create_assignments_table)
+        cursor =  con.cursor()  
+        cursor.execute(create_course_table)
+        cursor.execute(create_years_table)
+        cursor.execute(create_module_table)
+        cursor.execute(create_cw_table)
+        cursor.execute(create_exam_table)
+        cursor.execute(create_assignments_table)
 
-            con.commit()
-            print("Successfully initialised database")
+        con.commit()
+        print("Successfully initialised database")
     except Error as e:
         print(e)
 
 def get_next_id(table):
     try:
-        with connect(
+        connection =  connect(
             host = "localhost",
             user= username,
             password = Password,
             database="university-progress",
-        ) as connection:
-            print(connection)
-            print("Successfully connected to database")
-            try:
-                with connection.cursor() as cursor:
-                    s = "SELECT `AUTO_INCREMENT` FROM `information_schema`.`TABLES` WHERE `TABLE_SCHEMA` = 'university-progress' AND `TABLE_NAME` = "+table
-                    cursor.execute(s)
-                    id = cursor.fetchone()
-                    return id[0]
-            except Error as e:
-                print(e)
+        )
+        print(connection)
+        print("Successfully connected to database")
+        try:
+            cursor =  connection.cursor()  
+            s = "SELECT `AUTO_INCREMENT` FROM `information_schema`.`TABLES` WHERE `TABLE_SCHEMA` = 'university-progress' AND `TABLE_NAME` = "+table
+            cursor.execute(s)
+            id = cursor.fetchone()
+            return id[0]
+        except Error as e:
+            print(e)
     except Error as e:
         print(e)
 
 def setup_db():
     try:
-        with connect(
+        connection =  connect(
             host="localhost",
             user = username,
             password = Password,
             database="university-progress",
-        ) as connection:
-            print(connection)
-            print("Successfully connected to database")
-            initialise_db(connection)
+        )  
+        print(connection)
+        print("Successfully connected to database")
+        initialise_db(connection)
     except Error:
         return "Error"
 

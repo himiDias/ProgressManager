@@ -377,7 +377,7 @@ class addWindow(QWidget):
             self.wBox = QLineEdit(
                 self,
                 placeholderText = "Weight",
-                maxLength = 3
+                maxLength = 4
             )
             wLayout.addWidget(wLabel)
             wLayout.addWidget(self.wBox)
