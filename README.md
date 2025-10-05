@@ -5,7 +5,35 @@ Application which can be used to store data about how well the user is doing at 
 # Features
 
 <img src="/assets/readme/login_screen.png" alt="Login Screen">
+
 - Log into user, uses MariaDB to store users
+
+<img src="/assets/readme/courses_screen.png" alt="Courses Screen">
+
+- Courses screen
+- Allows users to add, delete, edit courses
+- Displays current grade achieved for entire course
+
+<img src="/assets/readme/years_screen.png" alt="Years Screen">
+
+- Years Screen (Course -> Years)
+- Allows users to add, delete, edit years in a course
+- Displays current grade achieved for each year, and the weight of each year for the course
+- Displays graph of current progress for course using grades and weights
+
+<img src="/assets/readme/modules_screen.png" alt="Modules Screen">
+
+- Modules Screen (Course -> Year -> Modules)
+- Allows users to add, delete, edit modules in a year of a course
+- Displays current grade achieved for each module, and the number of credits each module is worth
+- Displays graph of current progress for year using grades and credits
+
+<img src="/assets/readme/assessments_screen.png" alt="Assessments Screen">
+
+- Assessments Screen (Course -> Year -> Module -> Assessments)
+- Allows users to add,delete,edit either a coursework component, exam component or both for a module.
+- Displays current grade achieved in coursework/exam and the weight it carries for the module
+- Displays graph of current progress for a module using grades and weight
 
 # Requirements
 
