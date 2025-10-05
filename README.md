@@ -12,6 +12,14 @@ I.e the grade of a module is automatically calculated using the grades achieved 
 
 The grade of a year is automatically calculated using the grades achieved from the modules and credits of each module.
 
+<img src="/assets/readme/nav.png" alt= "Bar">
+
+- For each screen navigation is done by clicking onto a next level down. To go back press the back arrow in the top bar.
+
+<img src="/assets/readme/additem.png" alt= "Add item">
+
+- For each screen, items are added by clicking the **+** icon in the top bar. This brings up a pop up form to enter details for item.
+
 <img src="/assets/readme/login_screen.png" alt="Login Screen">
 
 - Log into user, uses MariaDB to store users
