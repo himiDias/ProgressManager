@@ -2,17 +2,22 @@
 
 Application which can be used to store data about how well the user is doing at uni.
 
+# Features
+
+<img src="/assets/readme/login_screen.png" alt="Login Screen">
+- Log into user, uses MariaDB to store users
+
 # Requirements
 
 ## User Interaction
 
-- The application should allow users to enter the name of course
-- The application should allow users to enter the number of years studying the course and the weight of each year for the degree
-- The application should allow users to enter the names of modules for each year, and the number of credits for each module
-- The application should allow users to add 1/2 sections to each module (exam and coursework) and the weight of each section for the module
-- The application should allow users to add subsections to the coursework section for individual assignments
-- The application should allow users to enter the mark/ percentage recieved for each assignment
-- The application should allow users to enter the mark/ percentage for the exam
+- The application allows users to enter the name of course
+- The application allows users to enter the number of years studying the course and the weight of each year for the degree
+- The application allows users to enter the names of modules for each year, and the number of credits for each module
+- The application allows users to add 1/2 sections to each module (exam and coursework) and the weight of each section for the module
+- The application allows users to add subsections to the coursework section for individual assignments
+- The application allows users to enter the mark/ percentage recieved for each assignment
+- The application allows users to enter the mark/ percentage for the exam
 - The user can edit the values of any of these at anytime but under a different mode
 
 ## Application Outputs

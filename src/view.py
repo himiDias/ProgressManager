@@ -280,7 +280,14 @@ class editWindow(QWidget):
         gLayout = QHBoxLayout()
         gradeD = QWidget()
         gradeD.setLayout(gLayout)     
-        if (IType != "Assignment"):
+        if (IType == "Assignment" or IType == "Assessment"):
+            gLabel = QLabel("Enter Grade")
+            self.gBox = QLineEdit(
+                self,
+                maxLength = 5
+            )
+            self.gBox.setText(grade)
+        else:
             gInfoL = QLabel("Grade cannot be changed as it is dependant on child nodes")
             layout.addWidget(gInfoL)
 
@@ -288,13 +295,6 @@ class editWindow(QWidget):
             self.gBox = QLineEdit()
             self.gBox.setText(grade)
             self.gBox.setReadOnly(True)
-        else:
-            gLabel = QLabel("Enter Grade")
-            self.gBox = QLineEdit(
-                self,
-                maxLength = 5
-            )
-            self.gBox.setText(grade)
         gLayout.addWidget(gLabel)
         gLayout.addWidget(self.gBox)
         layout.addWidget(gradeD)
