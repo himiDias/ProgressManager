@@ -2,7 +2,15 @@
 
 Application which can be used to store data about how well the user is doing at uni.
 
+Developed in **Python** using MVC architecture using **PyQt5** for UI and **MariaDB** for storing persistant storage with **SQL**.
+
 # Features
+
+All grades are calculated bottom-top unless manually overriden.
+
+I.e the grade of a module is automatically calculated using the grades achieved in the assessments and their weights.
+
+The grade of a year is automatically calculated using the grades achieved from the modules and credits of each module.
 
 <img src="/assets/readme/login_screen.png" alt="Login Screen">
 
